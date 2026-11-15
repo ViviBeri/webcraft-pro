@@ -39,13 +39,19 @@ Repository existence, default branch and declared license metadata were checked 
 - [Claude Code skills](https://code.claude.com/docs/en/skills) — Claude Code skill behavior and configuration.
 - [VS Code Agent Skills](https://code.visualstudio.com/docs/agent-customization/agent-skills) — documented project skill locations for Codex, Claude and Copilot in VS Code.
 
+## Accessibility engineering
+
+- [W3C WCAG 2.2](https://www.w3.org/TR/WCAG22/) — normative accessibility requirements and testable success criteria.
+- [WAI-ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/) — design patterns and keyboard interaction guidance for custom widgets.
+- [Playwright accessibility testing](https://playwright.dev/docs/accessibility-testing) — automated accessibility testing with axe-core and documented testing limitations.
+- [axe-core](https://github.com/dequelabs/axe-core) — open-source accessibility testing engine.
+
 ## Frontend engineering and accessibility
 
 - [Chrome for Developers: Modern Web Guidance](https://developer.chrome.com/docs/modern-web-guidance/guides) — implementation guidance for current web platform patterns, including forms.
 - [web.dev: Learn Forms](https://web.dev/learn/forms) — form design, validation, accessibility, privacy, autofill and usability testing.
 - [web.dev: Accessibility](https://web.dev/learn/design/accessibility) — semantic structure, keyboard navigation, focus and accessible content.
 - [web.dev: Accessible responsive design](https://web.dev/articles/accessible-responsive-design) — responsive behavior, zoom, reading order and touch targets.
-- [W3C WCAG 2.2](https://www.w3.org/TR/WCAG22/) — web content accessibility requirements, including animation and interaction criteria.
 
 ## Reuse and attribution policy
 
