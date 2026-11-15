@@ -68,7 +68,19 @@ It gives coding agents structured, task-specific engineering guidance instead of
 | [animation-performance](skills/animation-performance/SKILL.md) | Profiles and improves animation smoothness, rendering cost and lifecycle reliability. |
 | [interactive-storytelling](skills/interactive-storytelling/SKILL.md) | Designs narrative pages that remain understandable without animation. |
 
-See [skills/README.md](skills/README.md) for the complete index and authoring rules. See [motion examples](examples/motion/README.md) for implementation patterns.
+### Accessibility engineering
+
+| Skill | What it does |
+|---|---|
+| [wcag-auditing](skills/wcag-auditing/SKILL.md) | Plans evidence-based WCAG 2.2 audits and documents scope, findings and conformance limits. |
+| [semantic-accessibility](skills/semantic-accessibility/SKILL.md) | Uses native HTML semantics, landmarks, labels and accessible names. |
+| [keyboard-focus](skills/keyboard-focus/SKILL.md) | Engineers keyboard operation, visible focus, dialogs and predictable focus restoration. |
+| [screen-reader-testing](skills/screen-reader-testing/SKILL.md) | Tests reading order, names, roles, states and dynamic announcements with assistive technology. |
+| [accessible-components](skills/accessible-components/SKILL.md) | Builds dialogs, tabs, menus, disclosures and comboboxes from documented interaction patterns. |
+| [accessibility-automation](skills/accessibility-automation/SKILL.md) | Adds axe-core scans to browser tests and CI without overstating automated coverage. |
+| [accessibility-review](skills/accessibility-review/SKILL.md) | Reviews critical journeys across input modes and produces actionable release findings. |
+
+See [skills/README.md](skills/README.md) for the complete index and authoring rules. See [motion examples](examples/motion/README.md) and [accessibility examples](examples/accessibility/README.md) for implementation patterns.(skills/README.md) for the complete index and authoring rules. See [motion examples](examples/motion/README.md) for implementation patterns.
 
 ## Installation
 
@@ -121,7 +133,7 @@ Every skill should:
 5. Include responsive, accessibility and security considerations relevant to the task.
 6. Define how to verify the work and report limitations honestly.
 
-See [Design Quality Standard](standards/design-quality.md), [Frontend Engineering Standard](standards/frontend-engineering.md) and [Motion Engineering Standard](standards/motion-engineering.md) for shared review baselines.
+See [Design Quality Standard](standards/design-quality.md), [Frontend Engineering Standard](standards/frontend-engineering.md), [Motion Engineering Standard](standards/motion-engineering.md) and [Accessibility Engineering Standard](standards/accessibility-engineering.md) for shared review baselines.
 
 ## Roadmap
 
@@ -142,7 +154,7 @@ See [Design Quality Standard](standards/design-quality.md), [Frontend Engineerin
 | Accessible motion and reduced-motion behavior | Available |
 | Animation performance | Available |
 | Interactive storytelling | Available |
-| Accessibility engineering | Planned |
+| Accessibility engineering | Available |
 | Web and API security | Planned |
 | Performance engineering | Planned |
 | Browser automation and QA | Planned |
