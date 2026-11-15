@@ -1,38 +1,42 @@
 # Skills
 
-This directory contains reusable AI agent skills.
+WebCraft Pro skills are maintained as canonical, portable Agent Skills under this directory.
 
-Each skill lives in its own directory and must contain a `SKILL.md` file.
+Each skill is a folder containing a `SKILL.md` with YAML frontmatter and task-specific instructions.
 
-## Structure
+## Available skills
 
-```text
-skills/
-├── design-direction/
-│   └── SKILL.md
-├── anti-slop-ui/
-│   └── SKILL.md
-├── frontend-engineering/
-│   └── SKILL.md
-└── web-security/
-    └── SKILL.md
-```
+| Skill | Purpose |
+|---|---|
+| [design-direction](design-direction/SKILL.md) | Establish a product-specific visual direction and reusable design system. |
+| [anti-slop-ui](anti-slop-ui/SKILL.md) | Audit and improve generic, repetitive or template-like interfaces. |
+| [premium-landing-pages](premium-landing-pages/SKILL.md) | Build responsive marketing and product landing pages with working conversion paths. |
+| [visual-design-review](visual-design-review/SKILL.md) | Review rendered interfaces, responsive behavior, accessibility and interactions. |
 
-## Skill requirements
+## Format
 
-Every skill must include YAML frontmatter with:
+Every skill must:
 
-- `name`
-- `description`
+- Use the exact filename `SKILL.md`.
+- Begin with YAML frontmatter containing `name` and `description`.
+- Use a lowercase kebab-case name matching its parent directory.
+- Explain both capability and activation conditions in the description.
+- Provide actionable, concise instructions.
+- Include verification criteria and honest limitations.
+- Avoid unsafe or fabricated implementation guidance.
 
-The name must match the directory name.
+## Authoring approach
 
-The description must explain the skill's purpose and activation conditions.
+Use progressive disclosure. Keep the main skill focused on the workflow. Put lengthy reference material, templates or scripts in supporting files only when they materially improve execution.
 
-Skill instructions should be practical, testable and framework-aware.
+Keep instructions portable. Do not assume a specific framework, shell, browser or paid tool unless the skill explicitly declares that requirement.
 
 ## Compatibility
 
-The repository maintains a common skill source.
+The canonical source is not duplicated into vendor-specific folders in this repository. Copy the skill directories into the target project's documented skill location:
 
-Agent-specific discovery and installation conventions will be documented separately to avoid assuming that every agent loads skills from the same directory.
+- Codex: `.agents/skills/`
+- Claude Code: `.claude/skills/`
+- GitHub Copilot: `.github/skills/`
+
+See the root [README](../README.md#installation) for installation guidance.
