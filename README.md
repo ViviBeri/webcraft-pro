@@ -20,9 +20,9 @@ Framework-agnostic Agent Skills for building distinctive, accessible, performant
 
 ## What is WebCraft Pro?
 
-WebCraft Pro is an open-source collection of reusable **Agent Skills** for the complete website delivery lifecycle: visual direction, interface quality, landing-page implementation, accessibility, performance, browser verification and application security.
+WebCraft Pro is an open-source collection of reusable **Agent Skills** for the website delivery lifecycle: visual direction, interface quality, frontend architecture, responsive implementation, forms, accessibility, performance, browser verification and application security.
 
-It gives coding agents structured, task-specific engineering guidance instead of relying on vague prompts. The skills are designed around the open Agent Skills format and maintained as one canonical source.
+It gives coding agents structured, task-specific engineering guidance instead of relying on vague prompts. The skills follow the open Agent Skills format and are maintained as one canonical source.
 
 **The project is framework-agnostic.** Choose tools based on the product and existing codebase—not because a skill assumes one framework.
 
@@ -30,14 +30,14 @@ It gives coding agents structured, task-specific engineering guidance instead of
 
 - **Design with purpose:** establish a visual system that reflects the product and audience.
 - **Avoid generic UI:** identify interchangeable layouts, filler copy and decoration without function.
-- **Build complete experiences:** connect page structure, content, responsive behavior and working interactions.
+- **Build maintainable frontends:** make deliberate architecture and component decisions.
+- **Support real devices:** engineer responsive behavior, accessible forms and resilient CSS.
 - **Verify the result:** review rendered pages, keyboard behavior and real viewport sizes.
-- **Treat quality as engineering:** account for accessibility, performance and security throughout implementation.
-- **Reuse one skill source:** keep portable instructions in the standard `SKILL.md` format.
+- **Reuse one skill source:** keep portable instructions in the standard SKILL.md format.
 
 ## Available skills
 
-The first design-intelligence release includes four skills:
+### Design intelligence
 
 | Skill | What it does |
 |---|---|
@@ -46,11 +46,21 @@ The first design-intelligence release includes four skills:
 | [premium-landing-pages](skills/premium-landing-pages/SKILL.md) | Plans and implements conversion-focused, responsive marketing and product pages. |
 | [visual-design-review](skills/visual-design-review/SKILL.md) | Reviews rendered pages, responsive layouts, accessibility and interactions using observable evidence. |
 
-More skills are planned for frontend architecture, responsive engineering, animation, accessibility, performance, web security, API security and browser QA. Planned modules are not represented as completed capabilities.
+### Frontend engineering
+
+| Skill | What it does |
+|---|---|
+| [frontend-architecture](skills/frontend-architecture/SKILL.md) | Evaluates application boundaries, routing, rendering, state ownership and data flow. |
+| [component-engineering](skills/component-engineering/SKILL.md) | Designs reusable component APIs, state behavior, semantic interactions and focused tests. |
+| [responsive-engineering](skills/responsive-engineering/SKILL.md) | Builds and audits fluid layouts, viewport behavior, touch interactions, zoom and reflow. |
+| [modern-css](skills/modern-css/SKILL.md) | Applies maintainable cascade strategy, design tokens, layout primitives and user preferences. |
+| [forms-and-validation](skills/forms-and-validation/SKILL.md) | Builds accessible forms with server-enforced validation, safe submission and useful errors. |
+
+See [skills/README.md](skills/README.md) for the complete index and authoring rules.
 
 ## Installation
 
-Each skill is a folder containing a `SKILL.md`. The canonical source is `skills/<skill-name>/`.
+Each skill is a folder containing a SKILL.md. The canonical source is skills/<skill-name>/.
 
 Clone the repository:
 
@@ -63,9 +73,9 @@ Copy the skills into the project-level directory supported by your coding agent.
 
 | Agent | Project skill directory |
 |---|---|
-| OpenAI Codex | `.agents/skills/` |
-| Claude Code | `.claude/skills/` |
-| GitHub Copilot | `.github/skills/` |
+| OpenAI Codex | .agents/skills/ |
+| Claude Code | .claude/skills/ |
+| GitHub Copilot | .github/skills/ |
 
 For example, install all skills for Codex:
 
@@ -74,7 +84,7 @@ mkdir -p .agents/skills
 cp -R skills/* .agents/skills/
 ```
 
-For Claude Code, use `.claude/skills/` as the destination. For GitHub Copilot, use `.github/skills/`.
+For Claude Code, use .claude/skills/ as the destination. For GitHub Copilot, use .github/skills/.
 
 These are project-local installation paths. Follow the target agent's current documentation for personal/global installation and supported client versions. The source files remain portable; discovery paths are client-specific.
 
@@ -86,7 +96,7 @@ Requirements: Node.js 20 or later.
 npm run validate
 ```
 
-The validator checks each skill directory for a `SKILL.md`, required frontmatter fields, naming consistency, duplicate names and non-empty instructions.
+The validator checks each skill directory for a SKILL.md, required frontmatter fields, naming consistency, duplicate names and non-empty instructions.
 
 ## Design and engineering principles
 
@@ -99,7 +109,7 @@ Every skill should:
 5. Include responsive, accessibility and security considerations relevant to the task.
 6. Define how to verify the work and report limitations honestly.
 
-See [Design Quality Standard](standards/design-quality.md) for the shared review baseline.
+See [Design Quality Standard](standards/design-quality.md) and [Frontend Engineering Standard](standards/frontend-engineering.md) for shared review baselines.
 
 ## Roadmap
 
@@ -109,8 +119,11 @@ See [Design Quality Standard](standards/design-quality.md) for the shared review
 | Anti-generic UI review | Available |
 | Premium landing pages | Available |
 | Visual design review | Available |
-| Frontend engineering and architecture | Planned |
-| Responsive implementation | Planned |
+| Frontend architecture | Available |
+| Component engineering | Available |
+| Responsive engineering | Available |
+| Modern CSS | Available |
+| Forms and validation | Available |
 | GSAP and scroll-driven motion | Planned |
 | Accessibility engineering | Planned |
 | Web and API security | Planned |
@@ -125,7 +138,7 @@ GitHub Actions validates skill metadata on pushes and pull requests. The workflo
 
 The project intends to add automated checks for:
 
-- Skill specification compliance.
+- Full Agent Skills specification compliance.
 - Markdown and link integrity.
 - Example validation.
 - Accessibility and browser regression testing.
