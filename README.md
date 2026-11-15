@@ -80,7 +80,20 @@ It gives coding agents structured, task-specific engineering guidance instead of
 | [accessibility-automation](skills/accessibility-automation/SKILL.md) | Adds axe-core scans to browser tests and CI without overstating automated coverage. |
 | [accessibility-review](skills/accessibility-review/SKILL.md) | Reviews critical journeys across input modes and produces actionable release findings. |
 
-See [skills/README.md](skills/README.md) for the complete index and authoring rules. See [motion examples](examples/motion/README.md) and [accessibility examples](examples/accessibility/README.md) for implementation patterns.(skills/README.md) for the complete index and authoring rules. See [motion examples](examples/motion/README.md) for implementation patterns.
+### Web and API security
+
+| Skill | What it does |
+|---|---|
+| [secure-application-design](skills/secure-application-design/SKILL.md) | Threat-models application architecture, trust boundaries and security controls. |
+| [authentication-sessions](skills/authentication-sessions/SKILL.md) | Secures login, identity protocols, account recovery and session lifecycle. |
+| [authorization-access-control](skills/authorization-access-control/SKILL.md) | Enforces object, function, property and tenant-level access controls. |
+| [secure-input-output](skills/secure-input-output/SKILL.md) | Handles untrusted input, safe output, uploads, redirects and SSRF boundaries. |
+| [api-security](skills/api-security/SKILL.md) | Applies OWASP API risk controls to REST, GraphQL and webhook services. |
+| [secrets-configuration](skills/secrets-configuration/SKILL.md) | Protects credentials, environment configuration and CI/CD secrets. |
+| [security-testing](skills/security-testing/SKILL.md) | Integrates SAST, dependency, secret and dynamic security checks. |
+| [security-review](skills/security-review/SKILL.md) | Produces evidence-based application security and release reviews. |
+
+See [skills/README.md](skills/README.md) for the complete index and authoring rules. See [security examples](examples/security/README.md) for implementation patterns.
 
 ## Installation
 
@@ -133,7 +146,7 @@ Every skill should:
 5. Include responsive, accessibility and security considerations relevant to the task.
 6. Define how to verify the work and report limitations honestly.
 
-See [Design Quality Standard](standards/design-quality.md), [Frontend Engineering Standard](standards/frontend-engineering.md), [Motion Engineering Standard](standards/motion-engineering.md) and [Accessibility Engineering Standard](standards/accessibility-engineering.md) for shared review baselines.
+See [Design Quality Standard](standards/design-quality.md), [Frontend Engineering Standard](standards/frontend-engineering.md), [Motion Engineering Standard](standards/motion-engineering.md) and [Accessibility Engineering Standard](standards/accessibility-engineering.md) and [Security Engineering Standard](standards/security-engineering.md) for shared review baselines.
 
 ## Roadmap
 
@@ -155,7 +168,7 @@ See [Design Quality Standard](standards/design-quality.md), [Frontend Engineerin
 | Animation performance | Available |
 | Interactive storytelling | Available |
 | Accessibility engineering | Available |
-| Web and API security | Planned |
+| Web and API security | Available |
 | Performance engineering | Planned |
 | Browser automation and QA | Planned |
 
