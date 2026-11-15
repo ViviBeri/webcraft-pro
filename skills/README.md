@@ -48,6 +48,19 @@ Each skill is a folder containing a SKILL.md with YAML frontmatter and task-spec
 | [accessibility-automation](accessibility-automation/SKILL.md) | Integrate axe-core accessibility scans with browser tests and CI. |
 | [accessibility-review](accessibility-review/SKILL.md) | Conduct release-focused accessibility reviews across input modes. |
 
+### Web and API security
+
+| Skill | Purpose |
+|---|---|
+| [secure-application-design](secure-application-design/SKILL.md) | Threat-model architecture, trust boundaries and security controls. |
+| [authentication-sessions](authentication-sessions/SKILL.md) | Secure identity protocols, login, recovery and session lifecycle. |
+| [authorization-access-control](authorization-access-control/SKILL.md) | Enforce object, function, property and tenant-level authorization. |
+| [secure-input-output](secure-input-output/SKILL.md) | Validate untrusted input and handle output, files and URLs safely. |
+| [api-security](api-security/SKILL.md) | Protect REST, GraphQL and webhook APIs against OWASP risks. |
+| [secrets-configuration](secrets-configuration/SKILL.md) | Manage credentials and secure CI/CD configuration. |
+| [security-testing](security-testing/SKILL.md) | Plan SAST, dependency, secret and dynamic security verification. |
+| [security-review](security-review/SKILL.md) | Conduct application security and pre-release reviews. |
+
 ## Format
 
 Every skill must:
