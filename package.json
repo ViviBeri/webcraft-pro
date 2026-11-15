@@ -1,0 +1,13 @@
+{
+  "name": "webcraft-pro",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Framework-agnostic AI agent skills for website design, engineering and security.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "validate": "node scripts/validate-skills.mjs"
+  }
+}
