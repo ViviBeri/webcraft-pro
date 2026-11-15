@@ -25,6 +25,17 @@ Each skill is a folder containing a SKILL.md with YAML frontmatter and task-spec
 | [modern-css](modern-css/SKILL.md) | Maintain CSS cascade, tokens, layout primitives and accessible states. |
 | [forms-and-validation](forms-and-validation/SKILL.md) | Build accessible forms with server-side validation and safe submission flows. |
 
+### Motion and interaction
+
+| Skill | Purpose |
+|---|---|
+| [gsap-fundamentals](gsap-fundamentals/SKILL.md) | Build scoped GSAP tweens and timelines with lifecycle cleanup. |
+| [scrolltrigger-experiences](scrolltrigger-experiences/SKILL.md) | Build scroll-linked stories and responsive ScrollTrigger sequences. |
+| [motion-design-systems](motion-design-systems/SKILL.md) | Define reusable motion tokens, timing, easing and interaction patterns. |
+| [accessible-motion](accessible-motion/SKILL.md) | Implement reduced-motion alternatives and stable focus behavior. |
+| [animation-performance](animation-performance/SKILL.md) | Profile and improve animation smoothness and rendering cost. |
+| [interactive-storytelling](interactive-storytelling/SKILL.md) | Design narrative experiences that remain clear without animation. |
+
 ## Format
 
 Every skill must:
