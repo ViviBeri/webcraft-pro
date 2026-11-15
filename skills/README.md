@@ -2,9 +2,11 @@
 
 WebCraft Pro skills are maintained as canonical, portable Agent Skills under this directory.
 
-Each skill is a folder containing a `SKILL.md` with YAML frontmatter and task-specific instructions.
+Each skill is a folder containing a SKILL.md with YAML frontmatter and task-specific instructions.
 
 ## Available skills
+
+### Design intelligence
 
 | Skill | Purpose |
 |---|---|
@@ -13,12 +15,22 @@ Each skill is a folder containing a `SKILL.md` with YAML frontmatter and task-sp
 | [premium-landing-pages](premium-landing-pages/SKILL.md) | Build responsive marketing and product landing pages with working conversion paths. |
 | [visual-design-review](visual-design-review/SKILL.md) | Review rendered interfaces, responsive behavior, accessibility and interactions. |
 
+### Frontend engineering
+
+| Skill | Purpose |
+|---|---|
+| [frontend-architecture](frontend-architecture/SKILL.md) | Plan application boundaries, routing, rendering, state ownership and data flow. |
+| [component-engineering](component-engineering/SKILL.md) | Design reusable component APIs, interaction states and component tests. |
+| [responsive-engineering](responsive-engineering/SKILL.md) | Engineer fluid layouts, touch behavior, zoom and responsive reflow. |
+| [modern-css](modern-css/SKILL.md) | Maintain CSS cascade, tokens, layout primitives and accessible states. |
+| [forms-and-validation](forms-and-validation/SKILL.md) | Build accessible forms with server-side validation and safe submission flows. |
+
 ## Format
 
 Every skill must:
 
-- Use the exact filename `SKILL.md`.
-- Begin with YAML frontmatter containing `name` and `description`.
+- Use the exact filename SKILL.md.
+- Begin with YAML frontmatter containing name and description.
 - Use a lowercase kebab-case name matching its parent directory.
 - Explain both capability and activation conditions in the description.
 - Provide actionable, concise instructions.
@@ -35,8 +47,8 @@ Keep instructions portable. Do not assume a specific framework, shell, browser o
 
 The canonical source is not duplicated into vendor-specific folders in this repository. Copy the skill directories into the target project's documented skill location:
 
-- Codex: `.agents/skills/`
-- Claude Code: `.claude/skills/`
-- GitHub Copilot: `.github/skills/`
+- Codex: .agents/skills/
+- Claude Code: .claude/skills/
+- GitHub Copilot: .github/skills/
 
 See the root [README](../README.md#installation) for installation guidance.
