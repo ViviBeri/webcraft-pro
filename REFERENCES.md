@@ -17,6 +17,9 @@ Repository existence, default branch and declared license metadata were checked 
 |---|---|---|
 | [scroll-craft](https://github.com/nateherkai/scroll-craft) | Scroll-driven interaction patterns | MIT |
 | [GSAP Skills](https://github.com/greensock/gsap-skills) | Animation workflow and GSAP guidance | MIT |
+| [GSAP documentation](https://gsap.com/docs/v3/) | Core tweens, timelines, context and responsive animation setup | Official documentation |
+| [GSAP matchMedia](https://gsap.com/docs/v3/GSAP/gsap.matchMedia/) | Responsive and reduced-motion-aware animation contexts | Official documentation |
+| [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) | Scroll-linked timelines, pinning, scrub and trigger lifecycle | Official documentation |
 
 ## Security, performance and testing
 
@@ -42,6 +45,7 @@ Repository existence, default branch and declared license metadata were checked 
 - [web.dev: Learn Forms](https://web.dev/learn/forms) — form design, validation, accessibility, privacy, autofill and usability testing.
 - [web.dev: Accessibility](https://web.dev/learn/design/accessibility) — semantic structure, keyboard navigation, focus and accessible content.
 - [web.dev: Accessible responsive design](https://web.dev/articles/accessible-responsive-design) — responsive behavior, zoom, reading order and touch targets.
+- [W3C WCAG 2.2](https://www.w3.org/TR/WCAG22/) — web content accessibility requirements, including animation and interaction criteria.
 
 ## Reuse and attribution policy
 
