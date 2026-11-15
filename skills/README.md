@@ -36,6 +36,18 @@ Each skill is a folder containing a SKILL.md with YAML frontmatter and task-spec
 | [animation-performance](animation-performance/SKILL.md) | Profile and improve animation smoothness and rendering cost. |
 | [interactive-storytelling](interactive-storytelling/SKILL.md) | Design narrative experiences that remain clear without animation. |
 
+### Accessibility engineering
+
+| Skill | Purpose |
+|---|---|
+| [wcag-auditing](wcag-auditing/SKILL.md) | Plan WCAG 2.2 audits and record evidence-based findings. |
+| [semantic-accessibility](semantic-accessibility/SKILL.md) | Build meaningful HTML structure and accessible names. |
+| [keyboard-focus](keyboard-focus/SKILL.md) | Implement keyboard operation and predictable focus behavior. |
+| [screen-reader-testing](screen-reader-testing/SKILL.md) | Validate reading order, announcements and assistive-technology workflows. |
+| [accessible-components](accessible-components/SKILL.md) | Implement accessible interactive components from established patterns. |
+| [accessibility-automation](accessibility-automation/SKILL.md) | Integrate axe-core accessibility scans with browser tests and CI. |
+| [accessibility-review](accessibility-review/SKILL.md) | Conduct release-focused accessibility reviews across input modes. |
+
 ## Format
 
 Every skill must:
