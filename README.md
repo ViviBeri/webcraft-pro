@@ -20,7 +20,7 @@ Framework-agnostic Agent Skills for building distinctive, accessible, performant
 
 ## What is WebCraft Pro?
 
-WebCraft Pro is an open-source collection of reusable **Agent Skills** for the website delivery lifecycle: visual direction, interface quality, frontend architecture, responsive implementation, forms, accessibility, performance, browser verification and application security.
+WebCraft Pro is an open-source collection of reusable **Agent Skills** for the website delivery lifecycle: visual direction, interface quality, frontend architecture, responsive implementation, forms, motion design, accessibility, performance, browser verification and application security.
 
 It gives coding agents structured, task-specific engineering guidance instead of relying on vague prompts. The skills follow the open Agent Skills format and are maintained as one canonical source.
 
@@ -32,6 +32,7 @@ It gives coding agents structured, task-specific engineering guidance instead of
 - **Avoid generic UI:** identify interchangeable layouts, filler copy and decoration without function.
 - **Build maintainable frontends:** make deliberate architecture and component decisions.
 - **Support real devices:** engineer responsive behavior, accessible forms and resilient CSS.
+- **Use purposeful motion:** create meaningful transitions and scroll experiences with accessible fallbacks.
 - **Verify the result:** review rendered pages, keyboard behavior and real viewport sizes.
 - **Reuse one skill source:** keep portable instructions in the standard SKILL.md format.
 
@@ -56,7 +57,18 @@ It gives coding agents structured, task-specific engineering guidance instead of
 | [modern-css](skills/modern-css/SKILL.md) | Applies maintainable cascade strategy, design tokens, layout primitives and user preferences. |
 | [forms-and-validation](skills/forms-and-validation/SKILL.md) | Builds accessible forms with server-enforced validation, safe submission and useful errors. |
 
-See [skills/README.md](skills/README.md) for the complete index and authoring rules.
+### Motion and interaction
+
+| Skill | What it does |
+|---|---|
+| [gsap-fundamentals](skills/gsap-fundamentals/SKILL.md) | Builds scoped GSAP tweens and timelines with predictable lifecycle cleanup. |
+| [scrolltrigger-experiences](skills/scrolltrigger-experiences/SKILL.md) | Creates scroll-linked storytelling and pinned sequences without scroll hijacking. |
+| [motion-design-systems](skills/motion-design-systems/SKILL.md) | Defines reusable motion tokens, timing, easing and interaction patterns. |
+| [accessible-motion](skills/accessible-motion/SKILL.md) | Implements reduced-motion alternatives, stable focus and accessible animation behavior. |
+| [animation-performance](skills/animation-performance/SKILL.md) | Profiles and improves animation smoothness, rendering cost and lifecycle reliability. |
+| [interactive-storytelling](skills/interactive-storytelling/SKILL.md) | Designs narrative pages that remain understandable without animation. |
+
+See [skills/README.md](skills/README.md) for the complete index and authoring rules. See [motion examples](examples/motion/README.md) for implementation patterns.
 
 ## Installation
 
@@ -109,7 +121,7 @@ Every skill should:
 5. Include responsive, accessibility and security considerations relevant to the task.
 6. Define how to verify the work and report limitations honestly.
 
-See [Design Quality Standard](standards/design-quality.md) and [Frontend Engineering Standard](standards/frontend-engineering.md) for shared review baselines.
+See [Design Quality Standard](standards/design-quality.md), [Frontend Engineering Standard](standards/frontend-engineering.md) and [Motion Engineering Standard](standards/motion-engineering.md) for shared review baselines.
 
 ## Roadmap
 
@@ -124,7 +136,12 @@ See [Design Quality Standard](standards/design-quality.md) and [Frontend Enginee
 | Responsive engineering | Available |
 | Modern CSS | Available |
 | Forms and validation | Available |
-| GSAP and scroll-driven motion | Planned |
+| GSAP fundamentals and timelines | Available |
+| ScrollTrigger experiences | Available |
+| Motion design systems | Available |
+| Accessible motion and reduced-motion behavior | Available |
+| Animation performance | Available |
+| Interactive storytelling | Available |
 | Accessibility engineering | Planned |
 | Web and API security | Planned |
 | Performance engineering | Planned |
