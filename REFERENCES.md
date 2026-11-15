@@ -30,11 +30,18 @@ Repository existence, default branch and declared license metadata were checked 
 
 ## Agent Skills format and compatibility
 
-- [Agent Skills specification](https://agentskills.io/specification) — portable skill folder and `SKILL.md` format.
+- [Agent Skills specification](https://agentskills.io/specification) — portable skill folder and SKILL.md format.
 - [OpenAI Skills](https://github.com/openai/skills) — examples and authoring guidance for Codex skills.
 - [GitHub Copilot agent skills](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills) — Copilot project skill discovery and installation.
 - [Claude Code skills](https://code.claude.com/docs/en/skills) — Claude Code skill behavior and configuration.
 - [VS Code Agent Skills](https://code.visualstudio.com/docs/agent-customization/agent-skills) — documented project skill locations for Codex, Claude and Copilot in VS Code.
+
+## Frontend engineering and accessibility
+
+- [Chrome for Developers: Modern Web Guidance](https://developer.chrome.com/docs/modern-web-guidance/guides) — implementation guidance for current web platform patterns, including forms.
+- [web.dev: Learn Forms](https://web.dev/learn/forms) — form design, validation, accessibility, privacy, autofill and usability testing.
+- [web.dev: Accessibility](https://web.dev/learn/design/accessibility) — semantic structure, keyboard navigation, focus and accessible content.
+- [web.dev: Accessible responsive design](https://web.dev/articles/accessible-responsive-design) — responsive behavior, zoom, reading order and touch targets.
 
 ## Reuse and attribution policy
 
