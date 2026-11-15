@@ -21,6 +21,15 @@ Repository existence, default branch and declared license metadata were checked 
 | [GSAP matchMedia](https://gsap.com/docs/v3/GSAP/gsap.matchMedia/) | Responsive and reduced-motion-aware animation contexts | Official documentation |
 | [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) | Scroll-linked timelines, pinning, scrub and trigger lifecycle | Official documentation |
 
+## Web and API security
+
+- [OWASP ASVS 5.0.0](https://asvs.owasp.org/) — stable application security verification requirements for web applications and services.
+- [OWASP API Security Top 10 (2023)](https://owasp.org/www-project-api-security/) — API-specific security risks and mitigation guidance.
+- [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/) — practical secure implementation guidance.
+- [Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html) — authentication and identity verification controls.
+- [Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html) — server-side access-control design.
+- [Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html) — syntactic and semantic validation practices.
+
 ## Security, performance and testing
 
 | Project | Focus | Declared repository license |
