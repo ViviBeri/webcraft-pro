@@ -1,4 +1,4 @@
-![WebCraft Pro Logo](./assets/webcraft-pro-icon.svg)
+![WebCraft Pro Logo](./assets/webcraft-pro-icon.png)
 
 # WebCraft Pro — Complete Web Engineering Toolkit for AI Agents
 
@@ -8,7 +8,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D22.12.0-brightgreen)](https://nodejs.org/)
 
-[![WebCraft Pro Social Preview](./assets/webcraft-pro-social-preview.svg)](./assets/webcraft-pro-social-preview.svg)
+![WebCraft Pro Banner](./assets/banner.png)
 
 **Design with intention. Engineer with discipline. Secure by default.**
 
