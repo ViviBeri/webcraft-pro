@@ -1,5 +1,9 @@
 <div align="center">
 
+<p>
+  <img src="assets/webcraft-banner.svg" alt="webcraft — build. craft. ship." width="100%">
+</p>
+
 # WebCraft Pro
 
 **Design with intention. Engineer with discipline. Secure by default.**
