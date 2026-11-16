@@ -202,7 +202,7 @@ async function main() {
   } catch (error) {
     fatalError = true;
     record(report, browser ? "unexpected-fatal-error" : "browser-launch", "all", false, "high", error.message);
-    process.stderr.write((browser ? "Browser check failed unexpectedly: " : "Chromium launch failed: ") + error.message + "\\n");
+    process.stderr.write((browser ? "Browser check failed unexpectedly: " : "Chromium launch failed: ") + error.message + "\n");
   } finally {
     if (browser) {
       try {
@@ -216,13 +216,13 @@ async function main() {
     report.summary.passed = report.checks.filter((c) => c.pass).length;
     report.summary.failed = report.checks.length - report.summary.passed;
     try {
-      await writeFile(reportPath, JSON.stringify(report, null, 2) + "\\n");
+      await writeFile(reportPath, JSON.stringify(report, null, 2) + "\n");
     } catch (error) {
       fatalError = true;
-      process.stderr.write("Cannot write browser check report: " + error.message + "\\n");
+      process.stderr.write("Cannot write browser check report: " + error.message + "\n");
     }
   }
-  process.stdout.write("Browser check: " + report.summary.passed + " passed, " + report.summary.failed + " failed.\\nReport: " + reportPath + "\\n");
+  process.stdout.write("Browser check: " + report.summary.passed + " passed, " + report.summary.failed + " failed.\nReport: " + reportPath + "\n");
   return fatalError ? 2 : report.summary.failed ? 1 : 0;
 }
 main().then((code) => { process.exitCode = code; }).catch((error) => {
