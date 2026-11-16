@@ -1,4 +1,4 @@
-import { readdir, readFile } from "node:fs/promises";
+import { access, readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 
 const root = process.cwd();
@@ -100,6 +100,30 @@ async function validateSkill(directory) {
   }
 }
 
+const requiredRepositoryFiles = [
+  "AGENTS.md",
+  "CLAUDE.md",
+  ".github/copilot-instructions.md",
+  "stages/README.md",
+  "stages/01-foundation/README.md",
+  "stages/02-design-intelligence/README.md",
+  "stages/03-frontend-engineering/README.md",
+  "stages/04-motion-gsap/README.md",
+  "stages/05-accessibility/README.md",
+  "stages/06-web-api-security/README.md",
+  "stages/07-performance/README.md",
+  "stages/08-browser-qa-release/README.md",
+];
+
+async function validateRepositoryStructure() {
+  for (const file of requiredRepositoryFiles) {
+    try {
+      await access(path.join(root, file));
+    } catch {
+      reportError("Repository structure: Missing required file " + file);
+    }
+  }
+}
 async function main() {
   let entries;
 
@@ -120,6 +144,8 @@ async function main() {
     await validateSkill(directory);
   }
 
+  await validateRepositoryStructure();
+
   if (errors.length > 0) {
     console.error("Skill validation failed:");
 
@@ -132,7 +158,7 @@ async function main() {
   }
 
   console.log(
-    `Skill validation passed. Validated ${directories.length} skill(s).`
+    `Repository validation passed. Validated ${directories.length} skill(s), ${requiredRepositoryFiles.length - 4} stage index file(s), and 3 agent entry point(s).`
   );
 }
 
