@@ -2,7 +2,7 @@
 
 WebCraft Pro skills are maintained as canonical, portable Agent Skills under this directory.
 
-Each skill is a folder containing a SKILL.md with YAML frontmatter and task-specific instructions.
+Each skill is a folder containing a SKILL.md with YAML frontmatter and task-specific instructions. The canonical skill source is agent-neutral; do not fork or duplicate skill bodies for individual coding agents. See the [eight-stage architecture](../stages/README.md) for stage-level acceptance criteria and the shared [AGENTS.md](../AGENTS.md) instructions.
 
 ## Available skills
 
