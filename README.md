@@ -130,6 +130,32 @@ The repository includes 13 practical templates across the three engineering-crit
 
 These templates help agents and engineers record scope, test conditions, evidence, findings, remediation, and release decisions consistently.
 
+## Why WebCraft Pro is Different
+
+WebCraft Pro is engineered as a repeatable web-delivery system, not just a collection of prompts or a wrapper around a preferred frontend stack.
+
+### 1. Enforced by CI, not just Prompts
+
+Many skill repositories rely primarily on long instruction files and expect an AI agent to follow them. WebCraft Pro pairs its guidance with executable GitHub Actions checks:
+
+- A zero-dependency Node.js security pattern audit checks code examples in Markdown skills, standards and templates for known risky patterns.
+- Playwright keyboard and focus tests run against the repository's accessibility fixtures and fail when the tested behaviors regress.
+- Repository validation checks skill metadata, structure and installer behavior.
+
+These checks make defined requirements testable in CI rather than leaving them as prompt-only advice. Their scope is explicit: the security audit is a static pattern check, and the keyboard suite covers its tested scenarios. They are not a guarantee that every generated application is secure or fully accessible.
+
+### 2. Zero-Dependency & Framework-Agnostic
+
+WebCraft Pro does not lock projects into a proprietary animation engine or require a heavy UI library to adopt its engineering approach. It provides portable skills, shared standards and verification workflows; teams bring their existing framework and choose implementation dependencies only when the project needs them.
+
+Use GSAP where coordinated motion justifies it, native CSS for simpler effects, and the framework already present in the project. Optional libraries remain optional.
+
+### 3. A Complete 8-Stage Lifecycle
+
+Single-purpose skills can be valuable for a focused task, but WebCraft Pro organizes the broader delivery pipeline into eight connected stages: foundation and agent interoperability, design intelligence, frontend engineering, motion and GSAP, accessibility, web and API security, performance, and browser QA and release.
+
+That architecture connects design direction and implementation with OWASP-informed security work, accessibility verification, performance measurement and release readiness. Shared standards, templates and CI workflows provide continuity across those stages instead of leaving each task as an isolated prompt.
+
 ## 4. How AI agents should use WebCraft Pro
 
 WebCraft Pro is designed to be a reusable engineering reference, not a collection of instructions to blindly apply to every project.
