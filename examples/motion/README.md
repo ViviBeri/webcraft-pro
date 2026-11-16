@@ -125,3 +125,39 @@ For simple feedback, CSS is usually sufficient.
 - Confirm revert() runs during teardown.
 - Test reduced motion, narrow viewports, keyboard navigation and reverse scrolling.
 - Remove development markers and temporary diagnostics.
+
+
+## 5. Lifecycle selection
+
+Choose one owner for each setup:
+
+- Use `gsap.context(callback, rootElement)` for a component/page group whose conditions do not need to change. Call `context.revert()` from that owner's teardown.
+- Use `gsap.matchMedia()` when the setup changes with viewport or user preference conditions. Its matching-condition handlers are context-managed; call `matchMedia.revert()` from teardown. Do not wrap the same handler in another context without a separate reason.
+- If a callback creates listeners, observers or timers outside GSAP, remove those explicitly during teardown.
+
+`rootElement` is a reference to the actual component or page root, not a global selector. Create the setup after that element exists.
+
+## 6. Timeline labels and controllable playback
+
+When a sequence needs named navigation or user controls, prefer labels and a stored timeline over unrelated delays.
+
+```js
+const sequence = gsap.timeline({ paused: true });
+
+sequence
+  .addLabel("intro")
+  .from(titleElement, { y: 16, autoAlpha: 0, duration: 0.4 })
+  .addLabel("details", ">")
+  .from(copyElement, { y: 10, autoAlpha: 0, duration: 0.3 }, "details");
+
+playButton.addEventListener("click", () => sequence.play());
+reverseButton.addEventListener("click", () => sequence.reverse());
+
+// Remove listeners and revert the owning context during teardown.
+```
+
+The buttons must remain usable if motion is reduced or unavailable. Do not make completion of this sequence a prerequisite for navigation or task completion.
+
+## 7. Reference alignment
+
+The patterns in this directory are independently authored. The upstream [GSAP Skills](https://github.com/greensock/gsap-skills) repository is used as a technical cross-check for core tweens, timelines, ScrollTrigger, framework lifecycle and performance. Follow the installed GSAP version and official documentation when APIs change.
