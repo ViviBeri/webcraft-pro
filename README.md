@@ -230,6 +230,8 @@ WebCraft Pro provides a complete structured foundation for AI-assisted web engin
 
 ## License
 
-This project is released under the [MIT License](LICENSE).
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+Third-party development dependency licenses are listed in [THIRD_PARTY_LICENSES.txt](THIRD_PARTY_LICENSES.txt).
 
 [Authorship & Originality Disclaimer](DISCLAIMER.md)
