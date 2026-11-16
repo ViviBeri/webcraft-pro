@@ -108,6 +108,12 @@ It gives coding agents structured, task-specific engineering guidance instead of
 
 See [skills/README.md](skills/README.md) for the complete index and authoring rules. See [security examples](examples/security/README.md) and [performance examples](examples/performance/README.md) for implementation patterns.
 
+## Eight-stage architecture
+
+WebCraft Pro is organized into eight stages, from foundation and design intelligence through secure engineering, performance, browser QA and release. The stage folders are the shared roadmap and acceptance index; the portable skill source remains in `skills/` so skill files are not duplicated across agents.
+
+See [the eight-stage architecture](stages/README.md) and the shared [agent instructions](AGENTS.md). Codex, Claude Code and GitHub Copilot use thin entry points that point to the same instructions.
+
 ## Installation
 
 Each skill is a folder containing a SKILL.md. The canonical source is skills/<skill-name>/.
@@ -159,7 +165,7 @@ Every skill should:
 5. Include responsive, accessibility and security considerations relevant to the task.
 6. Define how to verify the work and report limitations honestly.
 
-See [Design Quality Standard](standards/design-quality.md), [Frontend Engineering Standard](standards/frontend-engineering.md), [Motion Engineering Standard](standards/motion-engineering.md) and [Accessibility Engineering Standard](standards/accessibility-engineering.md) and [Security Engineering Standard](standards/security-engineering.md) and [Performance Engineering Standard](standards/performance-engineering.md) for shared review baselines.
+See [Design Quality Standard](standards/design-quality.md), [Frontend Engineering Standard](standards/frontend-engineering.md), [Motion Engineering Standard](standards/motion-engineering.md), [Accessibility Engineering Standard](standards/accessibility-engineering.md), [Security Engineering Standard](standards/security-engineering.md) and [Performance Engineering Standard](standards/performance-engineering.md) for shared review baselines.
 
 ## Roadmap
 
