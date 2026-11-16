@@ -66,3 +66,17 @@ Create a consistent motion language that communicates hierarchy, cause and effec
 ## Completion criteria
 
 The product has a small documented motion vocabulary, purposeful interaction patterns, consistent timing, accessible alternatives and verified behavior across relevant input methods.
+
+
+## Token governance
+
+Define motion tokens as semantic roles, not universal prescriptions. Document the intended use, approximate duration range, easing character, distance/scale guidance and reduced-motion behavior for each token. Keep tokens independent of GSAP so CSS transitions, native browser behavior and other approved engines can use the same vocabulary.
+
+For each shared pattern, document its trigger, start/end state, interruption behavior, reduced-motion alternative and whether it runs automatically. Avoid a token that encodes an implementation detail such as a specific GSAP ease name unless that dependency is intentional.
+
+## Interaction safety
+
+- State changes and controls must remain usable if an animation is interrupted, reversed or never initialized.
+- Do not delay activation, validation feedback, navigation or form submission until a decorative timeline completes.
+- Avoid focus movement and pointer-blocking overlays during transitions.
+- For automatically moving or updating content, assess applicable pause/stop/hide requirements instead of assuming reduced motion alone is sufficient.
