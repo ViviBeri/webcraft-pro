@@ -4,12 +4,16 @@
   "private": true,
   "description": "Framework-agnostic AI agent skills for website design, engineering and security.",
   "license": "MIT",
-  "engines": {
-    "node": ">=20"
-  },
+  "engines": { "node": ">=20" },
   "scripts": {
     "validate": "node scripts/validate-skills.mjs",
     "install:skills": "node scripts/install-skills.mjs",
-    "test:installer": "node --test scripts/install-skills.test.mjs"
+    "test:installer": "node --test scripts/install-skills.test.mjs",
+    "install:browsers": "playwright install --with-deps chromium",
+    "browser:check": "node scripts/browser-checker.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "playwright": "1.65.1"
   }
 }

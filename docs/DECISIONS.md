@@ -6,49 +6,55 @@ This log backfills decisions that are evidenced by the repository's existing fil
 
 ### backfilled — Keep the package free of declared runtime dependencies
 
-- **Decision:** Keep `package.json` free of declared runtime dependencies and development dependencies. The repository's installer is described as dependency-free.
-- **Rationale:** The repository records a dependency-free Node.js installer. A further rationale for the zero-dependency policy is not documented in repo.
-- **Alternatives considered:** Not recorded in repo.
-- **Source:** `package.json`; `stages/01-foundation/README.md`.
+- **Decision:** Keep the package free of declared runtime dependencies. Browser automation and accessibility tooling are development-only dependencies.
+- **Rationale:** The installer remains dependency-free at runtime. Playwright and axe-core are used only for browser QA and do not become dependencies of installed skills or consumer projects.
+- **Alternatives considered:** A zero-dependency Chrome DevTools Protocol implementation and Puppeteer were considered. CDP would require maintaining browser protocol, navigation, keyboard, screenshot and accessibility integration directly. Puppeteer was not selected because Playwright better aligns with the Stage 8 browser-project and cross-browser direction.
+- **Source:** This decision and implementation are recorded in commit "Add browser checker with Playwright".
 
 ### backfilled — Use Node.js 20 or later as the toolchain requirement
 
-- **Decision:** Set Node.js `>=20` as the package engine requirement and document Node.js 20 or later for installation and validation.
+- **Decision:** Set Node.js >=20 as the package engine requirement and document Node.js 20 or later for installation and validation.
 - **Rationale:** The repository specifies this minimum version. The reason for selecting Node.js 20 is not documented in repo.
 - **Alternatives considered:** Not recorded in repo.
-- **Source:** `package.json`; `README.md`.
+- **Source:** package.json; README.md.
 
 ### backfilled — Distribute original project materials under MIT and preserve upstream attribution terms
 
-- **Decision:** License original WebCraft Pro project materials under MIT, while retaining applicable third-party license and attribution requirements. The reference register identifies upstream materials under CC-BY-4.0 and CC-BY-SA-4.0, among other licenses.
-- **Rationale:** The repository states that original project materials use MIT except where a file or third-party material states otherwise, and that third-party references retain their own licenses and attribution requirements. No further rationale is documented in repo.
+- **Decision:** License original WebCraft Pro project materials under MIT, while retaining applicable third-party license and attribution requirements.
+- **Rationale:** The repository states that original project materials use MIT except where a file or third-party material states otherwise.
 - **Alternatives considered:** Not recorded in repo.
-- **Source:** `README.md`; `LICENSE`; `REFERENCES.md`.
+- **Source:** README.md; LICENSE; REFERENCES.md.
 
 ### backfilled — Keep portable skills separate from stage indexes and shared standards
 
-- **Decision:** Use the staged architecture with canonical portable skill files under `skills/<name>/SKILL.md`, shared engineering standards under `standards/`, and stage indexes and acceptance records under `stages/`. Do not duplicate skill stores inside stage folders.
-- **Rationale:** The repository states that portable skill source remains in `skills/` so skill files are not duplicated across agents, and that stage folders are indexes and acceptance records rather than duplicate skill stores.
-- **Alternatives considered:** A flat skills-only structure is not recorded as a formally evaluated alternative; the repository does state that stage folders are used instead of duplicating skills in them.
-- **Source:** `README.md`; `stages/01-foundation/README.md`.
+- **Decision:** Use canonical portable skill files under skills/, shared engineering standards under standards/, and stage indexes under stages/.
+- **Rationale:** This avoids duplicating skill stores across agents and stage folders.
+- **Alternatives considered:** A flat skills-only structure was not recorded as a formally evaluated alternative.
+- **Source:** README.md; stages/01-foundation/README.md.
 
 ### backfilled — Pin GitHub Actions to verified full commit SHAs
 
-- **Decision:** Pin external GitHub Actions to verified full commit SHAs. The active validation workflow pins `actions/checkout` to a full SHA and includes its version comment.
-- **Rationale:** Stage 8 explicitly requires verified full commit SHAs as a design constraint. The repository does not document a more detailed rationale for this policy.
+- **Decision:** Pin external GitHub Actions to verified full commit SHAs.
+- **Rationale:** Stage 8 explicitly requires verified full commit SHAs.
 - **Alternatives considered:** Not recorded in repo.
-- **Source:** `.github/workflows/validate.yml`; `README.md`; `stages/08-browser-qa-release/README.md`.
+- **Source:** .github/workflows/validate.yml; stages/08-browser-qa-release/README.md.
 
 ### backfilled — Grant CI the minimum contents read permission
 
-- **Decision:** Set workflow-level `permissions: contents: read` for the repository validation workflow.
-- **Rationale:** The README describes the workflow as using read-only repository permissions; Stage 8 requires least-privilege `GITHUB_TOKEN` permissions. No additional rationale is documented in repo.
+- **Decision:** Set workflow-level permissions: contents: read for repository validation.
+- **Rationale:** The repository requires least-privilege GITHUB_TOKEN permissions.
 - **Alternatives considered:** Not recorded in repo.
-- **Source:** `.github/workflows/validate.yml`; `README.md`; `stages/08-browser-qa-release/README.md`.
+- **Source:** .github/workflows/validate.yml; stages/08-browser-qa-release/README.md.
+
+### 2026-11-16 — Use Playwright and axe-core as development-only browser QA dependencies
+
+- **Decision:** Use Playwright for Chromium automation and @axe-core/playwright for accessibility scans. Both are devDependencies. The initial runner is Chromium-first and requires an explicit target URL.
+- **Rationale:** Real rendering, JavaScript execution, keyboard interaction and screenshots require a browser engine. Playwright provides a maintained automation API; axe-core adds repeatable accessibility checks. Dev-only dependencies preserve the dependency-free runtime and installer. Chromium-first limits initial CI installation and runtime cost.
+- **Alternatives considered:** A zero-dependency CDP implementation would require custom protocol and lifecycle handling for navigation, keyboard, viewport emulation, screenshots and accessibility. Puppeteer was considered but not selected because Playwright aligns better with the Stage 8 cross-browser direction.
+- **Source:** This decision and implementation are introduced together in commit "Add browser checker with Playwright"; package metadata and licenses are recorded in package.json and REFERENCES.md.
 
 ## Pending decisions
 
-- **Browser checker implementation:** Decide whether `browser-checker.mjs` should use Playwright or remain zero-dependency. The repository references Playwright and describes browser automation as planned, but does not record a decision to add Playwright as a dependency. Related outstanding browser QA work is tracked in `TODO.md`.
-- **Layout deck asset:** Decide whether `assets/layout-decks.json` is needed. Its absence and the unresolved decision are recorded in `TODO.md`.
-- **Examples index:** Decide whether `examples/README.md` should be rewritten to match the examples currently present. The discrepancy is recorded in `TODO.md`.
-- **Frontend templates:** Decide whether the three unfilled frontend templates should be populated or explicitly labeled template-only: `examples/frontend/architecture-decision-record.md`, `examples/frontend/component-contract-matrix.md` and `examples/frontend/responsive-verification-matrix.md`. This work is recorded in `TODO.md`.
+- **Layout deck asset:** Decide whether assets/layout-decks.json is needed. Its absence and the unresolved decision are recorded in TODO.md.
+- **Examples index:** Decide whether examples/README.md should be rewritten to match the examples currently present. The discrepancy is recorded in TODO.md.
+- **Frontend templates:** Decide whether the three unfilled frontend templates should be populated or explicitly labeled template-only: examples/frontend/architecture-decision-record.md, examples/frontend/component-contract-matrix.md and examples/frontend/responsive-verification-matrix.md. This work is recorded in TODO.md.

@@ -93,6 +93,9 @@ WebCraft Pro does not claim ownership of the referenced projects and is not affi
 
 ## Browser automation, quality and release
 
+- [Playwright](https://github.com/microsoft/playwright) — Apache-2.0 — browser automation library for Chromium, Firefox and WebKit.
+- [axe-core](https://github.com/dequelabs/axe-core) — MPL-2.0 — accessibility testing engine used through the Playwright integration.
+
 - [Playwright best practices](https://playwright.dev/docs/best-practices) — user-visible assertions, isolated tests, resilient locators, and cross-browser projects.
 - [Playwright CI](https://playwright.dev/docs/ci) — browser installation, CI worker settings and test execution guidance.
 - [Playwright trace viewer](https://playwright.dev/docs/trace-viewer) — inspect action timelines, DOM snapshots, screenshots and network activity when debugging failures.
