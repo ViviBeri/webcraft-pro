@@ -61,3 +61,15 @@ Use platform CSS capabilities to create maintainable, resilient styles without u
 ## Completion criteria
 
 Styles have clear cascade ownership, reusable semantic tokens where justified, robust intrinsic layouts, accessible interaction states and verified browser behavior.
+
+
+## Progressive enhancement and resilience
+
+- Use feature queries such as @supports when a newer feature is an enhancement rather than a baseline requirement.
+- Establish fallback layout behavior before introducing container queries, advanced selectors or newer color functions when the declared browser support requires it.
+- Use cascade layers to establish intentional precedence between reset, vendor, base, components and utilities; layer order participates in the cascade and can outweigh selector specificity.
+- Prefer logical properties for direction-aware spacing and sizing; test right-to-left and vertical writing modes when required.
+- Test forced-colors/high-contrast modes and ensure borders, icons and focus indicators remain perceivable.
+- Avoid using content-visibility, containment or will-change as blanket performance switches; measure behavior and verify focus, find-in-page and layout implications.
+
+For each progressive enhancement, state the baseline behavior and the enhancement. Check actual browser support against the project's policy.
