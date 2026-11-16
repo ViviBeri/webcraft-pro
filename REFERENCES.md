@@ -58,10 +58,18 @@ WebCraft Pro is an independently authored engineering toolkit. This directory po
 - [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci) — continuous performance measurement and assertions.
 - [OpenSSF Scorecard](https://scorecard.dev/) — open-source supply-chain security checks and their limitations.
 
+## Community Standards & Snippet Libraries
+
+- [Front-End Performance Checklist](https://github.com/thedaviddias/Front-End-Performance-Checklist) — community checklist covering HTML, CSS, fonts, images, JavaScript and performance tooling; required reading for Stage 7 audits.
+- [HEAD](https://github.com/joshbuchea/HEAD) — comprehensive catalog of HTML `<head>` elements, recommended ordering, metadata, social tags, links and icons; use alongside the WHATWG HTML standard for normative validity.
+- [30 seconds of code](https://github.com/Chalarangelo/30-seconds-of-code) — recommended snippet library for Stage 3 frontend patterns and Stage 4 motion-related implementation research. Verify snippets against the target runtime and current APIs before use. Its code snippets are CC-BY-4.0; provide attribution and preserve applicable notices when reusing them. Do not copy site content, images, branding or other non-code material without permission.
+
 ## Industry Tooling & Standards
 
 ### Stage 3 — Frontend architecture
 
+- [HEAD](https://github.com/joshbuchea/HEAD) — comprehensive HTML document-head reference for metadata, social previews, links and icons.
+- [30 seconds of code](https://github.com/Chalarangelo/30-seconds-of-code) — supplementary, attributed code-snippet research for frontend implementation.
 - [Angular Dependency Injection](https://angular.dev/guide/di) — official framework documentation describing dependency injection and explicit service boundaries. The concepts can inform decoupled frontend architecture without requiring Angular.
 
 ### Stage 6 — API security verification

@@ -22,6 +22,10 @@ Measure user experience, identify bottlenecks, improve delivery and rendering, a
 - [Performance investigation template](../../examples/performance/performance-investigation-template.md)
 - [Performance budget template](../../examples/performance/performance-budget-template.md)
 
+## Required Reading
+
+- [Front-End Performance Checklist](https://github.com/thedaviddias/Front-End-Performance-Checklist) — required community checklist. Audits must cover Network, Rendering, JavaScript, CSS and Images, using the checklist's HTML, CSS, fonts, images and JavaScript guidance as supporting checks.
+
 ## Reference set
 
 - [Web Vitals](https://web.dev/articles/vitals)

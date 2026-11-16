@@ -5,6 +5,22 @@ description: Audit website loading and runtime performance when establishing a b
 
 # Performance Auditing
 
+## Required Reading
+
+- [Front-End Performance Checklist](https://github.com/thedaviddias/Front-End-Performance-Checklist) — required reference for audit planning. Use its HTML, CSS, fonts, images and JavaScript checks as source material, and report findings under the five WebCraft Pro audit categories below.
+
+## Audit categories
+
+Every audit must assess each category and state `reviewed`, `not applicable` with a reason, or `not assessed` with a reason:
+
+1. **Network:** request waterfall, transfer size, compression, caching, CDN/origin latency, connection setup, resource priority and critical-resource discovery.
+2. **Rendering:** critical path, render-blocking resources, style/layout/paint, layout stability, LCP discovery, main-thread rendering work and hydration where applicable.
+3. **JavaScript:** bundle composition, unused code, parsing/execution, long tasks, interaction handlers, third-party scripts and code splitting.
+4. **CSS:** stylesheet size, unused rules, selector/style recalculation costs, critical CSS, blocking behavior and responsive delivery.
+5. **Images:** dimensions, responsive sources, modern formats, compression, lazy-loading boundaries, LCP image priority and reserved layout space.
+
+Map font loading and font-display checks into Network and Rendering. Keep findings evidence-based; do not force a category to produce a finding when measurements show no material issue.
+
 Use this skill to create a repeatable, evidence-based view of website performance.
 
 ## Workflow
