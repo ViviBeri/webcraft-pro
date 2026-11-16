@@ -225,3 +225,9 @@ The following workflows were verified green on that commit:
 WebCraft Pro provides a complete structured foundation for AI-assisted web engineering. Individual applications still require project-specific implementation, testing, and human review before release.
 
 **WebCraft Pro — Better interfaces. Better engineering. Safer releases.**
+
+## License
+
+This project is released under the [MIT License](LICENSE).
+
+[Authorship & Originality Disclaimer](DISCLAIMER.md)
