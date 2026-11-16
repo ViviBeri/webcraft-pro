@@ -68,6 +68,11 @@ Repository existence, default branch and declared license metadata were checked 
 
 ## Frontend engineering and accessibility
 
+- [MDN: CSS container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_queries) — component-responsive layout based on containing block dimensions, with fallback guidance.
+- [MDN: CSS cascade](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascade/Introduction) — cascade origins, layers, specificity and precedence.
+- [WAI: Labeling controls](https://www.w3.org/WAI/tutorials/forms/labels/) — explicit and implicit form label associations.
+- [WAI: Form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/) — accessible field instructions and expected formats.
+- [WAI: Validating input](https://www.w3.org/WAI/tutorials/forms/validation/) — accessible validation feedback and the need for server-side validation.
 - [Chrome for Developers: Modern Web Guidance](https://developer.chrome.com/docs/modern-web-guidance/guides) — implementation guidance for current web platform patterns, including forms.
 - [web.dev: Learn Forms](https://web.dev/learn/forms) — form design, validation, accessibility, privacy, autofill and usability testing.
 - [web.dev: Accessibility](https://web.dev/learn/design/accessibility) — semantic structure, keyboard navigation, focus and accessible content.
