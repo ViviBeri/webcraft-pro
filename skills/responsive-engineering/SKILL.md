@@ -61,3 +61,15 @@ Make the same content and functionality work across viewport sizes, input method
 ## Completion criteria
 
 The interface preserves content, task completion and accessibility across the tested viewport and input conditions, with any intentional overflow clearly designed and documented.
+
+
+## Reflow and content stress tests
+
+- Verify at a 320 CSS-pixel-wide viewport and at 400% browser zoom where applicable; content must remain available without two-dimensional page scrolling except where the content requires it (for example, a wide data table or map).
+- Test long words, URLs, translated labels, validation messages, empty states and user-generated content.
+- Check text resizing and spacing changes without clipping, overlap or loss of controls.
+- Test orientation changes and dynamic browser chrome on mobile when the experience depends on viewport height.
+- Confirm sticky headers, fixed action bars and virtual keyboards do not obscure focused fields or essential content.
+- For complex data, document the narrow-screen interaction: scroll region, column prioritization, summary/detail view or alternative representation.
+
+Choose breakpoints from observed content failure. Record widths and conditions actually tested; do not claim universal device coverage from a small sample.
