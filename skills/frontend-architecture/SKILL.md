@@ -40,6 +40,10 @@ Make the smallest coherent architectural change that improves clarity, reliabili
    - Check direct navigation, refresh, not-found behavior and environment configuration where relevant.
    - Report checks not run and explain why.
 
+## Component Architecture
+
+Angular's Dependency Injection and module organization are useful conceptual references for decoupling responsibilities and making dependencies explicit. Apply the underlying principles—not Angular-specific APIs or conventions—even when working in React, Vue or another frontend stack. Keep abstractions proportionate to the project and follow its existing framework conventions.
+
 ## Design constraints
 
 - Do not assume React, Next.js, Vue, Angular or any specific framework.

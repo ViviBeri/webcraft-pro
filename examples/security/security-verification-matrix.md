@@ -35,7 +35,7 @@ Replace example rows with application-specific controls. Add rows for every appl
 | Threat model / architecture review | `[scope]` | `[details]` | `[link]` | `[details]` |
 | Static analysis / code review | `[tool and rules]` | `[details]` | `[link]` | `[details]` |
 | Dependency and secret scanning | `[tool]` | `[details]` | `[link]` | `[details]` |
-| Dynamic / API testing | `[authorized scope]` | `[details]` | `[link]` | `[details]` |
+| API Testing | HTTPie CLI and Hoppscotch for manual requests within an authorized scope | `[date / operator]` | `[request/response evidence]` | Verify API authorization, rate limiting and input/output boundaries; tools do not replace server-side controls or automated coverage |
 | Configuration / infrastructure review | `[scope]` | `[details]` | `[link]` | `[details]` |
 | Manual abuse and authorization tests | `[scenarios]` | `[details]` | `[link]` | `[details]` |
 

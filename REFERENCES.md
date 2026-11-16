@@ -116,3 +116,21 @@ WebCraft Pro does not claim ownership of the referenced projects and is not affi
 - [GitHub Copilot custom instructions](https://docs.github.com/en/copilot/concepts/prompting-and-context/custom-instructions) — repository instructions and shared `AGENTS.md` behavior across Copilot surfaces.
 - [Claude Code project memory and AGENTS.md](https://code.claude.com/docs/en/memory) — project instruction files and importing shared instructions with `@path`.
 - [Agent Skills specification](https://agentskills.io/specification) — canonical skill structure and metadata requirements.
+
+## Ecosystem Tools & Inspiration
+
+### Stage 3 — Frontend architecture
+
+- [Angular](https://github.com/angular/angular) — reference for robust frontend architecture, dependency injection and module organization. Use these concepts as architectural inspiration for decoupling responsibilities; this is not a requirement to adopt Angular.
+
+### Stage 6 — API security verification
+
+- [HTTPie CLI](https://github.com/httpie/cli) — manual API requests for checking authorization behavior, request/response contracts and input/output boundaries.
+- [Hoppscotch](https://github.com/hoppscotch/hoppscotch) — browser-based API client for manually exercising authorization, rate limits and API input/output boundaries.
+
+### Noted but out of scope
+
+- [FastAPI](https://github.com/fastapi/fastapi) — an impressive Python backend framework, but backend framework implementation is outside WebCraft Pro's scope.
+- [AUTOMATIC1111/stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui) — an impressive specialized AI/ML interface, but its specialized ML interface and backend concerns are outside WebCraft Pro's scope.
+
+These references are tools and inspiration only; they do not add core skills or change WebCraft Pro's framework-agnostic frontend engineering and client-side lifecycle focus.

@@ -82,6 +82,7 @@ This log backfills decisions that are evidenced by the repository's existing fil
 - **Rationale:** Adding framework-specific backend skills would expand the toolkit beyond its frontend engineering purpose and undermine its framework-agnostic frontend scope. Backend security concepts remain covered at the standards level without prescribing a backend stack.
 - **Alternatives considered:** Adding Go/Gin or Node/Express framework skills was rejected as scope creep.
 - **Source:** Maintainer scope decision recorded in this change.
+- **Additional note:** While tools like FastAPI and Stable Diffusion WebUI are excellent, they represent backend logic and specialized ML interfaces. WebCraft Pro remains strictly focused on framework-agnostic frontend engineering.
 
 ## Pending decisions
 
