@@ -62,3 +62,21 @@ This standard defines the shared baseline for animation and interaction work in 
 ## 8. Definition of done
 
 Motion work is complete when it has a clear purpose, works as progressive enhancement, respects user preferences, preserves accessibility, cleans up its resources and has been tested in the relevant contexts.
+
+
+## 9. GSAP lifecycle and API selection
+
+- Use `gsap.context()` to scope component/page animations and revert them with the owning lifecycle.
+- Use `gsap.matchMedia()` for responsive and preference-specific setups. It manages a context for each matching condition; revert the matchMedia instance during teardown rather than wrapping identical work in a redundant context.
+- Register plugins once at an application/module boundary.
+- Use timelines for coordinated sequences and store references when playback control is required.
+- Use function-based ScrollTrigger measurements when layout changes and refresh only after meaningful layout changes settle.
+- Avoid deprecated APIs and verify examples against the installed GSAP version and current official documentation.
+
+## 10. Motion fallback and automatic content
+
+The complete content and controls must exist in normal document flow before animation setup. If JavaScript, GSAP or a plugin fails, users must still be able to read, navigate and complete the task. Review automatically moving or updating content for applicable pause, stop, hide or frequency controls; reduced-motion handling does not replace those controls when they are required.
+
+## 11. Evidence and review
+
+Record the route, browser, device class, viewport and interaction used for performance comparisons. Distinguish scripting, layout, paint, compositing and asset costs. Transform and opacity are candidates for efficient animation, not guarantees. Confirm teardown by repeating mount/unmount or route navigation and checking that triggers, listeners and observers do not accumulate.
