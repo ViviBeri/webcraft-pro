@@ -52,3 +52,10 @@ For GSAP, use one gsap.matchMedia() instance per relevant component or page scop
 ## Completion criteria
 
 The reduced-motion preference is respected, essential content and feedback remain available, focus remains stable, automatic movement is controllable where required, and the experience is tested with motion both enabled and reduced.
+
+
+## Automatic movement review
+
+Identify whether motion starts automatically, lasts beyond five seconds, runs in parallel with other content, or updates automatically. Determine whether users need a pause, stop, hide or frequency control under the applicable accessibility requirements. A reduced-motion preference is not a substitute for required controls when content continues moving or updating.
+
+Keep the non-animated state as the default content presentation where practical. Avoid hiding content until JavaScript initializes; when animation is unavailable, the page must not expose an empty region or leave focus on an invisible element. If a preference changes at runtime, revert the old setup before applying the new one.
