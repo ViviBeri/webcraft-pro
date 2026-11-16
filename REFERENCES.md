@@ -21,6 +21,11 @@ Repository existence, default branch and declared license metadata were checked 
 | [GSAP matchMedia](https://gsap.com/docs/v3/GSAP/gsap.matchMedia/) | Responsive and reduced-motion-aware animation contexts | Official documentation |
 | [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) | Scroll-linked timelines, pinning, scrub and trigger lifecycle | Official documentation |
 
+## Community Skill Directories
+
+- [Web Developer Skills Directory](https://webdeveloper.com/skills/) — a community-facing directory of AI coding skills that can be browsed by category and used across supported coding agents. Treat directory entries as discovery leads: inspect each skill's source, maintainer, license, freshness and safety before adopting it.
+- WebCraft Pro is designed to complement single-purpose community skills by providing a broader engineering lifecycle: shared standards, cross-stage workflows, verification guidance and CI enforcement. This lifecycle layer is intended to address operational gaps that an individual skill may not cover; it does not imply that every directory skill lacks those capabilities.
+
 ## Web and API security
 
 - [OWASP ASVS 5.0.0](https://asvs.owasp.org/) — stable application security verification requirements for web applications and services.

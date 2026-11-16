@@ -9,6 +9,16 @@ description: Plan, design, implement and refine high-quality marketing and produ
 
 Build a landing page that communicates a real offer clearly, earns trust through relevant evidence and helps visitors take an appropriate next step. Visual quality must support comprehension and conversion rather than compete with them.
 
+## Step 0: Verify Facts
+
+Before designing for a specific brand, SDK, or event, use search to verify current facts. Do not hallucinate product specs. If you catch yourself saying "I think X is...", stop and search.
+
+- Prefer authoritative, current sources such as official product documentation, release notes, brand guidance and event pages.
+- Verify names, capabilities, version-specific behavior, dates, pricing, availability and brand claims before using them in page copy or visuals.
+- Distinguish verified facts from user-provided claims, assumptions and editorial positioning.
+- Record source links and the date checked for material claims.
+- If a fact cannot be verified, omit it or mark it for owner confirmation. Never turn uncertainty into a testimonial, metric, customer logo, certification, award, guarantee or product promise.
+
 ## 1. Inspect the project
 
 Before implementation:
@@ -134,23 +144,11 @@ Identify one primary action and use consistent wording for it. Secondary actions
 
 Classify page content as verified product facts, independently verified public facts with source and date, editorial explanation, or placeholder content awaiting owner approval. Never convert an assumption into a testimonial, metric, customer logo, certification, award, guarantee, pricing statement or performance claim. Do not publish placeholder credibility elements.
 
-## Visitor decision journey
-
-Before choosing sections, describe the visitor's decision in four to seven meaningful beats. For each beat, record what the visitor currently knows or believes, what uncertainty remains, what evidence resolves it, and what the next useful action becomes.
-
-Use the journey to determine section order. Remove sections that add no useful information or decision support. A common pattern is problem recognition, solution explanation, proof, practical detail, objection resolution and commitment, but do not force every page into this sequence.
-
-Identify one primary action and use consistent wording for it. Secondary actions must not compete with the primary task.
-
-## Evidence and content integrity
-
-Classify page content as verified product facts, independently verified public facts with source and date, editorial explanation, or placeholder content awaiting owner approval. Never convert an assumption into a testimonial, metric, customer logo, certification, award, guarantee, pricing statement or performance claim. Do not publish placeholder credibility elements.
-
 ## Completion checklist
 
 - [ ] Offer and audience are immediately understandable.
 - [ ] Primary action is clear and functional.
-- [ ] Claims are supported by supplied facts.
+- [ ] Claims are supported by supplied facts or current sources.
 - [ ] Page sections serve the visitor's decision.
 - [ ] Layout works on mobile and desktop.
 - [ ] Forms and navigation work.

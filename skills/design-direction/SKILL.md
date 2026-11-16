@@ -9,6 +9,16 @@ description: Develop a distinctive, coherent visual direction for a website or w
 
 Translate the product, audience, brand, content and constraints into a deliberate visual system before implementation. Produce a design direction that is distinctive, usable, accessible and feasible for the chosen technology.
 
+## Step 0: Verify Facts
+
+Before designing for a specific brand, SDK, or event, use search to verify current facts. Do not hallucinate product specs. If you catch yourself saying "I think X is...", stop and search.
+
+- Prefer authoritative, current sources such as official product documentation, release notes, brand guidance and event pages.
+- Verify names, capabilities, version-specific behavior, dates, pricing, availability and brand claims before using them.
+- Distinguish verified facts from user-provided claims, assumptions and creative recommendations.
+- Record source links and the date checked for facts that materially shape the design.
+- If a fact cannot be verified, omit it or label it clearly as unverified; ask the user when it affects a consequential design decision.
+
 ## Workflow
 
 ### 1. Understand the brief
@@ -107,12 +117,6 @@ Before implementation, record the product, audience and primary task; confirmed 
 
 A good direction should be explainable in plain language and traceable to product needs.
 
-## Design calibration and decision record
-
-When comparing directions, record three qualitative dials: composition variance (conservative to experimental), visual density (spacious to information-rich), and motion intensity (static to expressive). These are discussion aids, not universal numeric standards. Explain each choice in product context; never let novelty or motion override clarity and accessibility.
-
-Before implementation, record the product, audience and primary task; confirmed brand constraints and assumptions; one-sentence art direction; composition, density and motion choices with rationale; typography, color and spacing principles; distinctive product-specific visual moments where appropriate; responsive and accessibility constraints; and risks requiring verification.
-
 ## Completion checklist
 
 - [ ] Direction is tied to the product and audience.
@@ -122,3 +126,4 @@ Before implementation, record the product, audience and primary task; confirmed 
 - [ ] Mobile and desktop layouts are considered.
 - [ ] Focus, contrast and reduced motion are addressed.
 - [ ] No unsupported brand or product claims are introduced.
+- [ ] Material brand, SDK and event facts have current supporting sources.
