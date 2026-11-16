@@ -12,7 +12,7 @@
 
 **Design with intention. Engineer with discipline. Secure by default.**
 
-WebCraft Pro is an open-source, framework-agnostic collection of **40 reusable Agent Skills**, shared engineering standards, practical examples, and verification workflows for building distinctive, accessible, performant, and secure web applications.
+WebCraft Pro is an open-source, framework-agnostic collection of **42 reusable Agent Skills**, shared engineering standards, practical examples, and verification workflows for building distinctive, accessible, performant, and secure web applications.
 
 It provides AI coding agents with a structured engineering process covering the complete website delivery lifecycle—from initial design direction through implementation, accessibility, security, performance, browser QA, and release.
 
@@ -93,12 +93,12 @@ Automated checks complement—not replace—manual assistive-technology testing,
 
 ## 3. Skills and engineering templates
 
-### 40 reusable Agent Skills
+### 42 reusable Agent Skills
 
-The canonical `skills/` directory contains 40 portable `SKILL.md` files covering:
+The canonical `skills/` directory contains 42 portable `SKILL.md` files covering:
 
 - Design intelligence and visual quality.
-- Frontend architecture and component engineering.
+- Frontend architecture, component engineering, and document head, SEO, and meta tags.
 - Responsive design and modern CSS.
 - GSAP, motion systems, and interactive storytelling.
 - Accessibility, WCAG auditing, keyboard focus, and screen readers.
@@ -212,7 +212,7 @@ Its core principles are:
 
 ## Project status
 
-The eight-stage architecture, 40 canonical skills, shared standards, and 13 Stage 5–7 engineering templates are maintained in the repository.
+The eight-stage architecture, 42 canonical skills, shared standards, and 13 Stage 5–7 engineering templates are maintained in the repository.
 
 The latest commit is:
 
