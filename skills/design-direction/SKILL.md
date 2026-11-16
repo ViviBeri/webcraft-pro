@@ -85,6 +85,17 @@ Check the design at narrow mobile, wide mobile, tablet, laptop and large desktop
 
 Review the complete page, not just the hero or first viewport. Ensure all pages feel related without becoming repetitive.
 
+### 7. Human confirmation gate
+
+Present the design direction, design tokens, page/component hierarchy, responsive behavior and accessibility constraints for user review. Ask for explicit confirmation before implementation.
+
+- Do not write component code, scaffold UI components or begin implementation until the user clearly approves the proposed direction.
+- If the user requests revisions, update the direction and present the revised decisions for confirmation.
+- Silence, an ambiguous response, or a request for feedback is not approval.
+- After confirmation, preserve the approved direction as the implementation baseline. Escalate material changes to the user rather than silently changing the approved design.
+
+This gate applies even when the initial request mentions implementation: planning and presenting the direction may proceed, but component implementation waits for confirmation.
+
 ## Quality rules
 
 - Make hierarchy obvious before adding visual effects.
@@ -107,7 +118,7 @@ Return:
 5. Responsive and interaction notes.
 6. Accessibility and validation checklist.
 
-When implementation is requested, implement the direction in the existing project rather than stopping at a concept document.
+When implementation is requested, first complete the design-direction deliverables and obtain explicit user confirmation. Only then implement the approved direction in the existing project.
 
 ## Design calibration and decision record
 
@@ -127,3 +138,4 @@ A good direction should be explainable in plain language and traceable to produc
 - [ ] Focus, contrast and reduced motion are addressed.
 - [ ] No unsupported brand or product claims are introduced.
 - [ ] Material brand, SDK and event facts have current supporting sources.
+- [ ] The user explicitly confirmed the design direction before component implementation.

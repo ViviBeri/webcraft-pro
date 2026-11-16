@@ -13,6 +13,7 @@ Make accessibility a design and engineering requirement across semantics, keyboa
 - [Accessible components](../../skills/accessible-components/SKILL.md)
 - [Accessibility automation](../../skills/accessibility-automation/SKILL.md)
 - [Accessibility review](../../skills/accessibility-review/SKILL.md)
+- [Independent review](../../skills/independent-review/SKILL.md) — independent/fresh-perspective checks for accessibility regressions alongside design and security review.
 - [Accessibility engineering standard](../../standards/accessibility-engineering.md)
 - [Accessibility examples and audit templates](../../examples/accessibility/README.md)
 - [Audit plan](../../examples/accessibility/accessibility-audit-plan.md)

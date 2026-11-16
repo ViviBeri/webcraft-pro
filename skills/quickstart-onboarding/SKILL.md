@@ -68,14 +68,18 @@ When the user selects **React** and **animated**:
 
 For all other framework/motion combinations, keep the guidance aligned with the selected stack and shared standards. Do not recommend React-only libraries for Vue, Astro or plain HTML projects.
 
-## 5. Handoff
+## 5. Human confirmation gate and handoff
 
-After writing `design-direction.md`:
+After writing `design-direction.md`, stop before implementation:
 
-- Summarize the chosen direction and key assumptions.
-- Link or point to the created file.
-- Identify any important unanswered questions without blocking the handoff.
-- Wait for the user's approval before implementing the website or adding dependencies.
+- Summarize the proposed direction, key decisions, assumptions and unresolved questions.
+- Link or point to the created file so the user can review it.
+- Ask the user for explicit confirmation to proceed with the proposed design direction.
+- Do not write component code, scaffold the interface, or add dependencies until the user confirms.
+- If the user requests changes, update the direction document and ask for confirmation again.
+- Treat silence, an ambiguous response, or a request to merely review the document as no approval.
+
+This is a real workflow gate, not a status message. Continue only after an unambiguous user approval.
 
 ## Completion criteria
 
@@ -83,5 +87,6 @@ After writing `design-direction.md`:
 - [ ] `design-direction.md` exists in the project root and follows the shared design standards.
 - [ ] Framework and motion guidance match the user's selections.
 - [ ] React + Animated users are pointed to GSAP Fundamentals and told Framer Motion is optional.
-- [ ] No dependencies were installed and no application implementation was started.
+- [ ] No dependencies were installed and no application implementation was started before explicit user confirmation.
+- [ ] The user was asked to confirm the design direction before any component code.
 - [ ] Accessibility, reduced motion, responsive behavior and verification are addressed.

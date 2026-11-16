@@ -6,7 +6,8 @@ Translate product context, user needs and brand constraints into a distinctive v
 
 ## Canonical skills
 
-- [Design direction](../../skills/design-direction/SKILL.md) — brief, art direction, visual calibration and tokens.
+- [Design direction](../../skills/design-direction/SKILL.md) — brief, art direction, visual calibration, tokens and the human confirmation gate.
+- [Independent review](../../skills/independent-review/SKILL.md) — fresh-perspective critique for template feel, accessibility regressions and security edge cases before finalization.
 - [Anti-slop UI](../../skills/anti-slop-ui/SKILL.md) — ordered redesign passes that preserve product truth.
 - [Premium landing pages](../../skills/premium-landing-pages/SKILL.md) — visitor journey, information architecture and working conversion paths.
 - [Visual design review](../../skills/visual-design-review/SKILL.md) — rendered evidence, severity and design scorecard.
