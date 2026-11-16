@@ -20,6 +20,7 @@ Translate product context, user needs and brand constraints into a distinctive v
 - [Design examples and templates](../../examples/design/README.md)
 - [Design brief template](../../examples/design/design-brief-template.md)
 - [Design review scorecard](../../examples/design/design-review-scorecard.md)
+- [Design asset directory](../../examples/design/design-assets-directory.md) — curated font, color, illustration/icon and UI inspiration sources with asset-selection and licensing rules.
 
 ## Reference research and attribution
 

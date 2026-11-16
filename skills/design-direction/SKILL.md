@@ -19,7 +19,17 @@ Before designing for a specific brand, SDK, or event, use search to verify curre
 - Record source links and the date checked for facts that materially shape the design.
 - If a fact cannot be verified, omit it or label it clearly as unverified; ask the user when it affects a consequential design decision.
 
-## Workflow
+## Design asset research
+
+Before finalizing the design direction, consult [Design Asset Directory](../../examples/design/design-assets-directory.md).
+
+- Select actual, project-appropriate font families, color values, illustrations/icons and imagery, or identify concrete references to guide their creation.
+- Record exact asset names, source URLs, intended use, font weights, color values and the proposed loading/self-hosting approach.
+- Check current license, attribution and commercial-use terms for each selected asset; do not infer usage rights from a directory listing.
+- Avoid generic placeholder copy and default system fonts. Use verified project content, or clearly labeled contextual draft copy pending user confirmation.
+- Add an **Asset selections** subsection to the design-direction deliverables. Explicitly mark unknown or unselected assets rather than inventing filenames, URLs or availability.
+
+### Workflow
 
 ### 1. Understand the brief
 
@@ -117,6 +127,7 @@ Return:
 4. Page and component hierarchy.
 5. Responsive and interaction notes.
 6. Accessibility and validation checklist.
+7. **Asset selections** — exact fonts and weights, color palette values, illustration/icon/image sources, intended placements, loading approach and license/attribution checks.
 
 When implementation is requested, first complete the design-direction deliverables and obtain explicit user confirmation. Only then implement the approved direction in the existing project.
 

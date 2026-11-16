@@ -74,6 +74,15 @@ This log backfills decisions that are evidenced by the repository's existing fil
 - **Qualification:** Dependency installation emitted a non-blocking `EBADENGINE` warning: `@axe-core/playwright@4.14.0` declares Node.js `>=22.12.0`, while this workflow currently selects Node.js 20. The run passed, but the workflow runtime should be aligned with the dependency's declared engine before treating the toolchain as warning-free.
 - **Source:** [Manual Browser Check run #7](https://github.com/ViviBeri/webcraft-pro/actions/runs/43919942669); workflow artifact `browser-check-artifacts`.
 
+## Scope Boundaries
+
+### 2026-11-17 — Keep backend framework implementations out of scope
+
+- **Decision:** WebCraft Pro intentionally excludes backend frameworks (e.g., Go/Gin, Node/Express) to maintain a strict focus on frontend engineering, UI/UX, and client-side security. Backend security is referenced through OWASP standards, but specific framework implementations are out of scope.
+- **Rationale:** Adding framework-specific backend skills would expand the toolkit beyond its frontend engineering purpose and undermine its framework-agnostic frontend scope. Backend security concepts remain covered at the standards level without prescribing a backend stack.
+- **Alternatives considered:** Adding Go/Gin or Node/Express framework skills was rejected as scope creep.
+- **Source:** Maintainer scope decision recorded in this change.
+
 ## Pending decisions
 
 - **Layout deck asset:** Decide whether assets/layout-decks.json is needed. Its absence and the unresolved decision are recorded in TODO.md.
