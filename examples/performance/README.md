@@ -2,7 +2,9 @@
 
 These examples are implementation review patterns, not universal configuration defaults. Validate behavior against the deployed application and its supported browsers.
 
-## 1. Responsive image with reserved dimensions
+## Implementation patterns
+
+### 1. Responsive image with reserved dimensions
 
 Use intrinsic dimensions, responsive candidates and an appropriate loading priority. The browser should discover the real LCP image early.
 
@@ -27,7 +29,7 @@ Use intrinsic dimensions, responsive candidates and an appropriate loading prior
 
 Only use high fetch priority when this asset is confirmed to be the page's LCP candidate. Do not lazy-load the initial viewport's critical image.
 
-## 2. Lazy-load non-critical media
+### 2. Lazy-load non-critical media
 
 ```html
 <img
@@ -42,7 +44,7 @@ Only use high fetch priority when this asset is confirmed to be the page's LCP c
 
 Use lazy loading for media outside the initial viewport. Keep dimensions so the browser can reserve layout space.
 
-## 3. Cache fingerprinted assets
+### 3. Cache fingerprinted assets
 
 A content-hashed asset can use a long immutable cache lifetime:
 
@@ -59,20 +61,15 @@ ETag: "deployment-specific-validator"
 
 Do not apply public caching to personalized or sensitive responses. Configure and verify headers at the deployed CDN or origin.
 
-## 4. Performance test protocol
+## Audit, measurement and investigation templates
 
-For each representative route, record:
-- Build and commit identifier.
-- Browser and tool versions.
-- Viewport, CPU/network profile and cache state.
-- Number of runs and aggregation method.
-- LCP, INP/interaction diagnostics, CLS and supporting metrics.
-- JavaScript and image transfer sizes.
-- Trace or report artifact and known environmental limitations.
+- [Performance audit template](performance-audit-template.md) — context, representative routes, metric results, bottleneck analysis and conclusion.
+- [Core Web Vitals record](core-web-vitals-record.md) — field p75 values, population, reporting window and supporting diagnostics.
+- [Performance test matrix](performance-test-matrix.md) — reproducible device, network, cache and workload scenarios.
+- [Performance investigation template](performance-investigation-template.md) — symptom, reproduction, evidence, root cause and retest.
+- [Performance budget template](performance-budget-template.md) — calibrated user-experience and delivery budgets with enforcement and waiver policy.
 
-Use Lighthouse CI or browser automation for repeatable lab regression checks. Use production field data for real-user Core Web Vitals conclusions.
-
-## 5. Review checklist
+## Performance review checklist
 
 - [ ] Field and lab evidence are clearly separated.
 - [ ] Mobile and desktop journeys are represented.

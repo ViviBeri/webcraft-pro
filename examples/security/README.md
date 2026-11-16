@@ -122,6 +122,12 @@ Replace placeholders with reviewed immutable action commit SHAs and verify the a
 - [ ] Logs and error responses contain no credentials or sensitive data.
 - [ ] Dependencies, secrets and CI permissions are reviewed.
 
+## Review and verification templates
+
+- [OWASP control mapping](owasp-control-mapping.md) — illustrative ASVS 5.0.0 and API Security Top 10 (2023) crosswalk, with a project mapping register.
+- [Security verification matrix](security-verification-matrix.md) — requirements, API risks, test procedures, evidence and status.
+- [Security review report](security-review-report-template.md) — assessment scope, methods, findings, residual risk and sign-off.
+
 ## Important limitation
 
 A passing static scan or dependency check does not prove an application is secure. Combine architecture review, negative authorization tests, safe dynamic testing, configuration review and ongoing monitoring. Test only systems for which you have authorization.

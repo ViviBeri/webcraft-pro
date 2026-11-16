@@ -15,7 +15,12 @@ Measure user experience, identify bottlenecks, improve delivery and rendering, a
 - [Rendering performance](../../skills/rendering-performance/SKILL.md)
 - [Performance testing](../../skills/performance-testing/SKILL.md)
 - [Performance engineering standard](../../standards/performance-engineering.md)
-- [Performance examples](../../examples/performance/README.md)
+- [Performance examples and templates](../../examples/performance/README.md)
+- [Performance audit template](../../examples/performance/performance-audit-template.md)
+- [Core Web Vitals record](../../examples/performance/core-web-vitals-record.md)
+- [Performance test matrix](../../examples/performance/performance-test-matrix.md)
+- [Performance investigation template](../../examples/performance/performance-investigation-template.md)
+- [Performance budget template](../../examples/performance/performance-budget-template.md)
 
 ## Reference set
 
@@ -26,9 +31,11 @@ Measure user experience, identify bottlenecks, improve delivery and rendering, a
 
 ## Acceptance gate
 
-- [ ] Field metrics and lab diagnostics are clearly distinguished.
-- [ ] Thresholds include percentile and sampling context.
-- [ ] Audits use repeatable routes, viewports and conditions.
-- [ ] Optimizations are tied to measured bottlenecks.
-- [ ] Budgets are calibrated against a baseline and noise.
-- [ ] Performance claims are not inferred from Lighthouse score alone.
+- [x] Field metrics and lab diagnostics are clearly distinguished.
+- [x] Thresholds include percentile and sampling context.
+- [x] Audits use repeatable routes, viewports and conditions.
+- [x] Optimizations are tied to measured bottlenecks.
+- [x] Budgets are calibrated against a baseline and noise.
+- [x] Performance claims are not inferred from Lighthouse score alone.
+
+These checkboxes indicate that the stage's documentation, templates and acceptance criteria are defined. They do not assert that a production application has been measured or meets the documented budgets.

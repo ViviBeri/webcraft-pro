@@ -15,19 +15,24 @@ Apply threat modeling, secure identity and authorization, input/output controls,
 - [Security testing](../../skills/security-testing/SKILL.md)
 - [Security review](../../skills/security-review/SKILL.md)
 - [Security engineering standard](../../standards/security-engineering.md)
-- [Security examples](../../examples/security/README.md)
+- [Security examples and templates](../../examples/security/README.md)
+- [OWASP control mapping](../../examples/security/owasp-control-mapping.md)
+- [Security verification matrix](../../examples/security/security-verification-matrix.md)
+- [Security review report template](../../examples/security/security-review-report-template.md)
 
 ## Reference set
 
 - [OWASP ASVS 5.0.0](https://asvs.owasp.org/)
-- [OWASP API Security Top 10](https://owasp.org/www-project-api-security/)
+- [OWASP API Security Top 10 (2023)](https://owasp.org/API-Security/)
 - [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/)
 
 ## Preservation and acceptance gate
 
-- [ ] Preserve existing ASVS mappings, API Top 10 mappings, checklists, scanners and header checks unless a concrete defect is found.
-- [ ] Verify scanner behavior, scope, false-positive handling and safe defaults.
-- [ ] Map controls to current authoritative OWASP guidance.
-- [ ] Keep versioned requirements and mappings explicit.
-- [ ] Distinguish static checks from dynamic testing and manual review.
-- [ ] Never claim a clean security posture from a limited scanner result.
+- [x] Preserve existing ASVS mappings, API Top 10 mappings, checklists, scanners and header checks unless a concrete defect is found.
+- [x] Verify scanner behavior, scope, false-positive handling and safe defaults.
+- [x] Map controls to current authoritative OWASP guidance.
+- [x] Keep versioned requirements and mappings explicit.
+- [x] Distinguish static checks from dynamic testing and manual review.
+- [x] Never claim a clean security posture from a limited scanner result.
+
+The crosswalk is illustrative. Exact ASVS 5.0.0 requirement identifiers and applicability must be verified against the official versioned catalogue for each application.

@@ -2,7 +2,9 @@
 
 These examples are implementation starting points, not proof of WCAG conformance. Adapt them to the product, native platform behavior and supported browser/assistive-technology matrix.
 
-## 1. Native semantic structure
+## Example implementation patterns
+
+### 1. Native semantic structure
 
 ```html
 <a class="skip-link" href="#main">Skip to main content</a>
@@ -29,7 +31,7 @@ These examples are implementation starting points, not proof of WCAG conformance
 
 Use native elements, meaningful headings and visible labels. Add only the landmarks and relationships the page needs.
 
-## 2. Visible focus
+### 2. Visible focus
 
 ```css
 :where(a, button, input, select, textarea, [tabindex]):focus-visible {
@@ -52,7 +54,7 @@ Use native elements, meaningful headings and visible labels. Add only the landma
 
 Check focus contrast against the actual background and ensure sticky headers do not cover focused content.
 
-## 3. Playwright and axe-core scan
+### 3. Playwright and axe-core scan
 
 ```ts
 import { test, expect } from '@playwright/test';
@@ -71,7 +73,21 @@ test('critical account page has no automated violations', async ({ page }) => {
 
 Add separate scans for meaningful states such as an open dialog, expanded navigation, validation errors and loaded results.
 
-## 4. Manual keyboard checklist
+## Audit and review templates
+
+- [Accessibility audit plan](accessibility-audit-plan.md) — scope, sampling, methods, risk and completion criteria.
+- [Semantic review checklist](semantic-review-checklist.md) — landmarks, names, roles, states, relationships, forms and non-text content.
+- [Screen-reader test matrix](screen-reader-test-matrix.md) — exact OS, browser and assistive-technology combinations and journey results.
+- [Accessibility audit report](accessibility-audit-report-template.md) — findings summary, coverage, limitations, remediation and release recommendation.
+- [Accessibility finding template](accessibility-finding-template.md) — reproducible barrier, user impact, evidence, remediation and retest.
+
+## Fixtures and automated keyboard tests
+
+- [Keyboard and focus fixture](fixture/) — representative HTML fixtures for skip links, forms and dialogs.
+- [Keyboard tests](../../tests/accessibility/keyboard.test.mjs) — Playwright tests for critical keyboard and focus behavior.
+- [Accessibility test workflow](../../.github/workflows/accessibility-check.yml) — CI execution for the keyboard tests.
+
+## Manual keyboard checklist
 
 - [ ] Reach every interactive control with Tab and Shift+Tab.
 - [ ] Activate links and buttons with their expected keys.
@@ -80,15 +96,6 @@ Add separate scans for meaningful states such as an open dialog, expanded naviga
 - [ ] Trigger form errors and verify focus and error associations.
 - [ ] Confirm no keyboard trap or unexpected focus jump.
 - [ ] Repeat at narrow viewport and browser zoom.
-
-## 5. Manual assistive-technology checklist
-
-- [ ] Navigate by landmarks and headings.
-- [ ] Confirm controls expose useful names, roles, values and states.
-- [ ] Complete a critical task without relying on visual position.
-- [ ] Verify important dynamic updates are announced.
-- [ ] Verify errors are understandable and associated with their fields.
-- [ ] Record the browser, assistive technology and versions used.
 
 ## Important limitation
 
