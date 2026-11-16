@@ -9,3 +9,8 @@ WebCraft Pro includes the following third-party development dependencies:
    Version: 4.14.0
    License: Mozilla Public License 2.0 (MPL 2.0)
    Source: https://github.com/dequelabs/axe-core-npm
+
+3. axe-core (dependency of @axe-core/playwright)
+   Version: 4.14.0
+   License: Mozilla Public License 2.0 (MPL 2.0)
+   Source: https://github.com/dequelabs/axe-core
