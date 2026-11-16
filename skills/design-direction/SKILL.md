@@ -99,6 +99,14 @@ Return:
 
 When implementation is requested, implement the direction in the existing project rather than stopping at a concept document.
 
+## Design calibration and decision record
+
+When comparing directions, record three qualitative dials: composition variance (conservative to experimental), visual density (spacious to information-rich), and motion intensity (static to expressive). These are discussion aids, not universal numeric standards. Explain each choice in product context; never let novelty or motion override clarity and accessibility.
+
+Before implementation, record the product, audience and primary task; confirmed brand constraints and assumptions; one-sentence art direction; composition, density and motion choices with rationale; typography, color and spacing principles; distinctive product-specific visual moments where appropriate; responsive and accessibility constraints; and risks requiring verification.
+
+A good direction should be explainable in plain language and traceable to product needs.
+
 ## Completion checklist
 
 - [ ] Direction is tied to the product and audience.
