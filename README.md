@@ -116,33 +116,39 @@ See [the eight-stage architecture](stages/README.md) and the shared [agent instr
 
 ## Installation
 
-Each skill is a folder containing a SKILL.md. The canonical source is skills/<skill-name>/.
+Requirements: Node.js 20 or later.
 
-Clone the repository:
+The installer copies canonical skills into the selected target project's agent-specific discovery directory. It does not modify the source skills.
+
+Preview an installation first:
 
 ```bash
-git clone https://github.com/ViviBeri/webcraft-pro.git
-cd webcraft-pro
+node scripts/install-skills.mjs --agent all --target /path/to/your/project --dry-run
 ```
 
-Copy the skills into the project-level directory supported by your coding agent.
+Install for one agent:
 
-| Agent | Project skill directory |
+```bash
+node scripts/install-skills.mjs --agent codex --target /path/to/your/project
+node scripts/install-skills.mjs --agent claude --target /path/to/your/project
+node scripts/install-skills.mjs --agent copilot --target /path/to/your/project
+```
+
+Install for all three agents:
+
+```bash
+node scripts/install-skills.mjs --agent all --target /path/to/your/project
+```
+
+| Agent | Project-local destination |
 |---|---|
-| OpenAI Codex | .agents/skills/ |
-| Claude Code | .claude/skills/ |
-| GitHub Copilot | .github/skills/ |
+| Codex | `.agents/skills/` |
+| Claude Code | `.claude/skills/` |
+| GitHub Copilot | `.github/skills/` |
 
-For example, install all skills for Codex:
+Existing skill directories are skipped to avoid overwriting project customizations. Use `--overwrite` only when you intentionally want to replace them. Use `--help` to view all options.
 
-```bash
-mkdir -p .agents/skills
-cp -R skills/* .agents/skills/
-```
-
-For Claude Code, use .claude/skills/ as the destination. For GitHub Copilot, use .github/skills/.
-
-These are project-local installation paths. Follow the target agent's current documentation for personal/global installation and supported client versions. The source files remain portable; discovery paths are client-specific.
+The repository's shared contributor instructions are in `AGENTS.md`. `CLAUDE.md` imports the same rules for Claude Code, and `.github/copilot-instructions.md` is the Copilot repository entry point. These files guide work in this repository; the installer copies task-specific skills into a consuming project.
 
 ## Validate the repository
 
