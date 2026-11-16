@@ -158,7 +158,7 @@ Requirements: Node.js 20 or later.
 npm run validate
 ```
 
-The validator checks each skill directory for a SKILL.md, required frontmatter fields, naming consistency, duplicate names and non-empty instructions.
+The validator checks each skill directory for a SKILL.md, required frontmatter fields, naming consistency, duplicate names and non-empty instructions. It also verifies the eight-stage index and the shared Codex, Claude Code and Copilot instruction entry points.
 
 ## Design and engineering principles
 
@@ -201,7 +201,7 @@ Roadmap status reflects files currently maintained in this repository. It is not
 
 ## Project quality checks
 
-GitHub Actions validates skill metadata on pushes and pull requests. The workflow uses read-only repository permissions and pins its external checkout action to a full commit SHA.
+GitHub Actions validates skill metadata and required stage/agent entry-point files, then runs the installer tests on pushes and pull requests. The workflow uses read-only repository permissions and pins its external checkout action to a full commit SHA.
 
 The project intends to add automated checks for:
 
