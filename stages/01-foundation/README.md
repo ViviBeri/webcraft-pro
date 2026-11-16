@@ -11,6 +11,8 @@ Provide one portable source of truth for WebCraft Pro, clear installation paths,
 - [GitHub Copilot adapter](../../.github/copilot-instructions.md)
 - [Repository overview](../../README.md)
 - [Canonical skill index](../../skills/README.md)
+- [Skill installer](../../scripts/install-skills.mjs)
+- [Skill installer tests](../../scripts/install-skills.test.mjs)
 - [Skill metadata validator](../../scripts/validate-skills.mjs)
 - [Validation workflow](../../.github/workflows/validate.yml)
 - [References and attribution](../../REFERENCES.md)
@@ -38,7 +40,8 @@ Provide one portable source of truth for WebCraft Pro, clear installation paths,
 - [x] GitHub Copilot has repository-wide instructions.
 - [x] Codex has a root `AGENTS.md`.
 - [x] The eight-stage architecture has one shared index.
-- [ ] Installer and plugin manifests are audited and documented.
+- [x] A dependency-free Node.js installer supports Codex, Claude Code and Copilot, skips existing skills by default, and offers dry-run and explicit overwrite modes.
+- [ ] Any legacy plugin manifests are audited against the source archive; none are present in the current live branch.
 - [ ] Skill format and discovery paths are verified against current official specifications.
 - [ ] Validation coverage and limitations are documented and tested.
 
