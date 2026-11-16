@@ -8,6 +8,8 @@
     "node": ">=20"
   },
   "scripts": {
-    "validate": "node scripts/validate-skills.mjs"
+    "validate": "node scripts/validate-skills.mjs",
+    "install:skills": "node scripts/install-skills.mjs",
+    "test:installer": "node --test scripts/install-skills.test.mjs"
   }
 }
