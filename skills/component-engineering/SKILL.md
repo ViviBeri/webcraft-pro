@@ -69,3 +69,12 @@ Build components with clear contracts, predictable state, accessible semantics a
 ## Completion criteria
 
 A component has a documented, minimal contract; predictable behavior; semantic and keyboard-accessible interactions; responsive styling; and tests that cover its meaningful states.
+
+
+## State and contract matrix
+
+For complex reusable components, list supported variants and states. Include trigger, visible output, accessible name/role/state, keyboard behavior, emitted event and recovery behavior. Exclude impossible combinations from the public API rather than relying on undocumented conventions.
+
+For asynchronous components, define request ownership, cancellation or stale-result handling, retry behavior and whether the component or parent owns pending state. Define which element receives public attributes, forwarded refs, accessible names and form participation.
+
+Preserve native browser behavior, avoid nested interactive elements, and ensure empty, long and localized content do not break the contract. Verify the component in a real consuming context; isolated tests do not prove integration behavior.
