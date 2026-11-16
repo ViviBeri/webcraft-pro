@@ -67,3 +67,21 @@ This standard defines the shared quality bar for WebCraft Pro design and interfa
 ## Review outcome
 
 A design is ready for handoff when it communicates the product clearly, supports its primary task, behaves responsively, preserves accessibility and has been checked against the relevant implementation requirements.
+
+## 9. Evidence-based design review
+
+Use the shared five-dimension scorecard when a structured review is useful:
+
+| Dimension | Review question |
+|---|---|
+| Product specificity | Could this interface plausibly belong to a different product without changing its content? |
+| Hierarchy and composition | Can users identify the main message, content order and next action? |
+| Visual system | Are typography, spacing, color and surfaces coherent and reusable? |
+| Responsive behavior | Does content reflow intentionally without clipping or losing priority? |
+| Accessibility and interaction | Can people identify and operate controls across supported input modes? |
+
+Score each dimension from 0 to 4: 0 = broken or harmful, 1 = major weakness, 2 = partial, 3 = effective, 4 = strong and evidenced. Record evidence for scores below 3. Mark untested dimensions as not assessed. Never average away a critical defect or treat the score as a compliance certificate.
+
+## 10. Design decision record
+
+For substantial redesigns, retain a short record of product and audience; user task and primary action; art-direction statement; reference observations and adaptations; token and component decisions; responsive and accessibility constraints; assumptions, risks and verification evidence.
