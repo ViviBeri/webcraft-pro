@@ -66,3 +66,14 @@ Create intentional, deterministic animation sequences with clear ownership, pred
 ## Completion criteria
 
 The animation has a clear purpose, correct timing, scoped targets, lifecycle cleanup, responsive behavior and a verified non-animated or reduced-motion experience.
+
+
+## Lifecycle and API precision
+
+- Use `gsap.context(callback, scope)` to collect animations created for one component or page region, then call `revert()` when that owner is removed.
+- Use `gsap.matchMedia()` when setup changes with media conditions. It creates and manages its own context for each matching condition; call the returned object's `revert()` during teardown rather than redundantly wrapping the same setup in another context.
+- Keep plugin registration at module or application initialization, not in render or mount callbacks that repeat.
+- Prefer timelines with labels and position parameters over chains of independent delays. Store the timeline when controls need to pause, reverse, seek or kill it.
+- When multiple `from()`/`fromTo()` tweens target the same property, review `immediateRender` behavior so a later tween does not overwrite an earlier start state.
+- Use `overwrite` deliberately for competing interactions; do not use it to conceal unclear animation ownership.
+- Do not assume transform or opacity is automatically compositor-only or free. Profile the rendered result on representative devices.
