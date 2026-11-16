@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
-<title id="title">WebCraft Pro interlocking W monogram</title>
-<desc id="desc">A symmetrical, interlocking white geometric W mark on a black square.</desc>
-<rect width="1024" height="1024" fill="#000"/>
-<g fill="none" stroke="#fff" stroke-width="48" stroke-linecap="square" stroke-linejoin="miter">
-  <path d="M150 310 H350 L470 520 L512 450 L554 520 L674 310 H874 L690 690 L630 570 L512 760 L394 570 L334 690 Z"/>
-  <path d="M150 310 L334 690 L394 570 L512 760 L630 570 L690 690 L874 310"/>
-</g>
-</svg>
