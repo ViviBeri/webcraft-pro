@@ -1,3 +1,5 @@
+![WebCraft Pro Logo](./assets/webcraft-pro-icon.svg)
+
 # WebCraft Pro — Complete Web Engineering Toolkit for AI Agents
 
 [![Validate Repository](https://github.com/ViviBeri/webcraft-pro/actions/workflows/validate.yml/badge.svg)](https://github.com/ViviBeri/webcraft-pro/actions/workflows/validate.yml)
@@ -6,7 +8,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D22.12.0-brightgreen)](https://nodejs.org/)
 
-![WebCraft Pro Banner](./assets/banner.png)
+[![WebCraft Pro Social Preview](./assets/webcraft-pro-social-preview.svg)](./assets/webcraft-pro-social-preview.svg)
 
 **Design with intention. Engineer with discipline. Secure by default.**
 
