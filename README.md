@@ -93,7 +93,20 @@ It gives coding agents structured, task-specific engineering guidance instead of
 | [security-testing](skills/security-testing/SKILL.md) | Integrates SAST, dependency, secret and dynamic security checks. |
 | [security-review](skills/security-review/SKILL.md) | Produces evidence-based application security and release reviews. |
 
-See [skills/README.md](skills/README.md) for the complete index and authoring rules. See [security examples](examples/security/README.md) for implementation patterns.
+### Performance engineering
+
+| Skill | What it does |
+|---|---|
+| [core-web-vitals](skills/core-web-vitals/SKILL.md) | Evaluates field Core Web Vitals at p75 and diagnoses loading, responsiveness and stability. |
+| [performance-auditing](skills/performance-auditing/SKILL.md) | Establishes repeatable lab and field performance baselines with actionable findings. |
+| [javascript-performance](skills/javascript-performance/SKILL.md) | Reduces bundle size, main-thread work, hydration cost and third-party JavaScript overhead. |
+| [image-asset-optimization](skills/image-asset-optimization/SKILL.md) | Optimizes responsive media, image priority, dimensions and loading behavior. |
+| [font-performance](skills/font-performance/SKILL.md) | Reduces font transfer and layout shifts with deliberate loading and fallback strategies. |
+| [network-caching](skills/network-caching/SKILL.md) | Improves network delivery, CDN behavior and safe HTTP cache policies. |
+| [rendering-performance](skills/rendering-performance/SKILL.md) | Profiles and improves critical rendering, layout, paint and hydration work. |
+| [performance-testing](skills/performance-testing/SKILL.md) | Defines repeatable performance budgets and CI regression checks. |
+
+See [skills/README.md](skills/README.md) for the complete index and authoring rules. See [security examples](examples/security/README.md) and [performance examples](examples/performance/README.md) for implementation patterns.
 
 ## Installation
 
@@ -146,7 +159,7 @@ Every skill should:
 5. Include responsive, accessibility and security considerations relevant to the task.
 6. Define how to verify the work and report limitations honestly.
 
-See [Design Quality Standard](standards/design-quality.md), [Frontend Engineering Standard](standards/frontend-engineering.md), [Motion Engineering Standard](standards/motion-engineering.md) and [Accessibility Engineering Standard](standards/accessibility-engineering.md) and [Security Engineering Standard](standards/security-engineering.md) for shared review baselines.
+See [Design Quality Standard](standards/design-quality.md), [Frontend Engineering Standard](standards/frontend-engineering.md), [Motion Engineering Standard](standards/motion-engineering.md) and [Accessibility Engineering Standard](standards/accessibility-engineering.md) and [Security Engineering Standard](standards/security-engineering.md) and [Performance Engineering Standard](standards/performance-engineering.md) for shared review baselines.
 
 ## Roadmap
 
@@ -169,7 +182,7 @@ See [Design Quality Standard](standards/design-quality.md), [Frontend Engineerin
 | Interactive storytelling | Available |
 | Accessibility engineering | Available |
 | Web and API security | Available |
-| Performance engineering | Planned |
+| Performance engineering | Available |
 | Browser automation and QA | Planned |
 
 Roadmap status reflects files currently maintained in this repository. It is not a claim of certification or guaranteed output quality.
