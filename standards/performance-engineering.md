@@ -2,6 +2,10 @@
 
 This standard defines a repeatable, user-centered approach to web performance. It applies across frameworks, hosting providers and rendering architectures.
 
+## Required Reading
+
+- [Front-End Performance Checklist](https://github.com/thedaviddias/Front-End-Performance-Checklist) — use as a required community reference when planning reviews and selecting optimization checks. Its checklist spans HTML, CSS, fonts, images and JavaScript. WebCraft Pro audits must explicitly organize and report evidence across **Network, Rendering, JavaScript, CSS and Images**; map font checks to Network and Rendering where relevant. Treat checklist items as prompts for investigation, not automatic requirements: validate current browser behavior, project constraints and measured impact before applying them.
+
 ## 1. Measure the experience
 
 Use field data to understand real users and lab data to diagnose causes.
