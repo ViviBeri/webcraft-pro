@@ -134,15 +134,7 @@ These templates help agents and engineers record scope, test conditions, evidenc
 
 WebCraft Pro is engineered as a repeatable web-delivery system, not just a collection of prompts or a wrapper around a preferred frontend stack.
 
-### 1. Enforced by CI, not just Prompts
-
-Many skill repositories rely primarily on long instruction files and expect an AI agent to follow them. WebCraft Pro pairs its guidance with executable GitHub Actions checks:
-
-- A zero-dependency Node.js security pattern audit checks code examples in Markdown skills, standards and templates for known risky patterns.
-- Playwright keyboard and focus tests run against the repository's accessibility fixtures and fail when the tested behaviors regress.
-- Repository validation checks skill metadata, structure and installer behavior.
-
-These checks make defined requirements testable in CI rather than leaving them as prompt-only advice. Their scope is explicit: the security audit is a static pattern check, and the keyboard suite covers its tested scenarios. They are not a guarantee that every generated application is secure or fully accessible.
+**Enforced by CI, not just Prompts:** While other repos provide massive text prompts hoping the LLM follows them, WebCraft Pro turns engineering guidance into verifiable CI checks. It combines repository validation, a zero-dependency security pattern audit, and Playwright keyboard/focus tests. These checks make defined engineering requirements measurable and enforceable in CI, while keeping their scope explicit.
 
 ### 2. Zero-Dependency & Framework-Agnostic
 
