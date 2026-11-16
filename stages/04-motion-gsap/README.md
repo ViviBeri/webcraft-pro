@@ -20,6 +20,7 @@ Use motion to communicate state, guide attention and support narrative without c
 - [GSAP documentation](https://gsap.com/docs/v3/)
 - [GSAP matchMedia](https://gsap.com/docs/v3/GSAP/gsap.matchMedia/)
 - [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/)
+- [30 seconds of code](https://github.com/Chalarangelo/30-seconds-of-code) — supplementary snippet research for motion and interaction implementation. Confirm framework/runtime compatibility and current APIs; attribute reused code under CC-BY-4.0.
 
 ## Cross-stage boundaries
 
