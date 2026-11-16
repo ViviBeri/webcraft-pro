@@ -51,9 +51,11 @@ Repository existence, default branch and declared license metadata were checked 
 
 ## Agent Skills format and compatibility
 
-- [Agent Skills specification](https://agentskills.io/specification) — portable skill folder and SKILL.md format.
+- [Agent Skills specification](https://agentskills.io/specification) — portable skill folder, required metadata and progressive-disclosure format.
+- [Codex AGENTS.md guidance](https://developers.openai.com/cookbook/examples/codex/iterating-development-workflows-with-codex) — repository-level instructions and project-local skill organization.
 - [OpenAI Skills](https://github.com/openai/skills) — examples and authoring guidance for Codex skills.
-- [GitHub Copilot agent skills](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills) — Copilot project skill discovery and installation.
+- [GitHub Copilot agent skills](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills) — project skill locations, SKILL.md requirements and supported Copilot surfaces.
+- [GitHub Copilot custom instructions](https://docs.github.com/en/copilot/concepts/prompting-and-context/custom-instructions) — repository-wide instructions and agent instruction file support.
 - [Claude Code skills](https://code.claude.com/docs/en/skills) — Claude Code skill behavior and configuration.
 - [VS Code Agent Skills](https://code.visualstudio.com/docs/agent-customization/agent-skills) — documented project skill locations for Codex, Claude and Copilot in VS Code.
 
