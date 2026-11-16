@@ -1,0 +1,11 @@
+WebCraft Pro includes the following third-party development dependencies:
+
+1. Playwright
+   Version: 1.65.1
+   License: Apache License 2.0
+   Source: https://github.com/microsoft/playwright
+
+2. @axe-core/playwright
+   Version: 4.14.0
+   License: Mozilla Public License 2.0 (MPL 2.0)
+   Source: https://github.com/dequelabs/axe-core-npm
