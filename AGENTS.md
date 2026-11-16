@@ -62,7 +62,7 @@ The current repository validation command is:
 npm run validate
 ```
 
-It validates skill metadata and non-empty instructions. It does not validate technical correctness, links, examples, browser behavior, accessibility conformance, performance or security. Report those limitations accurately.
+It validates skill metadata, non-empty instructions, the eight-stage index and required agent entry-point files. The installer has a separate automated test suite. These checks do not validate technical correctness, external links, examples, browser behavior, accessibility conformance, performance or security. Report those limitations accurately.
 
 When changing skills, standards, stage indexes or agent adapters, update all affected indexes and run the available validation workflow. Add tests only when they exercise real repository behavior.
 
