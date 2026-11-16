@@ -53,6 +53,14 @@ This log backfills decisions that are evidenced by the repository's existing fil
 - **Alternatives considered:** A zero-dependency CDP implementation would require custom protocol and lifecycle handling for navigation, keyboard, viewport emulation, screenshots and accessibility. Puppeteer was considered but not selected because Playwright aligns better with the Stage 8 cross-browser direction.
 - **Source:** This decision and implementation are introduced together in commit "Add browser checker with Playwright"; package metadata and licenses are recorded in package.json and REFERENCES.md.
 
+
+### 2026-11-16 — Use Playwright documentation as the browser-check demonstration target
+
+- **Decision:** The browser checker accepts arbitrary user-provided HTTP(S) target URLs. Set `https://playwright.dev` as the default target for manual workflow demonstrations.
+- **Rationale:** `example.com` is a minimal placeholder page, not a meaningful accessibility benchmark. A modern documentation site provides a more representative demonstration target while the workflow input continues to allow users to test their own sites.
+- **Alternatives considered:** Keep `https://example.com` as the default; this was not selected because its minimal structure makes it a poor demonstration target for accessibility and UX checks.
+- **Source:** `.github/workflows/browser-check.yml`; `scripts/browser-checker.mjs`.
+
 ## Pending decisions
 
 - **Layout deck asset:** Decide whether assets/layout-decks.json is needed. Its absence and the unresolved decision are recorded in TODO.md.

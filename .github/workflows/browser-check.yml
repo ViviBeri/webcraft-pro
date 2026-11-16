@@ -7,7 +7,7 @@ on:
         description: "HTTP(S) URL to check"
         required: true
         type: string
-        default: "https://example.com"
+        default: "https://playwright.dev"
 
 permissions:
   contents: read

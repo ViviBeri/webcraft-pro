@@ -34,6 +34,7 @@ This file is the repository's source of truth for the consolidated outstanding d
 - [ ] Support an explicit target URL or local-server configuration in the runner. (stages/08-browser-qa-release/README.md)
 - [ ] Make three viewport profiles configurable and produce traceable screenshots. (stages/08-browser-qa-release/README.md)
 - [ ] Make reduced-motion and keyboard checks repeatable. (stages/08-browser-qa-release/README.md)
+- [ ] Review and refine the keyboard focus check for edge cases in complex single-page applications, including dynamically updated focus order and route transitions. (scripts/browser-checker.mjs)
 - [ ] Cover meaningful route and interaction states with axe scans. (stages/08-browser-qa-release/README.md)
 - [ ] Document cross-browser coverage and exclusions. (stages/08-browser-qa-release/README.md)
 - [ ] Make Lighthouse CI assertions configurable and retain reports safely. (stages/08-browser-qa-release/README.md)
