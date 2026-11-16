@@ -75,3 +75,17 @@ Make forms understandable, accessible and resilient while treating all client-su
 ## Completion criteria
 
 The form has a clear data contract, semantic controls, accessible and actionable feedback, server-enforced validation and authorization, safe submission handling, and tests for both expected and adversarial input.
+
+
+## Validation and error interaction contract
+
+For every field, document its label, instruction, accepted format, required/optional status, validation boundary and error message. Associate help and error text programmatically, and ensure instructions are available before submission as well as after an error.
+
+- Prefer native constraint validation for standard constraints; if custom validation replaces browser messages, preserve equivalent keyboard, focus and announcement behavior.
+- On submit failure, provide a concise summary linked to invalid fields and move focus only when doing so helps users recover.
+- Do not announce the same error repeatedly while users are still typing; choose predictable validation timing.
+- Preserve valid entries when the server rejects a submission. Map server field errors to relevant controls without exposing stack traces or internal rules.
+- For multi-step forms, persist only what is necessary, explain session expiry and provide a safe recovery path.
+- Test autofill, password managers, mobile input modes, browser back/forward and keyboard-only completion.
+
+Use visible, associated labels and actionable instructions; ARIA relationships supplement rather than replace native labels. Server validation remains authoritative.
