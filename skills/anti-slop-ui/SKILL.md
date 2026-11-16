@@ -117,6 +117,23 @@ Preserve working content, routes and behavior unless the requested redesign requ
 
 Choose one or two intentional focal moments when the page benefits from them. A focal moment may be a real product preview, data visualization, image, typography treatment or meaningful interaction. Do not force hero illustration onto dashboards and utility interfaces. Gradients, centered layouts, cards, badges and shadows are valid when their role is clear and the overall system is coherent.
 
+## Ordered audit and refinement passes
+
+Work across the whole interface in deliberate passes. Do not change every property at once.
+
+1. **Product identity:** confirm that the page reflects the actual product and audience.
+2. **Composition and hierarchy:** correct page structure, alignment, whitespace and reading order.
+3. **Spacing and density:** normalize rhythm and remove accidental gaps or crowding.
+4. **Color and contrast:** assign colors semantic roles and remove competing accents.
+5. **Typography:** correct hierarchy, measure, line-height and font usage.
+6. **Content and iconography:** replace generic copy and irrelevant symbols with meaningful labels and product-specific content.
+7. **Imagery and detail:** improve crop, subject, surface, borders and depth where these add value.
+8. **Motion:** refine transitions last, and only when they clarify state or orientation.
+
+Preserve working content, routes and behavior unless the requested redesign requires a change. Reassess the full page after each major pass.
+
+Choose one or two intentional focal moments when the page benefits from them. A focal moment may be a real product preview, data visualization, image, typography treatment or meaningful interaction. Do not force hero illustration onto dashboards and utility interfaces. Gradients, centered layouts, cards, badges and shadows are valid when their role is clear and the overall system is coherent.
+
 ## Completion checklist
 
 - [ ] The interface communicates this product, not any product.
