@@ -1,0 +1,59 @@
+name: Security Pattern Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'skills/**'
+      - 'standards/**'
+      - 'examples/**'
+      - 'scripts/security-audit.mjs'
+      - '.github/workflows/security-audit.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'skills/**'
+      - 'standards/**'
+      - 'examples/**'
+      - 'scripts/security-audit.mjs'
+      - '.github/workflows/security-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  security-audit:
+    name: Audit Markdown Security Patterns
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '20'
+
+      - name: Run security audit (report-only during initial rollout)
+        continue-on-error: true
+        run: node scripts/security-audit.mjs --json | tee security-audit-report.json
+
+      - name: Verify scanner produced a report
+        run: |
+          if [ ! -s security-audit-report.json ]; then
+            echo "::error::security-audit.mjs did not produce a report. Exit code 2 or crash — investigate before trusting this run."
+            exit 1
+          fi
+          node -e "JSON.parse(require('fs').readFileSync('security-audit-report.json','utf8'))" \
+            || { echo "::error::Report is not valid JSON."; exit 1; }
+
+      - name: Upload security audit report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: security-audit-report
+          path: security-audit-report.json
+          if-no-files-found: warn
+          retention-days: 14
