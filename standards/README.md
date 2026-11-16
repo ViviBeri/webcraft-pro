@@ -1,18 +1,12 @@
 # Engineering Standards
 
-This directory contains shared standards for WebCraft Pro.
+This directory contains shared, independently useful engineering baselines for WebCraft Pro.
 
-Planned standards:
+- [Design quality](design-quality.md) — visual direction and interface consistency.
+- [Frontend engineering](frontend-engineering.md) — architecture and maintainability.
+- [Motion engineering](motion-engineering.md) — motion behavior and implementation.
+- [Accessibility engineering](accessibility-engineering.md) — accessibility review and verification.
+- [Security engineering](security-engineering.md) — application and API security.
+- [Performance engineering](performance-engineering.md) — field metrics, lab diagnostics, asset delivery, rendering and regression budgets.
 
-- Design quality and visual consistency.
-- Frontend architecture and maintainability.
-- Application security.
-- API security.
-- Accessibility.
-- Performance.
-- Browser testing.
-- Dependency and supply-chain security.
-
-Standards should be independently useful and referenced by relevant skills.
-
-Security recommendations should be based on authoritative sources such as OWASP and established industry standards.
+Standards are referenced by relevant skills and should be reviewed against authoritative sources as browser behavior and platform guidance evolve.
