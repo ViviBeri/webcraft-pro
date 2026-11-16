@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-labelledby="title desc">
+<title id="title">WebCraft Pro — Web Engineering Toolkit</title>
+<desc id="desc">Minimal black and white geometric W identity with the tagline Design with intention. Engineer with discipline. Secure by default.</desc>
+<rect width="1280" height="640" fill="#08090b"/>
+<g fill="none" stroke="#f5f5f2" stroke-width="24" stroke-linecap="square" stroke-linejoin="miter" transform="translate(110 132)">
+<path d="M0 0 92 260 200 88 308 260 400 0"/>
+</g>
+<path d="M610 126V514" stroke="#35383d" stroke-width="2"/>
+<g fill="#f5f5f2" font-family="Inter,Arial,Helvetica,sans-serif">
+<text x="680" y="260" font-size="72" font-weight="750" letter-spacing="-2">WEBCraft PRO</text>
+<text x="684" y="328" font-size="25" font-weight="500" letter-spacing="3" fill="#b7bbc2">WEB ENGINEERING TOOLKIT</text>
+<text x="684" y="404" font-size="23" font-weight="400" fill="#d6d8dc">Design with intention.</text>
+<text x="684" y="442" font-size="23" font-weight="400" fill="#d6d8dc">Engineer with discipline.</text>
+<text x="684" y="480" font-size="23" font-weight="400" fill="#d6d8dc">Secure by default.</text>
+</g>
+<path d="M110 562H1170" stroke="#35383d" stroke-width="2"/>
+<text x="110" y="600" fill="#858a93" font-family="Inter,Arial,Helvetica,sans-serif" font-size="15" letter-spacing="4">DESIGN  /  ENGINEERING  /  ACCESSIBILITY  /  SECURITY  /  PERFORMANCE</text>
+</svg>
