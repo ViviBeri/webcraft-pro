@@ -46,6 +46,8 @@ It gives coding agents structured, task-specific engineering guidance instead of
 | [anti-slop-ui](skills/anti-slop-ui/SKILL.md) | Audits generic or repetitive interfaces and replaces weak design decisions with product-specific solutions. |
 | [premium-landing-pages](skills/premium-landing-pages/SKILL.md) | Plans and implements conversion-focused, responsive marketing and product pages. |
 | [visual-design-review](skills/visual-design-review/SKILL.md) | Reviews rendered pages, responsive layouts, accessibility and interactions using observable evidence. |
+| [design-system-architecture](skills/design-system-architecture/SKILL.md) | Architects semantic design tokens, component foundations, themes and governance. |
+| [visual-reference-analysis](skills/visual-reference-analysis/SKILL.md) | Extracts design principles from screenshots and references without copying them. |
 
 ### Frontend engineering
 
@@ -106,7 +108,7 @@ It gives coding agents structured, task-specific engineering guidance instead of
 | [rendering-performance](skills/rendering-performance/SKILL.md) | Profiles and improves critical rendering, layout, paint and hydration work. |
 | [performance-testing](skills/performance-testing/SKILL.md) | Defines repeatable performance budgets and CI regression checks. |
 
-See [skills/README.md](skills/README.md) for the complete index and authoring rules. See [security examples](examples/security/README.md) and [performance examples](examples/performance/README.md) for implementation patterns.
+See [skills/README.md](skills/README.md) for the complete index and authoring rules. See [design examples](examples/design/README.md) for the reusable design brief and review scorecard. See [security examples](examples/security/README.md) and [performance examples](examples/performance/README.md) for implementation patterns.
 
 ## Eight-stage architecture
 
