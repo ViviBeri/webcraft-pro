@@ -57,3 +57,17 @@ For architecture work, provide a current-state summary, proposed boundaries and 
 ## Completion criteria
 
 The architecture fits the actual stack, reduces rather than relocates complexity, preserves required behavior, has clear ownership boundaries and is verified by relevant automated checks.
+
+
+## Decision record
+
+For consequential architecture choices, record context, constraints, options considered, decision, trade-offs, migration/rollback path and verification plan. Keep the record proportionate to the decision.
+
+## State and rendering boundaries
+
+- Classify state by lifetime and ownership: ephemeral component state, URL/shareable state, server data, cross-route client state and persisted preferences.
+- Keep server data authoritative; define cache freshness, invalidation and optimistic-update rollback behavior where applicable.
+- Make route-level loading, error, not-found, empty and permission-denied states explicit. Do not collapse distinct failures into a generic empty screen.
+- Treat server/client component boundaries as data and capability boundaries where supported; pass only minimum serializable data to client code.
+- Prefer progressive enhancement for critical flows when the platform and product allow it.
+- Document route ownership, deep-link behavior, refresh behavior and fallback behavior for unavailable dependencies.
