@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Accessible dialog fixture</title>
+  <style>
+    :focus-visible { outline: 3px solid #075fcc; outline-offset: 3px; }
+    dialog { max-width: 32rem; border: 2px solid #333; border-radius: 0.5rem; }
+    dialog::backdrop { background: rgb(0 0 0 / 55%); }
+    label { display: block; margin-block: 1rem 0.25rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Dialog interaction</h1>
+    <button type="button" id="open-dialog">Open dialog</button>
+    <dialog id="details-dialog" aria-labelledby="dialog-title">
+      <h2 id="dialog-title">Your details</h2>
+      <label for="dialog-name">Name</label>
+      <input id="dialog-name" name="name" autofocus>
+      <button type="button" id="close-dialog">Close dialog</button>
+    </dialog>
+  </main>
+  <script>
+    const dialog = document.querySelector("#details-dialog");
+    const trigger = document.querySelector("#open-dialog");
+    trigger.addEventListener("click", () => dialog.showModal());
+    document.querySelector("#close-dialog").addEventListener("click", () => dialog.close());
+  </script>
+</body>
+</html>

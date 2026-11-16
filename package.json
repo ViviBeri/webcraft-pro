@@ -11,6 +11,7 @@
     "test:installer": "node --test scripts/install-skills.test.mjs",
     "test:validate": "node --test scripts/validate-skills.test.mjs",
     "test:security": "node --test scripts/security-audit.test.mjs",
+    "test:accessibility": "node --test tests/accessibility/keyboard.test.mjs",
     "install:browsers": "playwright install --with-deps chromium",
     "browser:check": "node scripts/browser-checker.mjs"
   },

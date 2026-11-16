@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Accessible form fixture</title>
+  <style>
+    :focus-visible { outline: 3px solid #075fcc; outline-offset: 3px; }
+    label { display: block; margin-block: 1rem 0.25rem; }
+    input { display: block; padding: 0.5rem; }
+    [role="alert"] { color: #a21b1b; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Contact form</h1>
+    <form id="contact-form" novalidate>
+      <label for="email">Email address (required)</label>
+      <input id="email" name="email" type="email" autocomplete="email" required>
+      <label for="message">Message (required)</label>
+      <input id="message" name="message" required>
+      <button type="submit">Send message</button>
+      <p id="form-error" role="alert" tabindex="-1" hidden></p>
+    </form>
+  </main>
+  <script>
+    const form = document.querySelector("#contact-form");
+    const error = document.querySelector("#form-error");
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (!form.checkValidity()) {
+        error.textContent = "Please complete all required fields with valid information.";
+        error.hidden = false;
+        error.focus();
+        return;
+      }
+      error.hidden = true;
+    });
+  </script>
+</body>
+</html>

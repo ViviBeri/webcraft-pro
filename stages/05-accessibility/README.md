@@ -15,12 +15,15 @@ Make accessibility a design and engineering requirement across semantics, keyboa
 - [Accessibility review](../../skills/accessibility-review/SKILL.md)
 - [Accessibility engineering standard](../../standards/accessibility-engineering.md)
 - [Accessibility examples](../../examples/accessibility/README.md)
+- [Keyboard fixtures](../../examples/accessibility/fixture/)
+- [Keyboard tests](../../tests/accessibility/keyboard.test.mjs)
+- [Accessibility test workflow](../../.github/workflows/accessibility-check.yml)
 
 ## Acceptance gate
 
 - [ ] WCAG target and audit scope are explicit.
 - [ ] Native semantics are preferred over unnecessary ARIA.
-- [ ] Keyboard and focus behavior is tested for critical journeys.
+- [x] Keyboard and focus behavior is tested for critical journeys.
 - [ ] Screen-reader checks use named browser/AT combinations.
 - [ ] Automated scans are not presented as proof of conformance.
 - [ ] Findings include criterion, impact, evidence and retest result.

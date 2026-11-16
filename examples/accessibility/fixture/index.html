@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Keyboard accessibility fixture</title>
+  <style>
+    :focus-visible { outline: 3px solid #075fcc; outline-offset: 3px; }
+    .skip-link {
+      position: absolute; top: 0.5rem; left: 0.5rem; padding: 0.75rem 1rem;
+      color: #fff; background: #123b70; transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+    main { padding: 4rem 1rem 1rem; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header><nav aria-label="Primary"><a href="#main">Home</a></nav></header>
+  <main id="main" tabindex="-1">
+    <h1>Keyboard interaction fixture</h1>
+    <p>Use Tab to move through the interactive controls.</p>
+    <a href="#details">Read the details</a>
+    <button type="button" id="action">Activate example</button>
+    <label for="name">Name</label>
+    <input id="name" name="name" autocomplete="name">
+    <p id="details">All interactive controls have a visible focus indicator.</p>
+  </main>
+</body>
+</html>
