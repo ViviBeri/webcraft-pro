@@ -115,6 +115,22 @@ Fix the highest-impact issues first when implementation is requested. Re-run the
 
 Return an actionable report grouped by severity, followed by the checks performed and any unverified areas.
 
+## Design quality scorecard
+
+Score each dimension from 0 to 4 using the evidence available:
+
+| Score | Meaning |
+|---|---|
+| 0 | Missing, broken or actively harmful |
+| 1 | Major weakness; users are likely to struggle |
+| 2 | Partially effective; meaningful gaps remain |
+| 3 | Effective; only limited issues remain |
+| 4 | Strong, consistent and supported by evidence |
+
+Evaluate product specificity and content truth; information hierarchy and composition; typography, spacing and visual consistency; responsive behavior and content reflow; and accessibility and interaction clarity.
+
+For every score below 3, record at least one concrete observation and recommended action. Mark a dimension not assessed when evidence is insufficient; do not assign it a neutral score. Never hide a critical or high-severity defect behind an average score. The scorecard is a prioritization aid, not a certification or objective measure of taste.
+
 ## Completion checklist
 
 - [ ] Review scope and evidence are stated.
