@@ -16,7 +16,7 @@ Repository existence, default branch and declared license metadata were checked 
 | Project | Focus | Declared repository license |
 |---|---|---|
 | [scroll-craft](https://github.com/nateherkai/scroll-craft) | Visitor-journey planning, structural variety and scroll-driven visual verification | MIT |
-| [GSAP Skills](https://github.com/greensock/gsap-skills) | Animation workflow and GSAP guidance | MIT |
+| [GSAP Skills](https://github.com/greensock/gsap-skills) | Official agent guidance cross-check for core tweens, timelines, ScrollTrigger, framework lifecycle, plugins and performance | MIT |
 | [GSAP documentation](https://gsap.com/docs/v3/) | Core tweens, timelines, context and responsive animation setup | Official documentation |
 | [GSAP matchMedia](https://gsap.com/docs/v3/GSAP/gsap.matchMedia/) | Responsive and reduced-motion-aware animation contexts | Official documentation |
 | [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) | Scroll-linked timelines, pinning, scrub and trigger lifecycle | Official documentation |
