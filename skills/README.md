@@ -61,6 +61,19 @@ Each skill is a folder containing a SKILL.md with YAML frontmatter and task-spec
 | [security-testing](security-testing/SKILL.md) | Plan SAST, dependency, secret and dynamic security verification. |
 | [security-review](security-review/SKILL.md) | Conduct application security and pre-release reviews. |
 
+### Performance engineering
+
+| Skill | Purpose |
+|---|---|
+| [core-web-vitals](core-web-vitals/SKILL.md) | Evaluate field Core Web Vitals and diagnose loading, responsiveness and visual stability. |
+| [performance-auditing](performance-auditing/SKILL.md) | Establish repeatable performance baselines and evidence-based audit findings. |
+| [javascript-performance](javascript-performance/SKILL.md) | Reduce bundle, main-thread, hydration and third-party JavaScript costs. |
+| [image-asset-optimization](image-asset-optimization/SKILL.md) | Optimize responsive images, media delivery and layout stability. |
+| [font-performance](font-performance/SKILL.md) | Improve font loading, fallback behavior and typography stability. |
+| [network-caching](network-caching/SKILL.md) | Tune network delivery, CDN behavior and HTTP caching policies. |
+| [rendering-performance](rendering-performance/SKILL.md) | Diagnose browser rendering, layout, paint and hydration bottlenecks. |
+| [performance-testing](performance-testing/SKILL.md) | Define performance budgets and repeatable CI regression checks. |
+
 ## Format
 
 Every skill must:
