@@ -11,7 +11,13 @@ Translate requirements into maintainable frontend architecture, reusable compone
 - [Responsive engineering](../../skills/responsive-engineering/SKILL.md) — content-driven layouts, zoom, reflow, touch and stress testing.
 - [Modern CSS](../../skills/modern-css/SKILL.md) — cascade strategy, semantic tokens, progressive enhancement and user preferences.
 - [Forms and validation](../../skills/forms-and-validation/SKILL.md) — native semantics, accessible feedback and server-authoritative validation.
+- [Document head and SEO](../../skills/document-head-seo/SKILL.md) — valid head structure, essential metadata, social previews, canonical URLs, icons and resource hints.
 - [Frontend engineering standard](../../standards/frontend-engineering.md)
+
+## Recommended reference
+
+- [HEAD](https://github.com/joshbuchea/HEAD) — comprehensive `<head>` element catalog and recommended ordering. Use with the WHATWG HTML standard for normative validity.
+- [30 seconds of code](https://github.com/Chalarangelo/30-seconds-of-code) — supplementary frontend snippet research; verify current APIs and follow CC-BY-4.0 attribution requirements when reusing code.
 
 ## Practical examples
 
