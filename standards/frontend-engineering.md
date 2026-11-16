@@ -74,3 +74,24 @@ A frontend change is complete when it:
 - Preserves semantic and keyboard accessibility.
 - Protects trust boundaries and sensitive data.
 - Has relevant automated verification and a clear record of limitations.
+
+
+## 9. Architecture and state decisions
+
+For consequential choices, record context, constraints, alternatives, decision, trade-offs, migration/rollback and verification. Classify state by lifetime and owner (component, URL, server data, cross-route client state or persisted preference). Define cache freshness, invalidation and optimistic rollback when relevant. Keep route-level loading, empty, error, not-found and permission-denied states distinct. Use progressive enhancement where practical.
+
+## 10. Component contracts
+
+For complex reusable components, define a state/variant matrix covering trigger, visible result, semantics, keyboard behavior, emitted event and recovery. Specify attribute/ref forwarding, form participation, asynchronous cancellation and stale-result handling. Verify isolated behavior and at least one consuming context. Avoid impossible prop combinations and nested interactive elements.
+
+## 11. Responsive stress conditions
+
+Test 320 CSS-pixel viewport width and 400% zoom where applicable. Exercise long and localized content, validation errors, orientation changes, dynamic browser chrome, sticky overlays and virtual keyboards. Document intentional two-dimensional content and its narrow-screen interaction. Record actual tested conditions rather than claiming device-wide coverage.
+
+## 12. CSS enhancement strategy
+
+Establish baseline behavior before optional features. Use @supports when advanced CSS is an enhancement; use cascade layers only with deliberate precedence; test logical properties in required writing directions and forced-colors modes. Do not apply containment, content-visibility or will-change globally without measuring and checking interaction consequences.
+
+## 13. Form interaction contract
+
+Define labels, instructions, constraints, validation boundaries and error recovery per field. Associate help and errors programmatically, preserve valid input after recoverable server failures, and provide a useful error summary for long forms. Test autofill, password managers, mobile keyboards, keyboard-only completion and retry behavior. Native labels remain the baseline; ARIA supplements them.
