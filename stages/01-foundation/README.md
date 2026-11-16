@@ -42,7 +42,7 @@ Provide one portable source of truth for WebCraft Pro, clear installation paths,
 - [x] The eight-stage architecture has one shared index.
 - [x] A dependency-free Node.js installer supports Codex, Claude Code and Copilot, skips existing skills by default, and offers dry-run and explicit overwrite modes.
 - [ ] Any legacy plugin manifests are audited against the source archive; none are present in the current live branch.
-- [ ] Skill format and discovery paths are verified against current official specifications.
+- [x] Skill metadata and project-local discovery paths are cross-checked against the current Agent Skills, Codex, Claude Code and GitHub Copilot documentation.
 - [ ] Validation coverage and limitations are documented and tested.
 
 A checked item records repository presence, not an external compatibility guarantee. Complete the remaining checks before marking Stage 1 fully accepted.
