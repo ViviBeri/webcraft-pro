@@ -40,6 +40,15 @@ Repository existence, default branch and declared license metadata were checked 
 | [Playwright](https://github.com/microsoft/playwright) | Cross-browser automation and end-to-end testing | Apache-2.0 |
 | [OpenSSF Scorecard](https://github.com/ossf/scorecard) | Open-source supply-chain security checks | Apache-2.0 |
 
+## Performance engineering
+
+- [Web Vitals](https://web.dev/articles/vitals) — current field metrics, definitions and recommended thresholds.
+- [Core Web Vitals threshold methodology](https://web.dev/articles/defining-core-web-vitals-thresholds) — p75 classification and threshold rationale.
+- [Chrome DevTools Performance panel](https://developer.chrome.com/docs/devtools/performance/overview) — profiling, traces and local Core Web Vitals diagnostics.
+- [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview) — controlled lab audits and performance diagnostics.
+- [PageSpeed Insights](https://pagespeed.web.dev/) — field and lab performance reporting where data is available.
+- [MDN HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching) — cache-control, validators and immutable asset caching.
+
 ## Agent Skills format and compatibility
 
 - [Agent Skills specification](https://agentskills.io/specification) — portable skill folder and SKILL.md format.
