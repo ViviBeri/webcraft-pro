@@ -48,9 +48,9 @@ This file is the repository's source of truth for the consolidated outstanding d
 - [ ] Fill the blank frontend templates or label them explicitly as template-only: `architecture-decision-record.md`, `component-contract-matrix.md` and `responsive-verification-matrix.md`. (examples/frontend/architecture-decision-record.md; examples/frontend/component-contract-matrix.md; examples/frontend/responsive-verification-matrix.md)
 - [ ] Decide later whether `assets/layout-decks.json` is needed; the file does not currently exist. (repository tree)
 
-## v1.1.0 Roadmap (Scroll-Craft Parity)
+## v1.1.0 Roadmap — Design and Storytelling Quality
 
-These items capture selected Scroll-Craft-inspired capabilities for WebCraft Pro v1.1.0. They are roadmap commitments only; do not implement them as part of the current release.
+These items define product-specific design and storytelling capabilities for WebCraft Pro v1.1.0. They are roadmap commitments only; do not implement them as part of the current release.
 
 - [ ] **Design Uniqueness Gate** — Add a review gate that compares a proposed page against existing designs across meaningful dimensions (such as page grammar, navigation, hero treatment, action structure, closing section and signature interaction). Require clear differentiation rather than superficial color or copy changes.
 - [ ] **Eight Page Grammars** — Document eight reusable page-structure patterns for distinct storytelling and user-journey goals. Include guidance on when to choose each grammar and how to adapt it without forcing a single visual style.

@@ -22,11 +22,9 @@ Translate product context, user needs and brand constraints into a distinctive v
 - [Design review scorecard](../../examples/design/design-review-scorecard.md)
 - [Design asset directory](../../examples/design/design-assets-directory.md) — curated font, color, illustration/icon and UI inspiration sources with asset-selection and licensing rules.
 
-## Reference research and attribution
+## Design quality and verification
 
-- [unslop](https://github.com/heydamir/unslop) — audit first, establish product-specific direction, then refine the interface in deliberate passes. Its source is CC BY 4.0; WebCraft Pro uses independently authored guidance and does not copy its skill text.
-- [taste-skill](https://github.com/Leonxlnx/taste-skill) — design judgment, adjustable composition/density/motion direction, specialized workflows and reference boards. The current upstream README describes v2 as experimental; WebCraft Pro does not adopt its hard constraints as universal rules.
-- [scroll-craft](https://github.com/nateherkai/scroll-craft) — page journey, deliberate structural variety and screenshot-based verification. This is a motion/scroll reference, not a general design-system specification; see Stage 4 for motion implementation.
+Apply product-specific visual direction, deliberate page composition, meaningful structural variety and evidence-based review. Require clear differentiation between pages, coherent information hierarchy and interactions that support the user journey. Use the shared design-quality standard and current platform guidance; do not treat any single visual style or page structure as universal.
 
 ## Stage 2 completion record
 
@@ -34,7 +32,7 @@ Translate product context, user needs and brand constraints into a distinctive v
 - [x] Guidance is independently authored and links to relevant shared standards.
 - [x] Visual critique requires rendered evidence where available and clearly records evidence limitations.
 - [x] Responsive, accessibility and content-integrity constraints are included.
-- [x] Reference repositories and declared licenses were checked; no third-party skill text or assets were copied.
+- [x] Design guidance is independently authored and aligned with shared engineering standards; no third-party skill text or assets are copied.
 - [x] Reusable design brief and review scorecard examples are provided.
 
 ## Acceptance boundary

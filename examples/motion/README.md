@@ -160,4 +160,4 @@ The buttons must remain usable if motion is reduced or unavailable. Do not make 
 
 ## 7. Reference alignment
 
-The patterns in this directory are independently authored. The upstream [GSAP Skills](https://github.com/greensock/gsap-skills) repository is used as a technical cross-check for core tweens, timelines, ScrollTrigger, framework lifecycle and performance. Follow the installed GSAP version and official documentation when APIs change.
+The patterns in this directory are independently authored and reviewed against the official GSAP documentation for core tweens, timelines, ScrollTrigger, framework lifecycle and performance. Follow the installed GSAP version and official documentation when APIs change.

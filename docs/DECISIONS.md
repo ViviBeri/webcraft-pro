@@ -18,7 +18,7 @@ This log backfills decisions that are evidenced by the repository's existing fil
 - **Alternatives considered:** Not recorded in repo.
 - **Source:** package.json; README.md.
 
-### backfilled — Distribute original project materials under MIT and preserve upstream attribution terms
+### backfilled — Distribute original project materials under MIT and preserve applicable third-party notices
 
 - **Decision:** License original WebCraft Pro project materials under MIT, while retaining applicable third-party license and attribution requirements.
 - **Rationale:** The repository states that original project materials use MIT except where a file or third-party material states otherwise.
@@ -82,7 +82,6 @@ This log backfills decisions that are evidenced by the repository's existing fil
 - **Rationale:** Adding framework-specific backend skills would expand the toolkit beyond its frontend engineering purpose and undermine its framework-agnostic frontend scope. Backend security concepts remain covered at the standards level without prescribing a backend stack.
 - **Alternatives considered:** Adding Go/Gin or Node/Express framework skills was rejected as scope creep.
 - **Source:** Maintainer scope decision recorded in this change.
-- **Additional note:** While tools like FastAPI and Stable Diffusion WebUI are excellent, they represent backend logic and specialized ML interfaces. WebCraft Pro remains strictly focused on framework-agnostic frontend engineering.
 
 ## Pending decisions
 

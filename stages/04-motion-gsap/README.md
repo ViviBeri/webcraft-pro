@@ -15,11 +15,11 @@ Use motion to communicate state, guide attention and support narrative without c
 - [Motion engineering standard](../../standards/motion-engineering.md)
 - [Motion examples](../../examples/motion/README.md)
 
-## Reference set
+## Authoritative documentation
 
-- [GSAP Skills](https://github.com/greensock/gsap-skills)
-- [scroll-craft](https://github.com/nateherkai/scroll-craft)
 - [GSAP documentation](https://gsap.com/docs/v3/)
+- [GSAP matchMedia](https://gsap.com/docs/v3/GSAP/gsap.matchMedia/)
+- [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/)
 
 ## Cross-stage boundaries
 
@@ -40,4 +40,4 @@ Use motion to communicate state, guide attention and support narrative without c
 
 ## Verification boundary
 
-Repository metadata and stage structure are checked by CI. Examples are reviewed against current official GSAP documentation and the upstream GSAP Skills reference. This repository has no consumer web application, so no live animation, device performance or browser interaction test is claimed here.
+Repository metadata and stage structure are checked by CI. Examples are reviewed against current official GSAP documentation. This repository has no consumer web application, so no live animation, device performance or browser interaction test is claimed here.

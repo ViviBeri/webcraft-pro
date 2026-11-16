@@ -40,7 +40,6 @@ Use this directory before finalizing a design direction. Select real, project-ap
 
 ## Supporting reference
 
-- [Brad Traversy's Design Resources for Developers](https://github.com/bradtraversy/design-resources-for-developers) — broad, categorized directory spanning UI graphics, fonts, colors, icons, stock media, tools and design inspiration. Use it to discover alternatives beyond the shortlist above. The upstream repository notes that new resource submissions are paused; check links and terms directly with each provider.
 
 ## Required design-direction asset record
 

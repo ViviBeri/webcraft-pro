@@ -1,136 +1,84 @@
-# References and attribution
+# References and standards
 
-WebCraft Pro is independently authored. The repositories and standards below are research references. Their presence here does not imply endorsement, affiliation or permission to copy their content.
+WebCraft Pro is an independently authored engineering toolkit. This directory points to authoritative standards, official platform documentation and product documentation used to validate technical guidance. References do not imply endorsement or affiliation.
 
-Repository existence, default branch and declared license metadata were checked when this file was updated. A repository's license may not cover every asset or third-party file; inspect the relevant license and notices before reuse.
+## Frontend platform and architecture
 
-## Design quality and interface critique
+- [MDN Web Docs](https://developer.mozilla.org/) — authoritative web platform reference for HTML, CSS, JavaScript and browser APIs.
+- [Chrome for Developers: Modern Web Guidance](https://developer.chrome.com/docs/modern-web-guidance/) — current implementation guidance for modern web applications.
+- [Angular documentation: Dependency Injection](https://angular.dev/guide/di) — official explanation of dependency injection concepts and explicit dependency boundaries.
+- [web.dev](https://web.dev/) — practical guidance for building fast, accessible and resilient web experiences.
 
-| Project | Focus | Declared repository license |
-|---|---|---|
-| [unslop](https://github.com/heydamir/unslop) | Product-specific visual direction and ordered interface refinement passes | CC-BY-4.0 |
-| [taste-skill](https://github.com/Leonxlnx/taste-skill) | Visual direction, configurable design choices and specialized frontend workflows | MIT |
+## Design systems and interface quality
+
+- [W3C Design Tokens Community Group](https://www.w3.org/community/design-tokens/) — community group work on interoperable design-token formats.
+- [MDN CSS guides](https://developer.mozilla.org/en-US/docs/Web/CSS) — normative platform behavior and practical CSS reference.
+- [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/) — contrast-ratio evaluation for text and interface colors.
+- [Google Fonts](https://fonts.google.com/) — font catalog and family/weight metadata. Review each font's license before distribution or self-hosting.
 
 ## Motion and interaction
 
-| Project | Focus | Declared repository license |
-|---|---|---|
-| [scroll-craft](https://github.com/nateherkai/scroll-craft) | Visitor-journey planning, structural variety and scroll-driven visual verification | MIT |
-| [GSAP Skills](https://github.com/greensock/gsap-skills) | Official agent guidance cross-check for core tweens, timelines, ScrollTrigger, framework lifecycle, plugins and performance | MIT |
-| [GSAP documentation](https://gsap.com/docs/v3/) | Core tweens, timelines, context and responsive animation setup | Official documentation |
-| [GSAP matchMedia](https://gsap.com/docs/v3/GSAP/gsap.matchMedia/) | Responsive and reduced-motion-aware animation contexts | Official documentation |
-| [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) | Scroll-linked timelines, pinning, scrub and trigger lifecycle | Official documentation |
-
-## Community Skill Directories
-
-- [Web Developer Skills Directory](https://webdeveloper.com/skills/) — a community-facing directory of AI coding skills that can be browsed by category and used across supported coding agents. Treat directory entries as discovery leads: inspect each skill's source, maintainer, license, freshness and safety before adopting it.
-- WebCraft Pro is designed to complement single-purpose community skills by providing a broader engineering lifecycle: shared standards, cross-stage workflows, verification guidance and CI enforcement. This lifecycle layer is intended to address operational gaps that an individual skill may not cover; it does not imply that every directory skill lacks those capabilities.
-
-## Web and API security
-
-- [OWASP ASVS 5.0.0](https://asvs.owasp.org/) — stable application security verification requirements for web applications and services.
-- [OWASP API Security Top 10 (2023)](https://owasp.org/www-project-api-security/) — API-specific security risks and mitigation guidance.
-- [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/) — practical secure implementation guidance.
-- [Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html) — authentication and identity verification controls.
-- [Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html) — server-side access-control design.
-- [Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html) — syntactic and semantic validation practices.
-
-## Security, performance and testing
-
-| Project | Focus | Declared repository license |
-|---|---|---|
-| [OWASP ASVS](https://github.com/OWASP/ASVS) | Application security verification requirements | CC-BY-SA-4.0 |
-| [OWASP Cheat Sheet Series](https://github.com/OWASP/CheatSheetSeries) | Secure implementation guidance | CC-BY-SA-4.0 |
-| [Google Lighthouse](https://github.com/GoogleChrome/lighthouse) | Performance, accessibility and best-practice auditing | Apache-2.0 |
-| [Playwright](https://github.com/microsoft/playwright) | Cross-browser automation and end-to-end testing | Apache-2.0 |
-| [OpenSSF Scorecard](https://github.com/ossf/scorecard) | Open-source supply-chain security checks | Apache-2.0 |
-
-## Performance engineering
-
-- [Web Vitals](https://web.dev/articles/vitals) — current field metrics, definitions and recommended thresholds.
-- [Core Web Vitals threshold methodology](https://web.dev/articles/defining-core-web-vitals-thresholds) — p75 classification and threshold rationale.
-- [Chrome DevTools Performance panel](https://developer.chrome.com/docs/devtools/performance/overview) — profiling, traces and local Core Web Vitals diagnostics.
-- [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview) — controlled lab audits and performance diagnostics.
-- [PageSpeed Insights](https://pagespeed.web.dev/) — field and lab performance reporting where data is available.
-- [MDN HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching) — cache-control, validators and immutable asset caching.
-
-## Agent Skills format and compatibility
-
-- [Agent Skills specification](https://agentskills.io/specification) — portable skill folder, required metadata and progressive-disclosure format.
-- [Codex AGENTS.md guidance](https://developers.openai.com/cookbook/examples/codex/iterating-development-workflows-with-codex) — repository-level instructions and project-local skill organization.
-- [OpenAI Skills](https://github.com/openai/skills) — examples and authoring guidance for Codex skills.
-- [GitHub Copilot agent skills](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills) — project skill locations, SKILL.md requirements and supported Copilot surfaces.
-- [GitHub Copilot custom instructions](https://docs.github.com/en/copilot/concepts/prompting-and-context/custom-instructions) — repository-wide instructions and agent instruction file support.
-- [Claude Code skills](https://code.claude.com/docs/en/skills) — Claude Code skill behavior and configuration.
-- [VS Code Agent Skills](https://code.visualstudio.com/docs/agent-customization/agent-skills) — documented project skill locations for Codex, Claude and Copilot in VS Code.
+- [GSAP documentation](https://gsap.com/docs/v3/) — official API reference for tweens, timelines, contexts and plugins.
+- [GSAP matchMedia](https://gsap.com/docs/v3/GSAP/gsap.matchMedia/) — responsive animation contexts and preference-aware setup.
+- [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) — scroll-linked animation, pinning, scrubbing and lifecycle behavior.
+- [MDN prefers-reduced-motion](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion) — platform preference for reduced motion.
 
 ## Accessibility engineering
 
 - [W3C WCAG 2.2](https://www.w3.org/TR/WCAG22/) — normative accessibility requirements and testable success criteria.
-- [WAI-ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/) — design patterns and keyboard interaction guidance for custom widgets.
-- [Playwright accessibility testing](https://playwright.dev/docs/accessibility-testing) — automated accessibility testing with axe-core and documented testing limitations.
-- [axe-core](https://github.com/dequelabs/axe-core) — open-source accessibility testing engine.
+- [WAI-ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/) — patterns and keyboard interaction guidance for custom widgets.
+- [WAI Forms Tutorial](https://www.w3.org/WAI/tutorials/forms/) — accessible labels, instructions and validation.
+- [axe-core documentation](https://github.com/dequelabs/axe-core) — automated accessibility testing engine and rule documentation.
+- [Playwright accessibility testing](https://playwright.dev/docs/accessibility-testing) — official guidance for automated accessibility checks and their limitations.
 
-## Frontend engineering and accessibility
+## Web and API security
 
-- [MDN: CSS container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_queries) — component-responsive layout based on containing block dimensions, with fallback guidance.
-- [MDN: CSS cascade](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascade/Introduction) — cascade origins, layers, specificity and precedence.
-- [WAI: Labeling controls](https://www.w3.org/WAI/tutorials/forms/labels/) — explicit and implicit form label associations.
-- [WAI: Form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/) — accessible field instructions and expected formats.
-- [WAI: Validating input](https://www.w3.org/WAI/tutorials/forms/validation/) — accessible validation feedback and the need for server-side validation.
-- [Chrome for Developers: Modern Web Guidance](https://developer.chrome.com/docs/modern-web-guidance/guides) — implementation guidance for current web platform patterns, including forms.
-- [web.dev: Learn Forms](https://web.dev/learn/forms) — form design, validation, accessibility, privacy, autofill and usability testing.
-- [web.dev: Accessibility](https://web.dev/learn/design/accessibility) — semantic structure, keyboard navigation, focus and accessible content.
-- [web.dev: Accessible responsive design](https://web.dev/articles/accessible-responsive-design) — responsive behavior, zoom, reading order and touch targets.
+- [OWASP ASVS 5.0.0](https://asvs.owasp.org/) — application security verification requirements for web applications and services.
+- [OWASP API Security Top 10](https://owasp.org/www-project-api-security/) — API-specific security risks and mitigation guidance.
+- [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/) — practical secure implementation guidance.
+- [OWASP Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html) — authentication and identity verification controls.
+- [OWASP Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html) — access-control design.
+- [OWASP Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html) — syntactic and semantic validation practices.
 
-## Reuse and attribution policy
+## Performance engineering
 
-Before adapting or redistributing third-party code, documentation, examples, images or skill content:
+- [Google Core Web Vitals](https://web.dev/articles/vitals) — user-centric loading, interactivity and visual-stability metrics with current thresholds.
+- [Core Web Vitals threshold methodology](https://web.dev/articles/defining-core-web-vitals-thresholds) — percentile-based classification and threshold rationale.
+- [Chrome DevTools Performance panel](https://developer.chrome.com/docs/devtools/performance/overview) — profiling, traces and local performance diagnostics.
+- [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview) — controlled lab audits and performance diagnostics.
+- [PageSpeed Insights](https://pagespeed.web.dev/) — field and lab performance reporting where data is available.
+- [MDN HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching) — cache-control, validators and immutable asset caching.
 
-1. Inspect the source repository's current license and the license of the specific file or asset.
-2. Confirm that the intended reuse is permitted by that license.
-3. Preserve copyright notices, attribution and change notices where required.
-4. Record the source and modifications when adapting material.
-5. Do not treat a repository's top-level license as permission to reuse files that carry separate terms.
-6. Prefer independently written guidance that cites the source rather than copying substantial content.
+## Browser QA and release
 
-WebCraft Pro does not claim ownership of the referenced projects and is not affiliated with their maintainers.
+- [Playwright documentation](https://playwright.dev/docs/intro) — official browser automation documentation for Chromium, Firefox and WebKit.
+- [Playwright best practices](https://playwright.dev/docs/best-practices) — user-visible assertions, isolated tests and resilient locators.
+- [Playwright CI](https://playwright.dev/docs/ci) — browser installation and CI execution guidance.
+- [Playwright trace viewer](https://playwright.dev/docs/trace-viewer) — inspect action timelines, DOM snapshots, screenshots and network activity.
+- [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci) — continuous performance measurement and assertions.
+- [OpenSSF Scorecard](https://scorecard.dev/) — open-source supply-chain security checks and their limitations.
 
-## Browser automation, quality and release
-
-- [Playwright](https://github.com/microsoft/playwright) — Apache-2.0 — browser automation library for Chromium, Firefox and WebKit.
-- [axe-core](https://github.com/dequelabs/axe-core) — MPL-2.0 — accessibility testing engine used through the Playwright integration.
-
-- [Playwright best practices](https://playwright.dev/docs/best-practices) — user-visible assertions, isolated tests, resilient locators, and cross-browser projects.
-- [Playwright CI](https://playwright.dev/docs/ci) — browser installation, CI worker settings and test execution guidance.
-- [Playwright trace viewer](https://playwright.dev/docs/trace-viewer) — inspect action timelines, DOM snapshots, screenshots and network activity when debugging failures.
-- [Playwright accessibility testing](https://playwright.dev/docs/accessibility-testing) — axe-core integration and the limits of automated accessibility checks.
-- [Playwright visual comparisons](https://playwright.dev/docs/test-snapshots) — screenshot baselines and visual comparison configuration.
-- [Lighthouse CI getting started](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/getting-started.md) — collect, assert and retain Lighthouse reports in CI.
-- [Lighthouse CI assertions](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md#assertions) — configure route and audit assertions against a project baseline.
-- [OpenSSF Scorecard](https://scorecard.dev/) — evaluate open-source supply-chain practices and understand the limits of individual checks.
-- [Scorecard GitHub Action](https://github.com/ossf/scorecard-action) — official action inputs, permissions, publication behavior and SARIF reporting guidance.
-
-## Agent interoperability
-
-- [GitHub Copilot custom instructions](https://docs.github.com/en/copilot/concepts/prompting-and-context/custom-instructions) — repository instructions and shared `AGENTS.md` behavior across Copilot surfaces.
-- [Claude Code project memory and AGENTS.md](https://code.claude.com/docs/en/memory) — project instruction files and importing shared instructions with `@path`.
-- [Agent Skills specification](https://agentskills.io/specification) — canonical skill structure and metadata requirements.
-
-## Ecosystem Tools & Inspiration
+## Industry Tooling & Standards
 
 ### Stage 3 — Frontend architecture
 
-- [Angular](https://github.com/angular/angular) — reference for robust frontend architecture, dependency injection and module organization. Use these concepts as architectural inspiration for decoupling responsibilities; this is not a requirement to adopt Angular.
+- [Angular Dependency Injection](https://angular.dev/guide/di) — official framework documentation describing dependency injection and explicit service boundaries. The concepts can inform decoupled frontend architecture without requiring Angular.
 
 ### Stage 6 — API security verification
 
-- [HTTPie CLI](https://github.com/httpie/cli) — manual API requests for checking authorization behavior, request/response contracts and input/output boundaries.
-- [Hoppscotch](https://github.com/hoppscotch/hoppscotch) — browser-based API client for manually exercising authorization, rate limits and API input/output boundaries.
+- [HTTPie documentation](https://httpie.io/docs/cli) — command-line HTTP client for manual API requests and response inspection.
+- [Hoppscotch documentation](https://docs.hoppscotch.io/) — API client documentation for manually exercising requests, authorization and response contracts.
 
-### Noted but out of scope
+### Agent interoperability
 
-- [FastAPI](https://github.com/fastapi/fastapi) — an impressive Python backend framework, but backend framework implementation is outside WebCraft Pro's scope.
-- [AUTOMATIC1111/stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui) — an impressive specialized AI/ML interface, but its specialized ML interface and backend concerns are outside WebCraft Pro's scope.
+- [Agent Skills specification](https://agentskills.io/specification) — portable skill structure and metadata requirements.
+- [GitHub Copilot custom instructions](https://docs.github.com/en/copilot/concepts/prompting-and-context/custom-instructions) — repository-wide agent instruction support.
+- [Claude Code skills](https://code.claude.com/docs/en/skills) — official skill behavior and configuration.
+- [VS Code Agent Skills](https://code.visualstudio.com/docs/agent-customization/agent-skills) — documented project skill locations and compatibility.
 
-These references are tools and inspiration only; they do not add core skills or change WebCraft Pro's framework-agnostic frontend engineering and client-side lifecycle focus.
+## Source and reuse policy
+
+- Prefer standards bodies, official product documentation and primary platform documentation for technical requirements.
+- Verify version-specific behavior against the documentation for the installed tool or runtime.
+- Review applicable licenses and notices before redistributing third-party code, documentation, fonts, images or other assets.
+- Keep WebCraft Pro guidance independently authored; cite authoritative requirements without copying substantial third-party material.
