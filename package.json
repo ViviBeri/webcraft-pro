@@ -4,7 +4,7 @@
   "private": true,
   "description": "Framework-agnostic AI agent skills for website design, engineering and security.",
   "license": "MIT",
-  "engines": { "node": ">=20" },
+  "engines": { "node": ">=22.12.0" },
   "scripts": {
     "validate": "node scripts/validate-skills.mjs",
     "install:skills": "node scripts/install-skills.mjs",

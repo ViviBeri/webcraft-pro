@@ -4,14 +4,17 @@
 
 Provide a reusable, framework-agnostic quality workflow for browser behavior, responsive rendering, accessibility, performance, supply-chain signals and release readiness.
 
-## Planned capabilities
+## Implemented in this repository
 
-- Playwright setup, locators, assertions, fixtures and browser projects.
+- [x] Manual browser-check workflow accepts an explicit HTTP(S) or local file URL and defaults to the repository's local fixture.
+- [x] Version-controlled accessible test fixture at `examples/test-page.html`.
+- [x] Playwright Chromium execution with mobile, tablet and desktop viewport profiles, standard and reduced-motion modes, keyboard-focus checks and axe-core scans.
+- [x] JSON report and screenshot artifact upload from the manual workflow.
+
+## Remaining planned capabilities
+
 - Critical journey tests across Chromium, Firefox and WebKit.
-- Screenshots at mobile, tablet and desktop viewports.
-- Reduced-motion and keyboard-focused checks.
-- axe-core scans on representative routes and interactive states.
-- Trace, screenshot and report artifacts for failed CI runs.
+- Trace collection and richer failure diagnostics.
 - Lighthouse CI collection and evidence-based performance budgets.
 - OpenSSF Scorecard workflow and result interpretation.
 - Release checklist, smoke testing, deployment verification and rollback.
@@ -38,10 +41,14 @@ Provide a reusable, framework-agnostic quality workflow for browser behavior, re
 
 ## Acceptance gate
 
-- [ ] Runner supports explicit target URL or local server configuration.
-- [ ] Three viewport profiles are configurable and produce traceable screenshots.
-- [ ] Reduced-motion and keyboard checks are repeatable.
-- [ ] axe scans cover meaningful route and interaction states.
+- [x] Manual browser runner accepts explicit HTTP(S) and local file targets, with a local fixture default.
+- [x] A minimal accessible local test fixture is maintained at `examples/test-page.html`.
+- [x] Playwright Chromium execution completes against the local fixture in standard and reduced-motion modes.
+- [x] Browser-check JSON report and screenshots are uploaded as a workflow artifact.
+- [ ] Runner supports a configurable local-server lifecycle in addition to direct URL targets.
+- [x] Three viewport profiles are configurable and produce traceable screenshots.
+- [x] Reduced-motion and keyboard checks run in the current Chromium fixture workflow.
+- [x] axe scans run against the local fixture; meaningful multi-route and interaction-state coverage remains outstanding.
 - [ ] Cross-browser coverage and exclusions are documented.
 - [ ] Lighthouse CI assertions are configurable and reports are retained safely.
 - [ ] Scorecard workflow permissions and SARIF handling are verified.

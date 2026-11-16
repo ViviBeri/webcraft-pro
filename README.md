@@ -112,7 +112,7 @@ It gives coding agents structured, task-specific engineering guidance instead of
 | [rendering-performance](skills/rendering-performance/SKILL.md) | Profiles and improves critical rendering, layout, paint and hydration work. |
 | [performance-testing](skills/performance-testing/SKILL.md) | Defines repeatable performance budgets and CI regression checks. |
 
-See [skills/README.md](skills/README.md) for the complete index and authoring rules. See [design examples](examples/design/README.md) for the reusable design brief and review scorecard. See [design examples](examples/design/README.md) for the reusable design brief and review scorecard. See [security examples](examples/security/README.md) and [performance examples](examples/performance/README.md) for implementation patterns.
+See [skills/README.md](skills/README.md) for the complete index and authoring rules. See [design examples](examples/design/README.md) for the reusable design brief and review scorecard. See [security examples](examples/security/README.md) and [performance examples](examples/performance/README.md) for implementation patterns.
 
 ## Eight-stage architecture
 
@@ -122,7 +122,7 @@ See [the eight-stage architecture](stages/README.md) and the shared [agent instr
 
 ## Installation
 
-Requirements: Node.js 20 or later.
+Requirements: Node.js 22.12.0 or later.
 
 The installer copies canonical skills into the selected target project's agent-specific discovery directory. It does not modify the source skills.
 
@@ -158,7 +158,7 @@ The repository's shared contributor instructions are in `AGENTS.md`. `CLAUDE.md`
 
 ## Validate the repository
 
-Requirements: Node.js 20 or later.
+Requirements: Node.js 22.12.0 or later.
 
 ```bash
 npm run validate
@@ -201,7 +201,7 @@ See [Design Quality Standard](standards/design-quality.md), [Frontend Engineerin
 | Accessibility engineering | Available |
 | Web and API security | Available |
 | Performance engineering | Available |
-| Browser automation and QA | Planned |
+| Playwright/axe browser automation and QA | Implemented — `scripts/browser-checker.mjs` and the manual `browser-check.yml` workflow run Chromium checks, accessibility scans, screenshots and JSON reporting. |
 
 Roadmap status reflects files currently maintained in this repository. It is not a claim of certification or guaranteed output quality.
 
@@ -209,15 +209,13 @@ Roadmap status reflects files currently maintained in this repository. It is not
 
 GitHub Actions validates skill metadata and required stage/agent entry-point files, then runs the installer tests on pushes and pull requests. The workflow uses read-only repository permissions and pins its external checkout action to a full commit SHA.
 
-The project intends to add automated checks for:
+The repository currently runs these automated checks:
 
-- Full Agent Skills specification compliance.
-- Markdown and link integrity.
-- Example validation.
-- Accessibility and browser regression testing.
-- Dependency and supply-chain security.
+- Skill metadata, stage structure and installer tests through the validation workflow.
+- Markdown security-pattern scanning through the security-audit workflow.
+- On-demand Chromium browser checks through the Manual Browser Check workflow, using the local accessible fixture by default or a supplied HTTP(S)/file URL. The runner captures viewport screenshots, runs axe-core and writes a JSON report; the workflow uploads the report and screenshots as an artifact.
 
-Only checks present in the repository's workflows should be treated as active.
+Broader cross-browser end-to-end coverage, Lighthouse CI budgets and OpenSSF Scorecard integration remain planned. Only checks present in the repository's workflows should be treated as active.
 
 ## References and attribution
 
