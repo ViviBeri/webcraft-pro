@@ -36,8 +36,7 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Run security audit (report-only during initial rollout)
-        continue-on-error: true
+      - name: Run security audit
         run: node scripts/security-audit.mjs --json | tee security-audit-report.json
 
       - name: Verify scanner produced a report
