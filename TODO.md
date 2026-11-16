@@ -47,3 +47,12 @@ This file is the repository's source of truth for the consolidated outstanding d
 - [ ] Reconcile the planned example applications in `examples/README.md` with the example applications actually present in the repository. (examples/README.md; repository tree)
 - [ ] Fill the blank frontend templates or label them explicitly as template-only: `architecture-decision-record.md`, `component-contract-matrix.md` and `responsive-verification-matrix.md`. (examples/frontend/architecture-decision-record.md; examples/frontend/component-contract-matrix.md; examples/frontend/responsive-verification-matrix.md)
 - [ ] Decide later whether `assets/layout-decks.json` is needed; the file does not currently exist. (repository tree)
+
+## v1.1.0 Roadmap (Scroll-Craft Parity)
+
+These items capture selected Scroll-Craft-inspired capabilities for WebCraft Pro v1.1.0. They are roadmap commitments only; do not implement them as part of the current release.
+
+- [ ] **Design Uniqueness Gate** — Add a review gate that compares a proposed page against existing designs across meaningful dimensions (such as page grammar, navigation, hero treatment, action structure, closing section and signature interaction). Require clear differentiation rather than superficial color or copy changes.
+- [ ] **Eight Page Grammars** — Document eight reusable page-structure patterns for distinct storytelling and user-journey goals. Include guidance on when to choose each grammar and how to adapt it without forcing a single visual style.
+- [ ] **Signature Interaction Requirement** — Require each applicable immersive page concept to define one distinctive, purposeful interaction that reinforces its story or product value. Document its expected behavior, reduced-motion alternative, accessibility considerations and verification criteria.
+
