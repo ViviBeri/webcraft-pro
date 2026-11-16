@@ -1,248 +1,201 @@
-<div align="center">
-
-<p>
-  <img src="assets/webcraft-banner.svg" alt="webcraft — build. craft. ship." width="100%">
-</p>
-
-# WebCraft Pro
+# WebCraft Pro — Complete Web Engineering Toolkit for AI Agents
 
 **Design with intention. Engineer with discipline. Secure by default.**
 
-Framework-agnostic Agent Skills for building distinctive, accessible, performant and secure websites.
+WebCraft Pro is an open-source, framework-agnostic collection of **40 reusable Agent Skills**, shared engineering standards, practical examples, and verification workflows for building distinctive, accessible, performant, and secure web applications.
 
-[![Validate Repository](https://github.com/ViviBeri/webcraft-pro/actions/workflows/validate.yml/badge.svg)](https://github.com/ViviBeri/webcraft-pro/actions/workflows/validate.yml)
-[![GitHub stars](https://img.shields.io/github/stars/ViviBeri/webcraft-pro?style=flat)](https://github.com/ViviBeri/webcraft-pro/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/ViviBeri/webcraft-pro?style=flat)](https://github.com/ViviBeri/webcraft-pro/network/members)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Agent Skills](https://img.shields.io/badge/Format-Agent%20Skills-6f42c1)](https://agentskills.io/)
+It provides AI coding agents with a structured engineering process covering the complete website delivery lifecycle—from initial design direction through implementation, accessibility, security, performance, browser QA, and release.
 
-[Explore skills](#available-skills) · [Install](#installation) · [Contribute](CONTRIBUTING.md) · [Report a vulnerability](SECURITY.md)
+## 1. Eight-stage architecture
 
-</div>
+WebCraft Pro organizes the engineering lifecycle into eight stages:
 
----
+| Stage | Area | Purpose |
+|---|---|---|
+| 01 | Foundation and Agent Interoperability | Establish repository conventions, portable skills, installation, and shared agent instructions. |
+| 02 | Design Intelligence | Define visual direction, design systems, hierarchy, and product-specific interfaces. |
+| 03 | Frontend Engineering | Build maintainable components, responsive layouts, forms, and frontend architecture. |
+| 04 | Motion and GSAP | Create purposeful animation, scroll experiences, and accessible motion systems. |
+| 05 | Accessibility Engineering | Apply semantic HTML, keyboard navigation, screen-reader testing, and WCAG-oriented reviews. |
+| 06 | Web and API Security | Address authentication, authorization, input handling, API risks, secrets, and security testing. |
+| 07 | Performance Engineering | Measure and improve Core Web Vitals, rendering, JavaScript, images, fonts, and network delivery. |
+| 08 | Browser Automation, QA and Release | Verify rendered experiences, browser behavior, accessibility checks, screenshots, and release readiness. |
 
-## What is WebCraft Pro?
+The stage directories provide the roadmap, acceptance criteria, and supporting documentation. Canonical skills remain in \`skills/\`, avoiding duplicated skill instructions across stages and AI agents.
 
-WebCraft Pro is an open-source collection of reusable **Agent Skills** for the website delivery lifecycle: visual direction, interface quality, frontend architecture, responsive implementation, forms, motion design, accessibility, performance, browser verification and application security.
+## 2. Automated quality and CI pipelines
 
-It gives coding agents structured, task-specific engineering guidance instead of relying on vague prompts. The skills follow the open Agent Skills format and are maintained as one canonical source.
+WebCraft Pro includes complementary GitHub Actions workflows and browser verification tooling.
 
-**The project is framework-agnostic.** Choose tools based on the product and existing codebase—not because a skill assumes one framework.
+### Repository validation
 
-## Why use it?
+The \`Validate Repository\` workflow checks:
 
-- **Design with purpose:** establish a visual system that reflects the product and audience.
-- **Avoid generic UI:** identify interchangeable layouts, filler copy and decoration without function.
-- **Build maintainable frontends:** make deliberate architecture and component decisions.
-- **Support real devices:** engineer responsive behavior, accessible forms and resilient CSS.
-- **Use purposeful motion:** create meaningful transitions and scroll experiences with accessible fallbacks.
-- **Verify the result:** review rendered pages, keyboard behavior and real viewport sizes.
-- **Reuse one skill source:** keep portable instructions in the standard SKILL.md format.
+- Skill metadata and required frontmatter.
+- Skill directory and naming consistency.
+- Eight-stage repository structure.
+- Skill validator tests.
+- Installer tests.
 
-## Available skills
+### Zero-dependency security pattern audit
 
-### Design intelligence
+The \`Security Pattern Audit\` workflow runs a Node.js static pattern scanner built using Node.js standard-library modules.
 
-| Skill | What it does |
-|---|---|
-| [design-direction](skills/design-direction/SKILL.md) | Defines visual direction, design tokens, hierarchy and responsive design principles. |
-| [anti-slop-ui](skills/anti-slop-ui/SKILL.md) | Audits generic or repetitive interfaces and replaces weak design decisions with product-specific solutions. |
-| [premium-landing-pages](skills/premium-landing-pages/SKILL.md) | Plans and implements conversion-focused, responsive marketing and product pages. |
-| [visual-design-review](skills/visual-design-review/SKILL.md) | Reviews rendered pages, responsive layouts, accessibility and interactions using observable evidence. |
-| [design-system-architecture](skills/design-system-architecture/SKILL.md) | Architects semantic design tokens, component foundations, themes and governance. |
-| [visual-reference-analysis](skills/visual-reference-analysis/SKILL.md) | Extracts design principles from screenshots and references without copying them. |
+It scans Markdown code fences in:
 
-### Frontend engineering
+- \`skills/\`
+- \`standards/\`
+- \`examples/\`
 
-| Skill | What it does |
-|---|---|
-| [frontend-architecture](skills/frontend-architecture/SKILL.md) | Evaluates application boundaries, routing, rendering, state ownership and data flow. |
-| [component-engineering](skills/component-engineering/SKILL.md) | Designs reusable component APIs, state behavior, semantic interactions and focused tests. |
-| [responsive-engineering](skills/responsive-engineering/SKILL.md) | Builds and audits fluid layouts, viewport behavior, touch interactions, zoom and reflow. |
-| [modern-css](skills/modern-css/SKILL.md) | Applies maintainable cascade strategy, design tokens, layout primitives and user preferences. |
-| [forms-and-validation](skills/forms-and-validation/SKILL.md) | Builds accessible forms with server-enforced validation, safe submission and useful errors. |
+It checks for patterns including \`eval()\`, \`new Function()\`, unsafe \`innerHTML\` assignments, \`document.write()\`, potentially unsafe \`href\` values, and wildcard \`postMessage()\` origins.
 
-### Motion and interaction
+The workflow tests the scanner, generates a JSON report, verifies the report, and uploads it as an artifact.
 
-| Skill | What it does |
-|---|---|
-| [gsap-fundamentals](skills/gsap-fundamentals/SKILL.md) | Builds scoped GSAP tweens and timelines with predictable lifecycle cleanup. |
-| [scrolltrigger-experiences](skills/scrolltrigger-experiences/SKILL.md) | Creates scroll-linked storytelling and pinned sequences without scroll hijacking. |
-| [motion-design-systems](skills/motion-design-systems/SKILL.md) | Defines reusable motion tokens, timing, easing and interaction patterns. |
-| [accessible-motion](skills/accessible-motion/SKILL.md) | Implements reduced-motion alternatives, stable focus and accessible animation behavior. |
-| [animation-performance](skills/animation-performance/SKILL.md) | Profiles and improves animation smoothness, rendering cost and lifecycle reliability. |
-| [interactive-storytelling](skills/interactive-storytelling/SKILL.md) | Designs narrative pages that remain understandable without animation. |
+**Scope limitation:** This is a static Markdown code-example pattern audit—not a complete application security scanner or proof of security.
 
-### Accessibility engineering
+### Playwright accessibility keyboard tests
 
-| Skill | What it does |
-|---|---|
-| [wcag-auditing](skills/wcag-auditing/SKILL.md) | Plans evidence-based WCAG 2.2 audits and documents scope, findings and conformance limits. |
-| [semantic-accessibility](skills/semantic-accessibility/SKILL.md) | Uses native HTML semantics, landmarks, labels and accessible names. |
-| [keyboard-focus](skills/keyboard-focus/SKILL.md) | Engineers keyboard operation, visible focus, dialogs and predictable focus restoration. |
-| [screen-reader-testing](skills/screen-reader-testing/SKILL.md) | Tests reading order, names, roles, states and dynamic announcements with assistive technology. |
-| [accessible-components](skills/accessible-components/SKILL.md) | Builds dialogs, tabs, menus, disclosures and comboboxes from documented interaction patterns. |
-| [accessibility-automation](skills/accessibility-automation/SKILL.md) | Adds axe-core scans to browser tests and CI without overstating automated coverage. |
-| [accessibility-review](skills/accessibility-review/SKILL.md) | Reviews critical journeys across input modes and produces actionable release findings. |
+The \`Accessibility Keyboard Tests\` workflow installs Chromium and executes the Playwright keyboard/focus test suite.
 
-### Web and API security
+The current tests cover:
 
-| Skill | What it does |
-|---|---|
-| [secure-application-design](skills/secure-application-design/SKILL.md) | Threat-models application architecture, trust boundaries and security controls. |
-| [authentication-sessions](skills/authentication-sessions/SKILL.md) | Secures login, identity protocols, account recovery and session lifecycle. |
-| [authorization-access-control](skills/authorization-access-control/SKILL.md) | Enforces object, function, property and tenant-level access controls. |
-| [secure-input-output](skills/secure-input-output/SKILL.md) | Handles untrusted input, safe output, uploads, redirects and SSRF boundaries. |
-| [api-security](skills/api-security/SKILL.md) | Applies OWASP API risk controls to REST, GraphQL and webhook services. |
-| [secrets-configuration](skills/secrets-configuration/SKILL.md) | Protects credentials, environment configuration and CI/CD secrets. |
-| [security-testing](skills/security-testing/SKILL.md) | Integrates SAST, dependency, secret and dynamic security checks. |
-| [security-review](skills/security-review/SKILL.md) | Produces evidence-based application security and release reviews. |
+- Skip-link keyboard access and focus visibility.
+- Form validation errors and focus management.
+- Dialog focus entry, Escape-key dismissal, and focus restoration.
 
-### Performance engineering
+### Playwright and axe-core browser checker
 
-| Skill | What it does |
-|---|---|
-| [core-web-vitals](skills/core-web-vitals/SKILL.md) | Evaluates field Core Web Vitals at p75 and diagnoses loading, responsiveness and stability. |
-| [performance-auditing](skills/performance-auditing/SKILL.md) | Establishes repeatable lab and field performance baselines with actionable findings. |
-| [javascript-performance](skills/javascript-performance/SKILL.md) | Reduces bundle size, main-thread work, hydration cost and third-party JavaScript overhead. |
-| [image-asset-optimization](skills/image-asset-optimization/SKILL.md) | Optimizes responsive media, image priority, dimensions and loading behavior. |
-| [font-performance](skills/font-performance/SKILL.md) | Reduces font transfer and layout shifts with deliberate loading and fallback strategies. |
-| [network-caching](skills/network-caching/SKILL.md) | Improves network delivery, CDN behavior and safe HTTP cache policies. |
-| [rendering-performance](skills/rendering-performance/SKILL.md) | Profiles and improves critical rendering, layout, paint and hydration work. |
-| [performance-testing](skills/performance-testing/SKILL.md) | Defines repeatable performance budgets and CI regression checks. |
+The repository also includes an on-demand browser checker using Playwright and axe-core.
 
-See [skills/README.md](skills/README.md) for the complete index and authoring rules. See [design examples](examples/design/README.md) for the reusable design brief and review scorecard. See [security examples](examples/security/README.md) and [performance examples](examples/performance/README.md) for implementation patterns.
+It supports:
 
-## Eight-stage architecture
+- Chromium browser verification.
+- Mobile, tablet, and desktop viewport profiles.
+- Standard and reduced-motion modes.
+- Keyboard tab-order and visible-focus checks.
+- axe-core accessibility scans.
+- JavaScript error detection.
+- Screenshots and JSON reporting.
 
-WebCraft Pro is organized into eight stages, from foundation and design intelligence through secure engineering, performance, browser QA and release. The stage folders are the shared roadmap and acceptance index; the portable skill source remains in `skills/` so skill files are not duplicated across agents.
+This checker is available through the Manual Browser Check workflow. It is separate from the push-triggered keyboard-test workflow.
 
-See [the eight-stage architecture](stages/README.md) and the shared [agent instructions](AGENTS.md). Codex, Claude Code and GitHub Copilot use thin entry points that point to the same instructions.
+Automated checks complement—not replace—manual assistive-technology testing, security review, cross-browser verification, and real-user performance measurement.
 
-## Installation
+## 3. Skills and engineering templates
 
-Requirements: Node.js 22.12.0 or later.
+### 40 reusable Agent Skills
 
-The installer copies canonical skills into the selected target project's agent-specific discovery directory. It does not modify the source skills.
+The canonical \`skills/\` directory contains 40 portable \`SKILL.md\` files covering:
 
-Preview an installation first:
+- Design intelligence and visual quality.
+- Frontend architecture and component engineering.
+- Responsive design and modern CSS.
+- GSAP, motion systems, and interactive storytelling.
+- Accessibility, WCAG auditing, keyboard focus, and screen readers.
+- Application security, authentication, authorization, and API security.
+- Core Web Vitals, rendering, JavaScript, images, fonts, and network performance.
 
-```bash
-node scripts/install-skills.mjs --agent all --target /path/to/your/project --dry-run
-```
+Skills follow the Agent Skills format and are organized by task rather than tied to one frontend framework.
 
-Install for one agent:
+### 13 engineering templates
 
-```bash
-node scripts/install-skills.mjs --agent codex --target /path/to/your/project
-node scripts/install-skills.mjs --agent claude --target /path/to/your/project
-node scripts/install-skills.mjs --agent copilot --target /path/to/your/project
-```
+The repository includes 13 practical templates across the three engineering-critical domains:
 
-Install for all three agents:
+**Accessibility — 5 templates**
+- Accessibility audit plan.
+- Semantic review checklist.
+- Screen-reader test matrix.
+- Accessibility audit report.
+- Accessibility finding template.
 
-```bash
-node scripts/install-skills.mjs --agent all --target /path/to/your/project
-```
+**Security — 3 templates**
+- OWASP control mapping, including illustrative ASVS 5.0.0 and API Security Top 10 mappings.
+- Security verification matrix.
+- Security review report.
+
+**Performance — 5 templates**
+- Performance audit template.
+- Core Web Vitals record.
+- Performance test matrix.
+- Performance investigation template.
+- Performance budget template.
+
+These templates help agents and engineers record scope, test conditions, evidence, findings, remediation, and release decisions consistently.
+
+## 4. How AI agents should use WebCraft Pro
+
+WebCraft Pro is designed to be a reusable engineering reference, not a collection of instructions to blindly apply to every project.
+
+Recommended agent workflow:
+
+1. **Understand the repository.** Read \`README.md\`, \`AGENTS.md\`, and \`stages/README.md\` to understand the project conventions and eight-stage architecture.
+2. **Identify the task.** Select the relevant skill from \`skills/README.md\` and read its complete \`SKILL.md\`.
+3. **Read the engineering standard.** Consult the relevant document in \`standards/\` before making domain-specific decisions.
+4. **Use the supporting template.** Select an appropriate audit, test matrix, finding, investigation, or report template from \`examples/\`.
+5. **Inspect the actual application.** Adapt guidance to the existing framework, architecture, user journeys, and constraints.
+6. **Implement and verify.** Use appropriate tests, browser checks, accessibility reviews, and security or performance evidence.
+7. **Report honestly.** Document what changed, what was tested, what passed, remaining risks, and checks that were not performed.
+
+### Installation
+
+The installer supports three agent environments:
 
 | Agent | Project-local destination |
 |---|---|
-| Codex | `.agents/skills/` |
-| Claude Code | `.claude/skills/` |
-| GitHub Copilot | `.github/skills/` |
+| OpenAI Codex | \`.agents/skills/\` |
+| Claude Code | \`.claude/skills/\` |
+| GitHub Copilot | \`.github/skills/\` |
 
-Existing skill directories are skipped to avoid overwriting project customizations. Use `--overwrite` only when you intentionally want to replace them. Use `--help` to view all options.
+Preview installation:
 
-The repository's shared contributor instructions are in `AGENTS.md`. `CLAUDE.md` imports the same rules for Claude Code, and `.github/copilot-instructions.md` is the Copilot repository entry point. These files guide work in this repository; the installer copies task-specific skills into a consuming project.
+\`\`\`bash id="vbqa1e"
+node scripts/install-skills.mjs --agent all --target /path/to/project --dry-run
+\`\`\`
 
-## Validate the repository
+Install all skills:
 
-Requirements: Node.js 22.12.0 or later.
+\`\`\`bash id="jwuwnj"
+node scripts/install-skills.mjs --agent all --target /path/to/project
+\`\`\`
 
-```bash
-npm run validate
-```
+Use \`--agent codex\`, \`--agent claude\`, or \`--agent copilot\` to install for an individual agent. Existing skill directories are protected from accidental overwrites unless \`--overwrite\` is explicitly supplied.
 
-The validator checks each skill directory for a SKILL.md, required frontmatter fields, naming consistency, duplicate names and non-empty instructions. It also verifies the eight-stage index and the shared Codex, Claude Code and Copilot instruction entry points.
+## 5. Engineering standards and project philosophy
 
-## Design and engineering principles
+WebCraft Pro maintains shared standards for:
 
-Every skill should:
+- Design quality.
+- Frontend engineering.
+- Motion engineering.
+- Accessibility engineering.
+- Security engineering.
+- Performance engineering.
 
-1. State when it should be used and what outcome it supports.
-2. Give an actionable workflow rather than generic advice.
-3. Respect the existing stack and project conventions.
-4. Avoid fabricated product claims, metrics, testimonials or credentials.
-5. Include responsive, accessibility and security considerations relevant to the task.
-6. Define how to verify the work and report limitations honestly.
+Its core principles are:
 
-See [Design Quality Standard](standards/design-quality.md), [Frontend Engineering Standard](standards/frontend-engineering.md), [Motion Engineering Standard](standards/motion-engineering.md), [Accessibility Engineering Standard](standards/accessibility-engineering.md), [Security Engineering Standard](standards/security-engineering.md) and [Performance Engineering Standard](standards/performance-engineering.md) for shared review baselines.
+- Prefer deliberate, product-specific design over generic interfaces.
+- Preserve maintainable architecture and existing project conventions.
+- Use semantic HTML and accessible interaction patterns.
+- Treat security as an engineering requirement, not a final checklist.
+- Measure performance using reproducible evidence.
+- Use automation where it adds confidence, while documenting its limitations.
+- Keep reusable skills framework-agnostic unless a skill explicitly targets a technology.
+- Never claim verification, conformance, or security without supporting evidence.
 
-## Roadmap
+## Project status
 
-| Area | Status |
-|---|---|
-| Design direction and visual systems | Available |
-| Anti-generic UI review | Available |
-| Premium landing pages | Available |
-| Visual design review | Available |
-| Frontend architecture | Available |
-| Component engineering | Available |
-| Responsive engineering | Available |
-| Modern CSS | Available |
-| Forms and validation | Available |
-| GSAP fundamentals and timelines | Available |
-| ScrollTrigger experiences | Available |
-| Motion design systems | Available |
-| Accessible motion and reduced-motion behavior | Available |
-| Animation performance | Available |
-| Interactive storytelling | Available |
-| Accessibility engineering | Available |
-| Web and API security | Available |
-| Performance engineering | Available |
-| Playwright/axe browser automation and QA | Implemented — `scripts/browser-checker.mjs` and the manual `browser-check.yml` workflow run Chromium checks, accessibility scans, screenshots and JSON reporting. |
+The eight-stage architecture, 40 canonical skills, shared standards, and 13 Stage 5–7 engineering templates are maintained in the repository.
 
-Roadmap status reflects files currently maintained in this repository. It is not a claim of certification or guaranteed output quality.
+The latest commit is:
 
-## Project quality checks
+\`bcc99b078a8f956729c4b2276b921136bf3acf2e\`
 
-GitHub Actions validates skill metadata and required stage/agent entry-point files, then runs the installer tests on pushes and pull requests. The workflow uses read-only repository permissions and pins its external checkout action to a full commit SHA.
+The following workflows were verified green on that commit:
 
-The repository currently runs these automated checks:
+- Validate Repository.
+- Security Pattern Audit.
+- Accessibility Keyboard Tests.
 
-- Skill metadata, stage structure and installer tests through the validation workflow.
-- Markdown security-pattern scanning through the security-audit workflow.
-- On-demand Chromium browser checks through the Manual Browser Check workflow, using the local accessible fixture by default or a supplied HTTP(S)/file URL. The runner captures viewport screenshots, runs axe-core and writes a JSON report; the workflow uploads the report and screenshots as an artifact.
+WebCraft Pro provides a complete structured foundation for AI-assisted web engineering. Individual applications still require project-specific implementation, testing, and human review before release.
 
-Broader cross-browser end-to-end coverage, Lighthouse CI budgets and OpenSSF Scorecard integration remain planned. Only checks present in the repository's workflows should be treated as active.
-
-## References and attribution
-
-WebCraft Pro is independently authored. We study established projects and standards for ideas, workflows and technical guidance; we do not assume that public source code is free to copy.
-
-See [REFERENCES.md](REFERENCES.md) for the checked reference repositories, their declared licenses and attribution requirements.
-
-## Contributing
-
-Contributions are welcome, especially reproducible improvements, framework-neutral guidance, practical examples and security corrections.
-
-- Read [CONTRIBUTING.md](CONTRIBUTING.md).
-- Follow the [Code of Conduct](CODE_OF_CONDUCT.md).
-- Report vulnerabilities using [SECURITY.md](SECURITY.md).
-- Open an issue for a focused proposal or bug report.
-
-## License
-
-The original project materials are distributed under the [MIT License](LICENSE), except where a file or third-party material states otherwise. Third-party references retain their own licenses and attribution requirements.
-
----
-
-If WebCraft Pro is useful in your workflow, consider **starring the repository** or contributing a tested improvement. Stars help other developers discover the project; useful skills and reliable maintenance are what make them stay.
-
-<div align="center">
-
-**WebCraft Pro**  
-*Better interfaces. Better engineering. Safer releases.*
-
-</div>
+**WebCraft Pro — Better interfaces. Better engineering. Safer releases.**
