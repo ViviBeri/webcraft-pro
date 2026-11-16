@@ -23,6 +23,7 @@ const help = [
   "Captures <host>-<viewport>-<mode>.png and browser-check-report.json.",
   "Checks navigation, uncaught JS errors, required selectors, keyboard focus/tab",
   "behavior, and axe-core. Chromium only; not full E2E or WCAG certification.",
+  "Keyboard focus check is capped at the first 40 tab stops to bound runtime.",
   "Exit codes: 0 pass; 1 target check findings (including unreachable URL);",
   "2 script cannot run (bad arguments, missing dependencies, browser launch failure).",
 ].join("\n");
@@ -88,15 +89,9 @@ async function main() {
   try { await mkdir(dir, { recursive: true }); }
   catch (error) { process.stderr.write("Cannot create output directory: " + error.message + "\n"); return 2; }
   let browser;
-  try { browser = await chromium.launch({ headless: true }); }
-  catch (error) {
-    record(report, "browser-launch", null, false, "high", error.message);
-    report.summary.failed = 1;
-    await writeFile(reportPath, JSON.stringify(report, null, 2) + "\n");
-    process.stderr.write("Chromium launch failed: " + error.message + "\nReport: " + reportPath + "\n");
-    return 2;
-  }
+  let fatalError = false;
   try {
+    browser = await chromium.launch({ headless: true });
     for (const viewport of options.viewports) {
       for (const mode of modes) {
         const context = await browser.newContext({
@@ -204,15 +199,31 @@ async function main() {
         await context.close();
       }
     }
+  } catch (error) {
+    fatalError = true;
+    record(report, browser ? "unexpected-fatal-error" : "browser-launch", "all", false, "high", error.message);
+    process.stderr.write((browser ? "Browser check failed unexpectedly: " : "Chromium launch failed: ") + error.message + "\\n");
   } finally {
-    await browser.close();
+    if (browser) {
+      try {
+        await browser.close();
+      } catch (error) {
+        fatalError = true;
+        record(report, "browser-close", "all", false, "high", error.message);
+      }
+    }
+    report.generatedAt = new Date().toISOString();
+    report.summary.passed = report.checks.filter((c) => c.pass).length;
+    report.summary.failed = report.checks.length - report.summary.passed;
+    try {
+      await writeFile(reportPath, JSON.stringify(report, null, 2) + "\\n");
+    } catch (error) {
+      fatalError = true;
+      process.stderr.write("Cannot write browser check report: " + error.message + "\\n");
+    }
   }
-  report.generatedAt = new Date().toISOString();
-  report.summary.passed = report.checks.filter((c) => c.pass).length;
-  report.summary.failed = report.checks.length - report.summary.passed;
-  await writeFile(reportPath, JSON.stringify(report, null, 2) + "\n");
-  process.stdout.write("Browser check: " + report.summary.passed + " passed, " + report.summary.failed + " failed.\nReport: " + reportPath + "\n");
-  return report.summary.failed ? 1 : 0;
+  process.stdout.write("Browser check: " + report.summary.passed + " passed, " + report.summary.failed + " failed.\\nReport: " + reportPath + "\\n");
+  return fatalError ? 2 : report.summary.failed ? 1 : 0;
 }
 main().then((code) => { process.exitCode = code; }).catch((error) => {
   process.stderr.write("Browser checker cannot run: " + (error.stack || error.message) + "\n");
