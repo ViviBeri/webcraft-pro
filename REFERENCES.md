@@ -94,7 +94,7 @@ WebCraft Pro does not claim ownership of the referenced projects and is not affi
 - [Lighthouse CI getting started](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/getting-started.md) — collect, assert and retain Lighthouse reports in CI.
 - [Lighthouse CI assertions](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md#assertions) — configure route and audit assertions against a project baseline.
 - [OpenSSF Scorecard](https://scorecard.dev/) — evaluate open-source supply-chain practices and understand the limits of individual checks.
-- [Scorecard GitHub Action](https://github.com/ossf/scorecard/blob/main/docs/ossf-scorecard.yml) — upstream workflow example and reporting configuration.
+- [Scorecard GitHub Action](https://github.com/ossf/scorecard-action) — official action inputs, permissions, publication behavior and SARIF reporting guidance.
 
 ## Agent interoperability
 
