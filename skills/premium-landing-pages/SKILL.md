@@ -134,6 +134,18 @@ Identify one primary action and use consistent wording for it. Secondary actions
 
 Classify page content as verified product facts, independently verified public facts with source and date, editorial explanation, or placeholder content awaiting owner approval. Never convert an assumption into a testimonial, metric, customer logo, certification, award, guarantee, pricing statement or performance claim. Do not publish placeholder credibility elements.
 
+## Visitor decision journey
+
+Before choosing sections, describe the visitor's decision in four to seven meaningful beats. For each beat, record what the visitor currently knows or believes, what uncertainty remains, what evidence resolves it, and what the next useful action becomes.
+
+Use the journey to determine section order. Remove sections that add no useful information or decision support. A common pattern is problem recognition, solution explanation, proof, practical detail, objection resolution and commitment, but do not force every page into this sequence.
+
+Identify one primary action and use consistent wording for it. Secondary actions must not compete with the primary task.
+
+## Evidence and content integrity
+
+Classify page content as verified product facts, independently verified public facts with source and date, editorial explanation, or placeholder content awaiting owner approval. Never convert an assumption into a testimonial, metric, customer logo, certification, award, guarantee, pricing statement or performance claim. Do not publish placeholder credibility elements.
+
 ## Completion checklist
 
 - [ ] Offer and audience are immediately understandable.
