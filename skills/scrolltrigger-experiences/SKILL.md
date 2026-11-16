@@ -64,3 +64,18 @@ Use scroll position to support narrative, orientation or meaningful feedback wit
 ## Completion criteria
 
 The story works as ordinary content first, scroll-linked motion improves comprehension, triggers respond correctly across viewports, and visitors can navigate and read without being forced through an animation.
+
+
+## Trigger lifecycle and refresh discipline
+
+- Create triggers only after their target elements exist and within the owning page/component lifecycle.
+- Revert the owning GSAP context or matchMedia instance on teardown; do not manually kill a shared global trigger collection unless the component owns it.
+- Use function-based `start` and `end` values when positions depend on current layout. Use `invalidateOnRefresh` when tween values must be recalculated during refresh.
+- Refresh after meaningful layout changes such as asynchronously loaded content, image dimensions becoming known or an expanded section changing document flow. Coordinate refresh after the layout settles; never refresh on every scroll or animation frame.
+- Avoid pinning nested containers or applying multiple competing pin spacers without a tested requirement.
+- If a trigger depends on another pinned scene, account for creation order and refresh ordering so downstream start positions remain correct.
+- Treat markers as development diagnostics only; remove them from production configuration.
+
+## Scroll behavior acceptance
+
+The document remains normally scrollable, browser history and anchor navigation work, focused content is not covered by pins, and the narrative is understandable when triggers are absent. Test direct load at a mid-page URL and reverse scrolling, not only a top-to-bottom demo.
