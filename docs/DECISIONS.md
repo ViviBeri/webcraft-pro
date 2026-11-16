@@ -53,7 +53,6 @@ This log backfills decisions that are evidenced by the repository's existing fil
 - **Alternatives considered:** A zero-dependency CDP implementation would require custom protocol and lifecycle handling for navigation, keyboard, viewport emulation, screenshots and accessibility. Puppeteer was considered but not selected because Playwright aligns better with the Stage 8 cross-browser direction.
 - **Source:** This decision and implementation are introduced together in commit "Add browser checker with Playwright"; package metadata and licenses are recorded in package.json and REFERENCES.md.
 
-
 ### 2026-11-16 — Use Playwright documentation as the browser-check demonstration target
 
 - **Decision:** The browser checker accepts arbitrary user-provided HTTP(S) target URLs. Set `https://playwright.dev` as the default target for manual workflow demonstrations.
@@ -61,13 +60,19 @@ This log backfills decisions that are evidenced by the repository's existing fil
 - **Alternatives considered:** Keep `https://example.com` as the default; this was not selected because its minimal structure makes it a poor demonstration target for accessibility and UX checks.
 - **Source:** `.github/workflows/browser-check.yml`; `scripts/browser-checker.mjs`.
 
-
 ### 2026-11-16 — Use a local accessible fixture as the deterministic browser-check baseline
 
 - **Decision:** Support validated local `file://` URLs in the browser checker and use `examples/test-page.html` as the default CI target. Keep the manual workflow input available for arbitrary live HTTP(S) URLs.
 - **Rationale:** Live websites can change their markup and accessibility state independently of this repository, making them unstable CI baselines. A small, version-controlled accessible fixture provides a deterministic target for verifying navigation, keyboard focus, screenshots and axe-core integration. Local file URLs are accepted only when they resolve to an existing regular file.
 - **Alternatives considered:** Continue using a third-party live site as the default; this was not selected because its content and accessibility defects are outside this repository's control.
 - **Source:** `.github/workflows/browser-check.yml`; `scripts/browser-checker.mjs`; `examples/test-page.html`.
+
+### 2026-11-16 — Verify the local browser-check baseline in GitHub Actions
+
+- **Decision:** Record the successful manual workflow run using the blank `target_url` input as the Stage 8 local-fixture verification.
+- **Evidence:** Manual Browser Check run #7 (run ID `43919942669`) completed successfully on commit `dc3b92800ba686575096143ef16f05218849aaa4`. The workflow resolved the blank input to `file:///home/runner/work/webcraft-pro/webcraft-pro/examples/test-page.html`; the browser checker reported 24 passed and 0 failed. The Chromium job, report/screenshot artifact upload and all workflow steps completed successfully.
+- **Qualification:** Dependency installation emitted a non-blocking `EBADENGINE` warning: `@axe-core/playwright@4.14.0` declares Node.js `>=22.12.0`, while this workflow currently selects Node.js 20. The run passed, but the workflow runtime should be aligned with the dependency's declared engine before treating the toolchain as warning-free.
+- **Source:** [Manual Browser Check run #7](https://github.com/ViviBeri/webcraft-pro/actions/runs/43919942669); workflow artifact `browser-check-artifacts`.
 
 ## Pending decisions
 
