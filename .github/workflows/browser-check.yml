@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       target_url:
-        description: "HTTP(S) URL to check"
-        required: true
+        description: "Optional HTTP(S) or local file URL; defaults to the local test fixture"
+        required: false
         type: string
-        default: "https://www.w3.org/WAI/"
+        default: ""
 
 permissions:
   contents: read
@@ -33,7 +33,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run browser checker
-        run: npm run browser:check -- --url "${{ inputs.target_url }}" --output-dir browser-check-artifacts
+        run: npm run browser:check -- --url "${{ inputs.target_url || format('file://{0}/examples/test-page.html', github.workspace) }}" --output-dir browser-check-artifacts
 
       - name: Upload browser check report and screenshots
         if: always()

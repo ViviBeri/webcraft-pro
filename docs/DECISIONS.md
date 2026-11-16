@@ -61,6 +61,14 @@ This log backfills decisions that are evidenced by the repository's existing fil
 - **Alternatives considered:** Keep `https://example.com` as the default; this was not selected because its minimal structure makes it a poor demonstration target for accessibility and UX checks.
 - **Source:** `.github/workflows/browser-check.yml`; `scripts/browser-checker.mjs`.
 
+
+### 2026-11-16 — Use a local accessible fixture as the deterministic browser-check baseline
+
+- **Decision:** Support validated local `file://` URLs in the browser checker and use `examples/test-page.html` as the default CI target. Keep the manual workflow input available for arbitrary live HTTP(S) URLs.
+- **Rationale:** Live websites can change their markup and accessibility state independently of this repository, making them unstable CI baselines. A small, version-controlled accessible fixture provides a deterministic target for verifying navigation, keyboard focus, screenshots and axe-core integration. Local file URLs are accepted only when they resolve to an existing regular file.
+- **Alternatives considered:** Continue using a third-party live site as the default; this was not selected because its content and accessibility defects are outside this repository's control.
+- **Source:** `.github/workflows/browser-check.yml`; `scripts/browser-checker.mjs`; `examples/test-page.html`.
+
 ## Pending decisions
 
 - **Layout deck asset:** Decide whether assets/layout-decks.json is needed. Its absence and the unresolved decision are recorded in TODO.md.

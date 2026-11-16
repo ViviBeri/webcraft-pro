@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WebCraft Pro Test Fixture</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Arial, sans-serif;
+      color: #000;
+      background: #fff;
+    }
+
+    body {
+      margin: 2rem;
+      line-height: 1.5;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      padding: 0.75rem 1rem;
+      color: #000;
+      background: #fff;
+      border: 2px solid #000;
+      transform: translateY(-200%);
+    }
+
+    .skip-link:focus,
+    .skip-link:focus-visible {
+      transform: translateY(0);
+      outline: 3px solid #005fcc;
+      outline-offset: 3px;
+    }
+
+    button {
+      padding: 0.75rem 1rem;
+      color: #000;
+      background: #fff;
+      border: 2px solid #000;
+      cursor: pointer;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid #005fcc;
+      outline-offset: 3px;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <main id="main">
+    <h1>WebCraft Pro Test Fixture</h1>
+    <button type="button">Click Me</button>
+  </main>
+</body>
+</html>

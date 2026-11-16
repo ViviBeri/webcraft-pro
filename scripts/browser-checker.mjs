@@ -1,6 +1,8 @@
 import { mkdir, writeFile } from "node:fs/promises";
+import { statSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";
+import { fileURLToPath } from "node:url";
 
 const defaults = [
   { name: "mobile", width: 390, height: 844 },
@@ -11,7 +13,7 @@ const modes = ["standard", "reduced-motion"];
 const help = [
   "Usage: node scripts/browser-checker.mjs --url <url> [options]",
   "",
-  "Required: --url <url> (absolute HTTP(S) URL)",
+  "Required: --url <url> (absolute HTTP(S) or local file URL)",
   "Options:",
   "  --output-dir <dir>   Output directory (default: browser-check-artifacts)",
   "  --viewports <list>   Comma-separated name=WIDTHxHEIGHT profiles.",
@@ -52,7 +54,18 @@ function parse(argv) {
   if (!o.url) throw new Error("--url is required unless --help is used");
   let u;
   try { u = new URL(o.url); } catch { throw new Error("--url must be an absolute URL"); }
-  if (!["http:", "https:"].includes(u.protocol)) throw new Error("--url must use HTTP or HTTPS");
+  if (!["http:", "https:", "file:"].includes(u.protocol)) throw new Error("--url must use HTTP, HTTPS, or file URLs");
+  if (u.protocol === "file:") {
+    let localPath;
+    try {
+      localPath = fileURLToPath(u);
+      if (!path.isAbsolute(localPath) || !statSync(localPath).isFile()) {
+        throw new Error("The file URL must resolve to an existing regular file");
+      }
+    } catch (error) {
+      throw new Error("Invalid file URL: " + error.message);
+    }
+  }
   if (!o.outputDir.trim()) throw new Error("--output-dir cannot be empty");
   if (!o.viewports.length || new Set(o.viewports.map((v) => v.name)).size !== o.viewports.length) throw new Error("Viewport names must be unique");
   o.url = u.toString();
@@ -104,9 +117,13 @@ async function main() {
         let loaded = false;
         try {
           const response = await page.goto(options.url, { waitUntil: "domcontentloaded", timeout: 30000 });
-          loaded = Boolean(response && response.status() < 400);
+          loaded = options.url.startsWith("file:")
+            ? await page.evaluate(() => document.readyState !== "loading")
+            : Boolean(response && response.status() < 400);
           record(report, "navigation", viewport.name, loaded, "high",
-            response ? "HTTP " + response.status() + " " + response.statusText() : "No HTTP response");
+            options.url.startsWith("file:")
+              ? (loaded ? "Loaded local file URL" : "Local file did not finish loading")
+              : response ? "HTTP " + response.status() + " " + response.statusText() : "No HTTP response");
         } catch (error) {
           record(report, "navigation", viewport.name, false, "high", error.message);
         }
@@ -202,7 +219,9 @@ async function main() {
                   previousDomOrder = state.domOrder;
                 }
                 if (visited.includes(state.id)) {
-                  issues.push("Tab focus loop detected at press " + (i + 1));
+                  if (visited.length < tabbableCount) {
+                    issues.push("Tab focus loop detected before all visible tabbable controls were reached");
+                  }
                   break;
                 }
                 visited.push(state.id);
@@ -223,7 +242,11 @@ async function main() {
         }
         record(report, "uncaught-javascript-errors", viewport.name, pageErrors.length === 0, "high",
           pageErrors.length ? pageErrors.join(" | ") : "No uncaught page errors observed");
-        const screenshot = slug(new URL(options.url).hostname) + "-" + slug(viewport.name) + "-" + mode + ".png";
+        const target = new URL(options.url);
+        const screenshotTarget = target.protocol === "file:"
+          ? path.basename(target.pathname, ".html")
+          : target.hostname;
+        const screenshot = slug(screenshotTarget) + "-" + slug(viewport.name) + "-" + mode + ".png";
         try {
           await page.screenshot({ path: path.join(dir, screenshot), fullPage: true, animations: "disabled", timeout: 30000 });
           report.screenshots.push(screenshot);
