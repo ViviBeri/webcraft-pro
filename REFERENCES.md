@@ -8,14 +8,14 @@ Repository existence, default branch and declared license metadata were checked 
 
 | Project | Focus | Declared repository license |
 |---|---|---|
-| [unslop](https://github.com/heydamir/unslop) | Critique of generic AI-generated interface patterns | CC-BY-4.0 |
-| [taste-skill](https://github.com/Leonxlnx/taste-skill) | Visual direction and design judgment | MIT |
+| [unslop](https://github.com/heydamir/unslop) | Product-specific visual direction and ordered interface refinement passes | CC-BY-4.0 |
+| [taste-skill](https://github.com/Leonxlnx/taste-skill) | Visual direction, configurable design choices and specialized frontend workflows | MIT |
 
 ## Motion and interaction
 
 | Project | Focus | Declared repository license |
 |---|---|---|
-| [scroll-craft](https://github.com/nateherkai/scroll-craft) | Scroll-driven interaction patterns | MIT |
+| [scroll-craft](https://github.com/nateherkai/scroll-craft) | Visitor-journey planning, structural variety and scroll-driven visual verification | MIT |
 | [GSAP Skills](https://github.com/greensock/gsap-skills) | Animation workflow and GSAP guidance | MIT |
 | [GSAP documentation](https://gsap.com/docs/v3/) | Core tweens, timelines, context and responsive animation setup | Official documentation |
 | [GSAP matchMedia](https://gsap.com/docs/v3/GSAP/gsap.matchMedia/) | Responsive and reduced-motion-aware animation contexts | Official documentation |
