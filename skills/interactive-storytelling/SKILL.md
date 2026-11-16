@@ -58,3 +58,12 @@ Use interaction and motion to help visitors understand a sequence, relationship 
 ## Completion criteria
 
 The narrative is coherent as semantic content, interaction improves understanding, the experience remains accessible across input modes, and motion can be disabled without losing information.
+
+
+## Resilience and narrative state
+
+- Make the complete story available in document order before motion setup. Use animation to emphasize progression, not to gate access to a section.
+- Ensure anchor links, browser find, heading navigation and direct fragment URLs still work when scenes are pinned or transformed.
+- Keep a visible progress or orientation cue only when it adds genuine value; do not imply that the visitor must follow a prescribed pace.
+- Define how the story behaves when fonts, images or remote data load late. Reserve media dimensions and refresh scroll measurements only after relevant layout changes settle.
+- Provide a linear narrow-screen alternative for horizontal or pinned sequences, preserving all text, controls and calls to action.
