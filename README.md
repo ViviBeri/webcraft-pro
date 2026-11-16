@@ -6,6 +6,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D22.12.0-brightgreen)](https://nodejs.org/)
 
+![WebCraft Pro Banner](./assets/banner.png)
+
 **Design with intention. Engineer with discipline. Secure by default.**
 
 WebCraft Pro is an open-source, framework-agnostic collection of **40 reusable Agent Skills**, shared engineering standards, practical examples, and verification workflows for building distinctive, accessible, performant, and secure web applications.
@@ -27,7 +29,7 @@ WebCraft Pro organizes the engineering lifecycle into eight stages:
 | 07 | Performance Engineering | Measure and improve Core Web Vitals, rendering, JavaScript, images, fonts, and network delivery. |
 | 08 | Browser Automation, QA and Release | Verify rendered experiences, browser behavior, accessibility checks, screenshots, and release readiness. |
 
-The stage directories provide the roadmap, acceptance criteria, and supporting documentation. Canonical skills remain in \`skills/\`, avoiding duplicated skill instructions across stages and AI agents.
+The stage directories provide the roadmap, acceptance criteria, and supporting documentation. Canonical skills remain in `skills/`, avoiding duplicated skill instructions across stages and AI agents.
 
 ## 2. Automated quality and CI pipelines
 
@@ -35,7 +37,7 @@ WebCraft Pro includes complementary GitHub Actions workflows and browser verific
 
 ### Repository validation
 
-The \`Validate Repository\` workflow checks:
+The `Validate Repository` workflow checks:
 
 - Skill metadata and required frontmatter.
 - Skill directory and naming consistency.
@@ -45,15 +47,15 @@ The \`Validate Repository\` workflow checks:
 
 ### Zero-dependency security pattern audit
 
-The \`Security Pattern Audit\` workflow runs a Node.js static pattern scanner built using Node.js standard-library modules.
+The `Security Pattern Audit` workflow runs a Node.js static pattern scanner built using Node.js standard-library modules.
 
 It scans Markdown code fences in:
 
-- \`skills/\`
-- \`standards/\`
-- \`examples/\`
+- `skills/`
+- `standards/`
+- `examples/`
 
-It checks for patterns including \`eval()\`, \`new Function()\`, unsafe \`innerHTML\` assignments, \`document.write()\`, potentially unsafe \`href\` values, and wildcard \`postMessage()\` origins.
+It checks for patterns including `eval()`, `new Function()`, unsafe `innerHTML` assignments, `document.write()`, potentially unsafe `href` values, and wildcard `postMessage()` origins.
 
 The workflow tests the scanner, generates a JSON report, verifies the report, and uploads it as an artifact.
 
@@ -61,7 +63,7 @@ The workflow tests the scanner, generates a JSON report, verifies the report, an
 
 ### Playwright accessibility keyboard tests
 
-The \`Accessibility Keyboard Tests\` workflow installs Chromium and executes the Playwright keyboard/focus test suite.
+The `Accessibility Keyboard Tests` workflow installs Chromium and executes the Playwright keyboard/focus test suite.
 
 The current tests cover:
 
@@ -91,7 +93,7 @@ Automated checks complement—not replace—manual assistive-technology testing,
 
 ### 40 reusable Agent Skills
 
-The canonical \`skills/\` directory contains 40 portable \`SKILL.md\` files covering:
+The canonical `skills/` directory contains 40 portable `SKILL.md` files covering:
 
 - Design intelligence and visual quality.
 - Frontend architecture and component engineering.
@@ -134,10 +136,10 @@ WebCraft Pro is designed to be a reusable engineering reference, not a collectio
 
 Recommended agent workflow:
 
-1. **Understand the repository.** Read \`README.md\`, \`AGENTS.md\`, and \`stages/README.md\` to understand the project conventions and eight-stage architecture.
-2. **Identify the task.** Select the relevant skill from \`skills/README.md\` and read its complete \`SKILL.md\`.
-3. **Read the engineering standard.** Consult the relevant document in \`standards/\` before making domain-specific decisions.
-4. **Use the supporting template.** Select an appropriate audit, test matrix, finding, investigation, or report template from \`examples/\`.
+1. **Understand the repository.** Read `README.md`, `AGENTS.md`, and `stages/README.md` to understand the project conventions and eight-stage architecture.
+2. **Identify the task.** Select the relevant skill from `skills/README.md` and read its complete `SKILL.md`.
+3. **Read the engineering standard.** Consult the relevant document in `standards/` before making domain-specific decisions.
+4. **Use the supporting template.** Select an appropriate audit, test matrix, finding, investigation, or report template from `examples/`.
 5. **Inspect the actual application.** Adapt guidance to the existing framework, architecture, user journeys, and constraints.
 6. **Implement and verify.** Use appropriate tests, browser checks, accessibility reviews, and security or performance evidence.
 7. **Report honestly.** Document what changed, what was tested, what passed, remaining risks, and checks that were not performed.
@@ -148,23 +150,23 @@ The installer supports three agent environments:
 
 | Agent | Project-local destination |
 |---|---|
-| OpenAI Codex | \`.agents/skills/\` |
-| Claude Code | \`.claude/skills/\` |
-| GitHub Copilot | \`.github/skills/\` |
+| OpenAI Codex | `.agents/skills/` |
+| Claude Code | `.claude/skills/` |
+| GitHub Copilot | `.github/skills/` |
 
 Preview installation:
 
-\`\`\`bash id="vbqa1e"
+```bash
 node scripts/install-skills.mjs --agent all --target /path/to/project --dry-run
-\`\`\`
+```
 
 Install all skills:
 
-\`\`\`bash id="jwuwnj"
+```bash
 node scripts/install-skills.mjs --agent all --target /path/to/project
-\`\`\`
+```
 
-Use \`--agent codex\`, \`--agent claude\`, or \`--agent copilot\` to install for an individual agent. Existing skill directories are protected from accidental overwrites unless \`--overwrite\` is explicitly supplied.
+Use `--agent codex`, `--agent claude`, or `--agent copilot` to install for an individual agent. Existing skill directories are protected from accidental overwrites unless `--overwrite` is explicitly supplied.
 
 ## 5. Engineering standards and project philosophy
 
@@ -194,7 +196,7 @@ The eight-stage architecture, 40 canonical skills, shared standards, and 13 Stag
 
 The latest commit is:
 
-\`bcc99b078a8f956729c4b2276b921136bf3acf2e\`
+`bcc99b078a8f956729c4b2276b921136bf3acf2e`
 
 The following workflows were verified green on that commit:
 
