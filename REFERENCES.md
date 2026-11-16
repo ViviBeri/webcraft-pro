@@ -83,3 +83,21 @@ Before adapting or redistributing third-party code, documentation, examples, ima
 6. Prefer independently written guidance that cites the source rather than copying substantial content.
 
 WebCraft Pro does not claim ownership of the referenced projects and is not affiliated with their maintainers.
+
+## Browser automation, quality and release
+
+- [Playwright best practices](https://playwright.dev/docs/best-practices) — user-visible assertions, isolated tests, resilient locators, and cross-browser projects.
+- [Playwright CI](https://playwright.dev/docs/ci) — browser installation, CI worker settings and test execution guidance.
+- [Playwright trace viewer](https://playwright.dev/docs/trace-viewer) — inspect action timelines, DOM snapshots, screenshots and network activity when debugging failures.
+- [Playwright accessibility testing](https://playwright.dev/docs/accessibility-testing) — axe-core integration and the limits of automated accessibility checks.
+- [Playwright visual comparisons](https://playwright.dev/docs/test-snapshots) — screenshot baselines and visual comparison configuration.
+- [Lighthouse CI getting started](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/getting-started.md) — collect, assert and retain Lighthouse reports in CI.
+- [Lighthouse CI assertions](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md#assertions) — configure route and audit assertions against a project baseline.
+- [OpenSSF Scorecard](https://scorecard.dev/) — evaluate open-source supply-chain practices and understand the limits of individual checks.
+- [Scorecard GitHub Action](https://github.com/ossf/scorecard/blob/main/docs/ossf-scorecard.yml) — upstream workflow example and reporting configuration.
+
+## Agent interoperability
+
+- [GitHub Copilot custom instructions](https://docs.github.com/en/copilot/concepts/prompting-and-context/custom-instructions) — repository instructions and shared `AGENTS.md` behavior across Copilot surfaces.
+- [Claude Code project memory and AGENTS.md](https://code.claude.com/docs/en/memory) — project instruction files and importing shared instructions with `@path`.
+- [Agent Skills specification](https://agentskills.io/specification) — canonical skill structure and metadata requirements.
