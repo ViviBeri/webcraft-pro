@@ -57,3 +57,14 @@ Keep animation responsive and stable on real devices by measuring bottlenecks, l
 ## Completion criteria
 
 The bottleneck is measured, the change addresses its cause, lifecycle resources are released, visual and interaction behavior is preserved, and the same scenario is re-tested on representative devices.
+
+
+## Rendering diagnosis details
+
+Separate scripting, style recalculation, layout, paint, compositing and asset decode costs before choosing an optimization. Transform and opacity are often good candidates for frequent animation, but large layers, filters, blending, rasterization and device memory can still make them expensive.
+
+- Inspect paint flashing, layer composition and frame timelines where browser tooling is available.
+- Avoid promoting many elements to layers; layer memory and compositing overhead can outweigh the benefit.
+- Batch layout reads before writes when custom measurement is unavoidable.
+- Pause or remove continuous work when the owning view is hidden, inactive or unmounted, where the interaction permits it.
+- Record the same route, device class, viewport and interaction for before/after comparisons.
