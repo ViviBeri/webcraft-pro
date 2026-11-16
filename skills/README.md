@@ -16,6 +16,8 @@ Each skill is a folder containing a SKILL.md with YAML frontmatter and task-spec
 | [visual-design-review](visual-design-review/SKILL.md) | Review rendered interfaces, responsive behavior, accessibility and interactions. |
 | [design-system-architecture](design-system-architecture/SKILL.md) | Architect semantic tokens, component foundations, themes and design-system governance. |
 | [visual-reference-analysis](visual-reference-analysis/SKILL.md) | Translate screenshots and visual references into original product-specific design decisions. |
+| [design-system-architecture](design-system-architecture/SKILL.md) | Architect semantic tokens, component foundations, themes and design-system governance. |
+| [visual-reference-analysis](visual-reference-analysis/SKILL.md) | Translate screenshots and visual references into original product-specific design decisions. |
 
 ### Frontend engineering
 
