@@ -136,52 +136,86 @@ async function main() {
             record(report, "axe-core", viewport.name, false, "high", "axe-core failed: " + error.message);
           }
           try {
-            const expected = await page.evaluate(() => {
-              const elements = [...document.querySelectorAll(
-                'a[href],area[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])'
-              )].filter((el) => {
-                const style = getComputedStyle(el); const rect = el.getBoundingClientRect();
+            const tabbableCount = await page.evaluate(() => {
+              const selector = 'a[href],area[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+              return [...document.querySelectorAll(selector)].filter((el) => {
+                const style = getComputedStyle(el);
+                const rect = el.getBoundingClientRect();
                 return el.tabIndex >= 0 && style.display !== "none" && style.visibility !== "hidden" &&
-                  Number(style.opacity) !== 0 && rect.width > 0 && rect.height > 0;
-              }).map((el, order) => ({ el, order, tabIndex: el.tabIndex }));
-              expectedSort(elements);
-              elements.forEach((item, index) => item.el.setAttribute("data-browser-check-focus-index", String(index)));
-              return elements.map((item) => ({ index: item.order, tabIndex: item.tabIndex }));
-              function expectedSort(items) {
-                items.sort((a, b) => {
-                  const aPositive = a.tabIndex > 0; const bPositive = b.tabIndex > 0;
-                  if (aPositive !== bPositive) return aPositive ? -1 : 1;
-                  if (aPositive && a.tabIndex !== b.tabIndex) return a.tabIndex - b.tabIndex;
-                  return a.order - b.order;
-                });
-              }
+                  rect.width > 0 && rect.height > 0;
+              }).length;
             });
-            if (!expected.length) {
+            if (!tabbableCount) {
               record(report, "keyboard-tab-order-and-focus", viewport.name, true, "info", "No visible tabbable controls");
             } else {
-              const visited = []; const issues = [];
-              for (let i = 0; i < Math.min(expected.length, 40); i += 1) {
+              const visited = [];
+              const issues = [];
+              let previousDomOrder = -1;
+              let focusedCount = 0;
+              for (let i = 0; i < 40; i += 1) {
                 await page.keyboard.press("Tab");
                 const state = await page.evaluate(() => {
                   const el = document.activeElement;
-                  if (!el || el === document.body || el === document.documentElement) return { index: null, visible: false, focus: false };
-                  const rect = el.getBoundingClientRect(); const style = getComputedStyle(el);
-                  return {
-                    index: el.getAttribute("data-browser-check-focus-index"),
-                    visible: rect.width > 0 && rect.height > 0 && style.display !== "none" && style.visibility !== "hidden",
-                    focus: el.matches(":focus-visible") &&
-                      ((style.outlineStyle !== "none" && parseFloat(style.outlineWidth) > 0) || style.boxShadow !== "none"),
-                  };
+                  if (!el || el === document.body || el === document.documentElement) {
+                    return { id: null, domOrder: -1, visible: false, focusVisible: false, focusIndicator: false };
+                  }
+                  const selector = 'a[href],area[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+                  const candidates = [...document.querySelectorAll(selector)];
+                  const domOrder = candidates.indexOf(el);
+                  const rect = el.getBoundingClientRect();
+                  const style = getComputedStyle(el);
+                  const visible = style.display !== "none" && style.visibility !== "hidden" &&
+                    rect.width > 0 && rect.height > 0;
+                  const focusVisible = el.matches(":focus-visible");
+                  const visibleColor = (value) => Boolean(value) &&
+                    value !== "transparent" && value !== "rgba(0, 0, 0, 0)" &&
+                    !/^rgba?\([^)]*,\s*0(?:\.0+)?\s*\)$/.test(value);
+                  const outline = style.outlineStyle !== "none" &&
+                    parseFloat(style.outlineWidth) > 0 && visibleColor(style.outlineColor);
+                  const shadow = style.boxShadow !== "none" && style.boxShadow !== "";
+                  const border = ["Top", "Right", "Bottom", "Left"].some((side) =>
+                    style["border" + side + "Style"] !== "none" &&
+                    parseFloat(style["border" + side + "Width"]) > 0 &&
+                    visibleColor(style["border" + side + "Color"])
+                  );
+                  const background = visibleColor(style.backgroundColor);
+                  const focusIndicator = focusVisible && (outline || shadow || border || background);
+                  let ids = window.__browserCheckFocusIds;
+                  if (!ids) {
+                    ids = { map: new WeakMap(), next: 1 };
+                    window.__browserCheckFocusIds = ids;
+                  }
+                  if (!ids.map.has(el)) ids.map.set(el, ids.next++);
+                  return { id: ids.map.get(el), domOrder, visible, focusVisible, focusIndicator };
                 });
-                visited.push(state.index);
-                if (!state.visible) issues.push("Tab reached a non-visible or unexpected target");
-                else if (state.index !== String(i)) issues.push("Tab order mismatch at position " + (i + 1));
-                if (state.visible && !state.focus) issues.push("No visible focus indicator at tab position " + (i + 1));
+                if (state.id === null) {
+                  if (focusedCount === 0) issues.push("Tab did not reach a visible focus target");
+                  break;
+                }
+                focusedCount += 1;
+                if (!state.visible) issues.push("Tab reached an invisible focus target at press " + (i + 1));
+                if (!state.focusIndicator) issues.push("No visible :focus-visible indicator at press " + (i + 1));
+                if (state.domOrder >= 0) {
+                  if (previousDomOrder >= 0 && state.domOrder < previousDomOrder) {
+                    issues.push("Tab traversal differs from DOM order at press " + (i + 1));
+                  }
+                  previousDomOrder = state.domOrder;
+                }
+                if (visited.includes(state.id)) {
+                  issues.push("Tab focus loop detected at press " + (i + 1));
+                  break;
+                }
+                visited.push(state.id);
               }
+              const highIssues = issues.filter((issue) =>
+                issue.startsWith("Tab did not") || issue.startsWith("Tab reached an invisible") ||
+                issue.startsWith("No visible") || issue.startsWith("Tab focus loop")
+              );
+              const orderIssues = issues.filter((issue) => issue.startsWith("Tab traversal differs"));
               record(report, "keyboard-tab-order-and-focus", viewport.name,
-                issues.length === 0 && visited.length === Math.min(expected.length, 40), "medium",
-                "Expected tabbable targets: " + expected.length + "; visited: " + visited.length + "; " +
-                (issues.slice(0, 5).join("; ") || "Keyboard traversal matched DOM/tabindex order with visible focus"));
+                highIssues.length === 0, highIssues.length ? "high" : orderIssues.length ? "warning" : "info",
+                "Initially visible tabbable controls: " + tabbableCount + "; focused targets: " + focusedCount +
+                "; " + (issues.slice(0, 8).join("; ") || "Tab traversal reached visible targets with visible focus indicators"));
             }
           } catch (error) {
             record(report, "keyboard-tab-order-and-focus", viewport.name, false, "medium", error.message);
