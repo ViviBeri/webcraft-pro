@@ -30,6 +30,9 @@ jobs:
         with:
           node-version: "22"
 
+      - name: Test skill validator
+        run: npm run test:validate
+
       - name: Validate skill metadata and stage structure
         run: npm run validate
 

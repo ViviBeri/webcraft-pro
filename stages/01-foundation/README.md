@@ -14,6 +14,7 @@ Provide one portable source of truth for WebCraft Pro, clear installation paths,
 - [Skill installer](../../scripts/install-skills.mjs)
 - [Skill installer tests](../../scripts/install-skills.test.mjs)
 - [Skill metadata validator](../../scripts/validate-skills.mjs)
+- [Skill validator tests](../../scripts/validate-skills.test.mjs)
 - [Validation workflow](../../.github/workflows/validate.yml)
 - [References and attribution](../../REFERENCES.md)
 
@@ -26,9 +27,18 @@ Provide one portable source of truth for WebCraft Pro, clear installation paths,
 - Skills remain in the portable `skills/<name>/SKILL.md` format.
 - Stage folders are indexes and acceptance records, not duplicate skill stores.
 
+## Legacy source archive status
+
+The original source ZIP is permanently unavailable and cannot be recovered for comparison. Legacy plugin-manifest parity is therefore unrecoverable. The current dependency-free installer at [scripts/install-skills.mjs](../../scripts/install-skills.mjs), together with its automated tests, is the verified baseline going forward. No claim is made that unavailable legacy manifests have been reproduced.
+
+## Validation scope and limitations
+
+The validator checks skill frontmatter, required metadata, naming and directory consistency, description length, non-empty instructions, and required repository entry-point and stage-index files. Its tests run the actual validator process against isolated temporary repository roots, including malformed metadata, duplicate names and missing required files.
+
+These checks verify repository structure and skill metadata. They do not validate full YAML semantics, agent runtime compatibility, the quality or correctness of skill instructions, or external platform behavior.
+
 ## Known gaps to close
 
-- Audit the existing installer and plugin/manifest story against the source archive before claiming packaging parity.
 - Verify each agent's current discovery and installation paths against official documentation.
 - Expand validation beyond skill metadata only when the repository has real fixtures and testable behavior.
 - Confirm that all root and stage indexes remain synchronized.
@@ -41,8 +51,8 @@ Provide one portable source of truth for WebCraft Pro, clear installation paths,
 - [x] Codex has a root `AGENTS.md`.
 - [x] The eight-stage architecture has one shared index.
 - [x] A dependency-free Node.js installer supports Codex, Claude Code and Copilot, skips existing skills by default, and offers dry-run and explicit overwrite modes.
-- [ ] Any legacy plugin manifests are audited against the source archive; none are present in the current live branch.
+- [x] Legacy source archive is permanently unavailable; legacy plugin-manifest parity is unrecoverable, and the current installer is the verified baseline.
 - [x] Skill metadata and project-local discovery paths are cross-checked against the current Agent Skills, Codex, Claude Code and GitHub Copilot documentation.
-- [ ] Validation coverage and limitations are documented and tested.
+- [x] Validation coverage and limitations are documented and tested.
 
 A checked item records repository presence, not an external compatibility guarantee. Complete the remaining checks before marking Stage 1 fully accepted.
