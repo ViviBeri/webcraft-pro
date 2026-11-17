@@ -214,7 +214,7 @@ When opening, remove `inert`, set `aria-hidden="false"` and update the trigger's
 Use CSS for a decorative icon swap when the control's accessible name and actual state are managed independently by the component. Both SVGs are decorative because the button supplies the action name.
 
 ```html
-<button type="button" class="toggle-button" aria-label="Enable notifications">
+<button type="button" class="toggle-button" aria-label="Notifications" aria-pressed="false">
   <span class="icon-swap" aria-hidden="true">
     <svg class="icon-swap__icon icon-swap__icon--off" viewBox="0 0 24 24">
       <path d="..." />
@@ -265,7 +265,7 @@ Use CSS for a decorative icon swap when the control's accessible name and actual
 }
 ```
 
-For a toggle button, use `aria-pressed` and a stable accessible label that describes the toggle itself (for example, "Notifications"), or use a changing action label when the control performs an explicit enable/disable action. Do not mix the two naming models. Update the state and label/pressed value in the component logic; CSS only presents the state. Ensure the initial HTML state matches the actual control state.
+For this toggle button, keep the accessible label stable ("Notifications") and update `aria-pressed` from `false` to `true` with the actual state. Alternatively, an explicit enable/disable action may use a changing action label without `aria-pressed`; do not mix the two naming models. Update the state and label/pressed value in the component logic; CSS only presents the state. Ensure the initial HTML state matches the actual control state.
 
 ## Review additions before production
 
