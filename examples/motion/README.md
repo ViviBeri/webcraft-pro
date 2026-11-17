@@ -161,3 +161,116 @@ The buttons must remain usable if motion is reduced or unavailable. Do not make 
 ## 7. Reference alignment
 
 The patterns in this directory are independently authored and reviewed against the official GSAP documentation for core tweens, timelines, ScrollTrigger, framework lifecycle and performance. Follow the installed GSAP version and official documentation when APIs change.
+
+## 8. CSS disclosure panel transition
+
+Use this pattern only when the component already has a correct disclosure state and keyboard contract. The trigger must be a real button with `aria-expanded` and an `aria-controls` reference. The component owner must keep `aria-expanded`, `aria-hidden` and `inert` synchronized with the actual open state; do not rely on CSS alone to manage semantics or focus.
+
+The closed panel uses `visibility: hidden` so its descendants are not keyboard-focusable after the exit transition. On close, move focus back to the trigger first if focus is inside the panel. Do not apply menu roles to ordinary site navigation.
+
+```html
+<button type="button" aria-expanded="false" aria-controls="account-panel">
+  Account options
+</button>
+<div id="account-panel" class="disclosure-panel" aria-hidden="true" inert>
+  <!-- Disclosure content -->
+</div>
+```
+
+```css
+.disclosure-panel {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-0.375rem);
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease,
+    visibility 0s linear 160ms;
+}
+
+.disclosure-panel.is-open {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease,
+    visibility 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .disclosure-panel,
+  .disclosure-panel.is-open {
+    transition: none;
+    transform: none;
+  }
+}
+```
+
+When opening, remove `inert`, set `aria-hidden="false"` and update the trigger's `aria-expanded` before or with the visual state change. When closing, restore focus if necessary, set `inert`, update the ARIA state, then apply the closing class. The component must also define Escape behavior if its interaction pattern requires it. Verify that the panel cannot receive focus while closed.
+
+## 9. CSS icon state transition
+
+Use CSS for a decorative icon swap when the control's accessible name and actual state are managed independently by the component. Both SVGs are decorative because the button supplies the action name.
+
+```html
+<button type="button" class="toggle-button" aria-label="Enable notifications">
+  <span class="icon-swap" aria-hidden="true">
+    <svg class="icon-swap__icon icon-swap__icon--off" viewBox="0 0 24 24">
+      <path d="..." />
+    </svg>
+    <svg class="icon-swap__icon icon-swap__icon--on" viewBox="0 0 24 24">
+      <path d="..." />
+    </svg>
+  </span>
+</button>
+```
+
+```css
+.icon-swap {
+  display: inline-grid;
+  inline-size: 1.25em;
+  block-size: 1.25em;
+}
+
+.icon-swap__icon {
+  grid-area: 1 / 1;
+  inline-size: 100%;
+  block-size: 100%;
+  fill: none;
+  stroke: currentColor;
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.icon-swap__icon--on {
+  opacity: 0;
+  transform: scale(0.85);
+}
+
+.toggle-button[aria-pressed="true"] .icon-swap__icon--off {
+  opacity: 0;
+  transform: scale(0.85);
+}
+
+.toggle-button[aria-pressed="true"] .icon-swap__icon--on {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-swap__icon {
+    transition: none;
+    transform: none;
+  }
+}
+```
+
+For a toggle button, use `aria-pressed` and a stable accessible label that describes the toggle itself (for example, "Notifications"), or use a changing action label when the control performs an explicit enable/disable action. Do not mix the two naming models. Update the state and label/pressed value in the component logic; CSS only presents the state. Ensure the initial HTML state matches the actual control state.
+
+## Review additions before production
+
+- Verify disclosure semantics and focus behavior independently from the transition.
+- Confirm hidden disclosure content cannot receive focus or be exposed as visible content to assistive technology.
+- Confirm icon-only controls have a correct accessible name and state even with CSS disabled.
+- Test both patterns with reduced motion enabled and with keyboard-only input.
+
