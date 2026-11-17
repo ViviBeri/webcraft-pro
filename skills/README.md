@@ -26,7 +26,7 @@ Each skill is a folder containing a SKILL.md with YAML frontmatter and task-spec
 | [responsive-engineering](responsive-engineering/SKILL.md) | Engineer fluid layouts, touch behavior, zoom and responsive reflow. |
 | [modern-css](modern-css/SKILL.md) | Maintain CSS cascade, tokens, layout primitives and accessible states. |
 | [forms-and-validation](forms-and-validation/SKILL.md) | Build accessible forms with server-side validation and safe submission flows. |
-| [document-head-seo](document-head-seo/SKILL.md) | Build valid, discoverable document heads with metadata, social previews, canonical URLs and icons. |
+| [document-head-seo](document-head-seo/SKILL.md) | Build valid, discoverable document heads with metadata, social previews, canonical URLs and icons. |\n| [icon-engineering](icon-engineering/SKILL.md) | Select, author, style and verify accessible, scalable SVG icons and icon controls. |
 
 ### Motion and interaction
 
