@@ -23,7 +23,7 @@ LLMs are trained on extensive software-engineering material, including semantic 
 
 WebCraft Pro does not claim to teach models facts they have never seen. It makes important requirements explicit through reusable skills and standards, then moves beyond instructions: repository validation, static audits, and browser-based tests provide evidence that selected requirements were actually checked. **The value is the guardrail and verification loop—not the prompt alone.**
 
-The micro-benchmark in [examples/benchmark](./examples/benchmark/) illustrates a deliberately flawed raw React form beside an accessible, skill-guided version. It is an illustrative code comparison, not a measured model benchmark; automated model evaluation is tracked in `TODO.md`.
+The micro-benchmark in [examples/benchmark](./examples/benchmark/) illustrates a deliberately flawed raw React form beside an accessible, skill-guided version. The examples are illustrative—not captured model outputs—and are not yet an executable CI benchmark. The existing CI workflows enforce repository and keyboard/focus checks; the on-demand Playwright/axe-core checker can assess rendered pages. Automated, repeatable model evaluation is tracked in `TODO.md`.
 
 ## 1. Eight-stage architecture
 
