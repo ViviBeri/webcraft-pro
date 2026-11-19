@@ -95,6 +95,39 @@ Check the design at narrow mobile, wide mobile, tablet, laptop and large desktop
 
 Review the complete page, not just the hero or first viewport. Ensure all pages feel related without becoming repetitive.
 
+## Two-Pass Design Workflow
+
+### Pass 1: Design Plan and critique
+
+Before writing code, create a concise **Design Plan** grounded in the user's brief. Include:
+
+- **Typography:** selected typefaces or appropriate font categories, roles, hierarchy, weights and readable line lengths.
+- **Palette:** named color roles and concrete values, including a contrast strategy.
+- **Layout:** page composition, grid, spacing rhythm, content hierarchy and responsive behavior.
+- **Distinctive decisions:** the product-specific visual idea and why it fits the audience and primary task.
+- **Motion and accessibility:** intended interaction motion, keyboard focus, reduced-motion behavior and other relevant constraints.
+
+Critique the plan against the actual brief before implementation:
+
+- Check whether every major choice is justified by the product, audience, content and user task.
+- Challenge predictable defaults and choices that could be reused unchanged for an unrelated product.
+- If the plan feels generic, revise the typography, palette, composition or focal idea and explain what changed.
+- Remove decorative choices that do not improve comprehension, identity, hierarchy or interaction.
+- Present the revised plan for the user's review and follow the human confirmation gate below. Do not begin implementation before explicit approval.
+
+### Pass 2: Implement and self-critique
+
+After the user approves the Design Plan, implement it within the existing project architecture and constraints. Then perform a **Self-Critique** before presenting the result:
+
+- Compare the implementation with the approved plan and the original brief; identify and correct meaningful drift.
+- Remove unnecessary decoration, redundant effects and visual elements without a clear purpose.
+- Check that typography, palette, spacing and hierarchy remain coherent across the complete experience.
+- Verify responsive behavior, semantic structure, readable contrast, visible keyboard focus and reduced-motion support.
+- Test key interactions and ensure controls communicate and perform their intended actions.
+- Report any checks that could not be performed; never claim unverified results.
+
+The self-critique is a required implementation pass, not a substitute for the separate visual-design-review skill or user approval of material design changes.
+
 ### 7. Human confirmation gate
 
 Present the design direction, design tokens, page/component hierarchy, responsive behavior and accessibility constraints for user review. Ask for explicit confirmation before implementation.
