@@ -11,7 +11,7 @@
 
 **🌐 [View the official WebCraft Pro Website](https://viviberi.github.io/webcraft-pro/)**
 
-![WebCraft Pro Banner](./assets/banner.png)
+![WebCraft Pro — Complete Web Engineering Toolkit for AI Agents](./assets/webcraft-pro-banner.png)
 
 **Design with intention. Engineer with discipline. Secure by default.**
 
