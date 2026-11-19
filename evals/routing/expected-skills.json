@@ -1,0 +1,29 @@
+{
+  "keyboard-focus-01": [
+    "keyboard-focus"
+  ],
+  "keyboard-focus-02": [
+    "keyboard-focus"
+  ],
+  "keyboard-focus-03": [
+    "keyboard-focus"
+  ],
+  "wcag-auditing-01": [
+    "wcag-auditing"
+  ],
+  "wcag-auditing-02": [
+    "wcag-auditing"
+  ],
+  "wcag-auditing-03": [
+    "wcag-auditing"
+  ],
+  "core-web-vitals-01": [
+    "core-web-vitals"
+  ],
+  "core-web-vitals-02": [
+    "core-web-vitals"
+  ],
+  "core-web-vitals-03": [
+    "core-web-vitals"
+  ]
+}
