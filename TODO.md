@@ -42,6 +42,10 @@ This file is the repository's source of truth for the consolidated outstanding d
 - [ ] Include smoke tests, deployment health and rollback in the release checklist. (stages/08-browser-qa-release/README.md)
 - [ ] Test templates in a sample application before describing them as production-ready. (stages/08-browser-qa-release/README.md)
 
+## Benchmarking and evaluation
+
+- [ ] Build a reproducible evaluation script that sends the same task prompt to a selected model with and without the relevant WebCraft Pro skills, renders or packages both outputs into the same test fixture, runs identical Playwright and axe-core checks, and reports comparable metrics (for example, violations, keyboard/focus failures, task completion, and run metadata). Record model/version, settings, prompt, repetitions, and limitations; do not present a single run as statistically conclusive.
+
 ## Existing documentation gaps
 
 - [ ] Reconcile the planned example applications in `examples/README.md` with the example applications actually present in the repository. (examples/README.md; repository tree)
