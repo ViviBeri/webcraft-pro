@@ -40,6 +40,12 @@ These are warning signs, not automatic violations:
 
 Do not remove a pattern simply because it is common. Retain it when it is the clearest solution for the task.
 
+## Distinctiveness challenge
+
+Challenge predictable AI gradients, identical card grids, and template-like layouts. Before finalizing, ask yourself: **"Could this design belong to any other product?"** If yes, rewrite it. Ground the revision in the actual product, audience, content and primary user task; do not add novelty or decoration without a clear purpose.
+
+
+
 ## Improvement workflow
 
 ### 1. Establish the product truth
