@@ -36,5 +36,11 @@ jobs:
       - name: Validate skill metadata and stage structure
         run: npm run validate
 
+      - name: Validate skill inventory count
+        run: npm run validate:skill-count
+
+      - name: Validate routing evaluation corpus
+        run: npm run validate:evals
+
       - name: Test skill installer
         run: npm run test:installer
