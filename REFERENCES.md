@@ -9,6 +9,17 @@ WebCraft Pro is an independently authored engineering toolkit. This directory po
 - [Angular documentation: Dependency Injection](https://angular.dev/guide/di) — official explanation of dependency injection concepts and explicit dependency boundaries.
 - [web.dev](https://web.dev/) — practical guidance for building fast, accessible and resilient web experiences.
 
+## Optional Visual Builders (Human-in-the-loop)
+
+These tools may be used by humans to create or edit website layouts and generate HTML/CSS. They are optional references, not required WebCraft Pro dependencies. AI agents reviewing exported code should follow the guardrails in the frontend architecture skill and shared frontend engineering standard.
+
+- [GrapesJS](https://github.com/GrapesJS/grapesjs) — embeddable, open-source visual web builder. License: BSD-3-Clause.
+- [HugoBlox Kit](https://github.com/HugoBlox/kit) — reusable website-building kit for HugoBlox projects. License: MIT.
+- [Webstudio](https://github.com/webstudio-is/webstudio) — visual website development platform. License: AGPL-3.0-or-later; review its obligations before copying or distributing any of its code.
+- [VvvebJs](https://github.com/givanz/VvvebJs) — drag-and-drop website builder written in JavaScript. License: Apache-2.0.
+
+Listing a project does not imply endorsement, affiliation, or permission to reuse its code or assets. Verify the current license and applicable notices in each upstream repository before reuse.
+
 ## Design systems and interface quality
 
 - [W3C Design Tokens Community Group](https://www.w3.org/community/design-tokens/) — community group work on interoperable design-token formats.
