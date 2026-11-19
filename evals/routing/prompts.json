@@ -1,0 +1,38 @@
+[
+  {
+    "id": "keyboard-focus-01",
+    "prompt": "Review this dialog implementation for keyboard focus entry, Escape handling, and focus restoration."
+  },
+  {
+    "id": "keyboard-focus-02",
+    "prompt": "Make this custom tab interface work correctly with Tab, arrow keys, Home, and End."
+  },
+  {
+    "id": "keyboard-focus-03",
+    "prompt": "Find keyboard traps and controls that cannot be reached without a mouse."
+  },
+  {
+    "id": "wcag-auditing-01",
+    "prompt": "Audit this checkout flow against WCAG 2.2 AA and produce evidence-backed findings."
+  },
+  {
+    "id": "wcag-auditing-02",
+    "prompt": "Create a scoped accessibility audit plan covering forms, navigation, mobile reflow, and screen readers."
+  },
+  {
+    "id": "wcag-auditing-03",
+    "prompt": "Can we claim this entire site conforms to WCAG because the homepage axe scan has no violations? Assess the evidence."
+  },
+  {
+    "id": "core-web-vitals-01",
+    "prompt": "Investigate why our mobile LCP is above 2.5 seconds using field data and lab traces."
+  },
+  {
+    "id": "core-web-vitals-02",
+    "prompt": "Diagnose layout shifts caused by late-loading images, fonts, and embedded content."
+  },
+  {
+    "id": "core-web-vitals-03",
+    "prompt": "Compare field Core Web Vitals at the 75th percentile for mobile and desktop, then prioritize fixes."
+  }
+]
