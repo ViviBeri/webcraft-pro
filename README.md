@@ -16,6 +16,15 @@ WebCraft Pro is an open-source, framework-agnostic collection of **43 reusable A
 
 It provides AI coding agents with a structured engineering process covering the complete website delivery lifecycle—from initial design direction through implementation, accessibility, security, performance, browser QA, and release.
 
+
+## Why this exists (LLMs already know this)
+
+LLMs are trained on extensive software-engineering material, including semantic HTML, accessibility, security, and performance practices. Knowing a rule is not the same as applying it consistently. Under context pressure, speed-oriented generation, ambiguous requirements, or hallucinated assumptions, an agent can still omit labels, choose non-semantic controls, skip focus states, or leave risky patterns unchecked.
+
+WebCraft Pro does not claim to teach models facts they have never seen. It makes important requirements explicit through reusable skills and standards, then moves beyond instructions: repository validation, static audits, and browser-based tests provide evidence that selected requirements were actually checked. **The value is the guardrail and verification loop—not the prompt alone.**
+
+The micro-benchmark in [examples/benchmark](./examples/benchmark/) illustrates a deliberately flawed raw React form beside an accessible, skill-guided version. It is an illustrative code comparison, not a measured model benchmark; automated model evaluation is tracked in `TODO.md`.
+
 ## 1. Eight-stage architecture
 
 WebCraft Pro organizes the engineering lifecycle into eight stages:
