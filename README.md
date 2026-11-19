@@ -1,4 +1,4 @@
-![WebCraft Pro Logo](./assets/webcraft-pro-icon.png)
+![WebCraft Pro Icon](./assets/webcraft-pro-icon1.png)
 
 # WebCraft Pro — Engineering Toolkit for AI Agents
 
