@@ -108,7 +108,7 @@ Automated checks complement—not replace—manual assistive-technology testing,
 
 The canonical `skills/` directory contains 43 portable `SKILL.md` files covering:
 
-- Design intelligence and visual quality.
+- Design intelligence and visual quality, including a two-pass design planning and self-critique workflow.
 - Frontend architecture, component engineering, and document head, SEO, and meta tags.
 - Responsive design and modern CSS.
 - GSAP, motion systems, and interactive storytelling.
