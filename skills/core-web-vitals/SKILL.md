@@ -34,3 +34,11 @@ Use this skill when a page feels slow, interactions lag, content shifts during l
 ## Deliverables
 
 Provide the page or journey scope, field and lab evidence, metric values, likely causes, prioritized fixes, verification conditions and remaining uncertainty.
+
+## Common AI failure mode
+
+**Failure:** An agent treats one Lighthouse score or a single lab run as representative field performance, or reports a site as passing without sufficient real-user data.
+
+**Why it matters:** Lab conditions are controlled samples and may not reflect the experience of users across devices, networks, locations, and page templates.
+
+**Prevention:** Separate field data from lab diagnostics, report the 75th-percentile field metrics with device segmentation and sample context, use lab traces to investigate causes, and state when field evidence is insufficient.

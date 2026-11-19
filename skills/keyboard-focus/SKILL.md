@@ -59,3 +59,11 @@ Test with keyboard only, browser zoom, visible focus inspection and at least one
 ## Completion criteria
 
 All controls are reachable and operable, focus is visible and unobscured, custom widgets follow a documented pattern, and focus is restored predictably after transient UI closes.
+
+## Common AI failure mode
+
+**Failure:** An agent makes a custom control look interactive but leaves it unreachable by keyboard, removes the native focus outline, or implements a generic arrow-key model without checking the widget pattern.
+
+**Why it matters:** Keyboard users can lose access to essential actions, become trapped, or lose track of their position even when the interface appears correct with a mouse.
+
+**Prevention:** Prefer native controls, follow the exact WAI-ARIA Authoring Practices pattern for custom widgets, and verify forward/reverse Tab order, visible and unobscured focus, documented widget keys, Escape behavior, and focus restoration.
