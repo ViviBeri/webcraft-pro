@@ -16,6 +16,7 @@ Each skill is a folder containing a SKILL.md with YAML frontmatter and task-spec
 | [visual-design-review](visual-design-review/SKILL.md) | Review rendered interfaces, responsive behavior, accessibility and interactions. |
 | [design-system-architecture](design-system-architecture/SKILL.md) | Architect semantic tokens, component foundations, themes and design-system governance. |
 | [visual-reference-analysis](visual-reference-analysis/SKILL.md) | Translate screenshots and visual references into original product-specific design decisions. |
+| [quickstart-onboarding](quickstart-onboarding/SKILL.md) | Turn a short project brief into a confirmed design direction before implementation. |
 
 ### Frontend engineering
 
@@ -26,7 +27,8 @@ Each skill is a folder containing a SKILL.md with YAML frontmatter and task-spec
 | [responsive-engineering](responsive-engineering/SKILL.md) | Engineer fluid layouts, touch behavior, zoom and responsive reflow. |
 | [modern-css](modern-css/SKILL.md) | Maintain CSS cascade, tokens, layout primitives and accessible states. |
 | [forms-and-validation](forms-and-validation/SKILL.md) | Build accessible forms with server-side validation and safe submission flows. |
-| [document-head-seo](document-head-seo/SKILL.md) | Build valid, discoverable document heads with metadata, social previews, canonical URLs and icons. |\n| [icon-engineering](icon-engineering/SKILL.md) | Select, author, style and verify accessible, scalable SVG icons and icon controls. |
+| [document-head-seo](document-head-seo/SKILL.md) | Build valid, discoverable document heads with metadata, social previews, canonical URLs and icons. |
+| [icon-engineering](icon-engineering/SKILL.md) | Select, author, style and verify accessible, scalable SVG icons and icon controls. |
 
 ### Motion and interaction
 
@@ -76,6 +78,12 @@ Each skill is a folder containing a SKILL.md with YAML frontmatter and task-spec
 | [network-caching](network-caching/SKILL.md) | Tune network delivery, CDN behavior and HTTP caching policies. |
 | [rendering-performance](rendering-performance/SKILL.md) | Diagnose browser rendering, layout, paint and hydration bottlenecks. |
 | [performance-testing](performance-testing/SKILL.md) | Define performance budgets and repeatable CI regression checks. |
+
+### Review and quality
+
+| Skill | Purpose |
+|---|---|
+| [independent-review](independent-review/SKILL.md) | Critique prototypes, design systems and security-critical code from a fresh perspective. |
 
 ## Format
 
