@@ -55,3 +55,11 @@ For each finding include:
 ## Completion criteria
 
 The audit has a defined scope and target, representative workflows have been tested, findings map to evidence and criteria, limitations are explicit, and remediated issues have been retested.
+
+## Common AI failure mode
+
+**Failure:** An agent treats a clean automated scan or a small sample of pages as proof that the entire site conforms to WCAG.
+
+**Why it matters:** Automated tools detect only a subset of accessibility failures, and untested templates, states, journeys, and assistive-technology behavior can contain serious barriers.
+
+**Prevention:** Define and record scope, WCAG version and level; combine automated checks with manual keyboard, reflow, content, and assistive-technology testing; map findings to criteria and evidence; and state exclusions and untested areas explicitly.
