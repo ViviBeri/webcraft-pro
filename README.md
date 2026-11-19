@@ -5,6 +5,7 @@
 [![Validate Repository](https://github.com/ViviBeri/webcraft-pro/actions/workflows/validate.yml/badge.svg)](https://github.com/ViviBeri/webcraft-pro/actions/workflows/validate.yml)
 [![Security Pattern Audit](https://github.com/ViviBeri/webcraft-pro/actions/workflows/security-audit.yml/badge.svg)](https://github.com/ViviBeri/webcraft-pro/actions/workflows/security-audit.yml)
 [![Accessibility Keyboard Tests](https://github.com/ViviBeri/webcraft-pro/actions/workflows/accessibility-check.yml/badge.svg)](https://github.com/ViviBeri/webcraft-pro/actions/workflows/accessibility-check.yml)
+[![Latest Release](https://img.shields.io/github/v/release/ViviBeri/webcraft-pro?display_name=tag&sort=semver)](https://github.com/ViviBeri/webcraft-pro/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D22.12.0-brightgreen)](https://nodejs.org/)
 
@@ -223,21 +224,15 @@ Its core principles are:
 
 ## Project status
 
-The eight-stage architecture, 43 canonical skills, shared standards, and 13 Stage 5–7 engineering templates are maintained in the repository.
+**Latest release: [v1.4.0 — Two-Pass Design & Self-Critique](https://github.com/ViviBeri/webcraft-pro/releases/tag/v1.4.0).**
 
-The official [WebCraft Pro landing page](https://viviberi.github.io/webcraft-pro/) is built with zero dependencies and semantic HTML, and passes the project's Playwright accessibility checks.
+The release includes the two-pass design workflow, the anti-slop originality challenge, pre-flight design review requirements, and the official GitHub Pages website.
 
-The latest commit is:
+The official [WebCraft Pro landing page](https://viviberi.github.io/webcraft-pro/) was checked with the on-demand Chromium browser checker on 19 November 2026. The run completed **24 checks with 0 failures** across mobile (390px), tablet (768px), and desktop (1440px), in standard and reduced-motion modes. The report recorded no axe-core violations, 38 passed axe-core rules and 1 incomplete rule per viewport scan, successful keyboard traversal with visible focus indicators, and no uncaught page errors. [View the browser-check run and artifacts](https://github.com/ViviBeri/webcraft-pro/actions/runs/44602749892).
 
-`bcc99b078a8f956729c4b2276b921136bf3acf2e`
+The axe-core incomplete result is not a confirmed violation; it still requires manual review. Automated checks complement rather than replace manual assistive-technology testing and human review.
 
-The following workflows were verified green on that commit:
-
-- Validate Repository.
-- Security Pattern Audit.
-- Accessibility Keyboard Tests.
-
-WebCraft Pro provides a complete structured foundation for AI-assisted web engineering. Individual applications still require project-specific implementation, testing, and human review before release.
+The repository maintains 43 canonical skills, eight lifecycle stages, shared engineering standards, and 13 accessibility, security, and performance templates. Individual applications still require project-specific implementation, testing, and human review before release.
 
 **WebCraft Pro — Better interfaces. Better engineering. Safer releases.**
 
