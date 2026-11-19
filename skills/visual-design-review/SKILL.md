@@ -77,7 +77,18 @@ Use automated tools as supporting evidence, not as a substitute for manual check
 
 Test navigation, calls to action, menus, dialogs, forms, accordions and other visible controls. Check loading, success and failure feedback. Confirm that links lead to the intended destinations and buttons perform the advertised action.
 
-### 6. Prioritize findings
+### 6. Pre-Flight Check
+
+Before presenting the review or completed work, inspect the output against this checklist:
+
+- **Intentional motion:** motion has a clear purpose, does not distract or delay interaction, and responds appropriately to user actions.
+- **Responsive behavior:** layouts, navigation, content, images and controls work at the supported viewport sizes without clipping or horizontal overflow.
+- **Keyboard focus:** interactive elements are reachable and operable by keyboard, with a clear visible focus indicator and sensible focus order.
+- **Reduced motion:** non-essential motion is reduced or removed when the user requests reduced motion; essential state changes remain understandable.
+
+Record the evidence and any limitations. Fix confirmed defects when implementation is in scope; otherwise include them as prioritized findings. Do not mark a check as passed without inspecting it.
+
+### 7. Prioritize findings
 
 Classify each issue:
 
@@ -88,7 +99,7 @@ Classify each issue:
 
 Separate confirmed defects from subjective design preferences.
 
-### 7. Report and fix
+### 8. Report and fix
 
 For each finding, include:
 
