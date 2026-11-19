@@ -40,6 +40,15 @@ Make the smallest coherent architectural change that improves clarity, reliabili
    - Check direct navigation, refresh, not-found behavior and environment configuration where relevant.
    - Report checks not run and explain why.
 
+## Reviewing Visual Builder Export Code
+
+If a user provides HTML/CSS exported from a visual builder (like GrapesJS, Webstudio, or Webflow), do not blindly trust it. Audit it for semantic HTML (div-soup), unused CSS, WCAG accessibility violations, and vendor lock-in scripts. Strip out unnecessary builder bloat before integrating it into the codebase.
+
+- Preserve required behavior and visual intent while replacing generic containers with semantic elements where appropriate.
+- Check keyboard operation, accessible names, focus visibility, heading hierarchy, form labels, contrast and responsive reflow.
+- Identify builder runtime dependencies, hosted assets, proprietary attributes and scripts; remove them only when they are not required by the exported experience.
+- Verify the resulting code in the target application and report any retained dependencies or limitations.
+
 ## Component Architecture
 
 Angular's Dependency Injection and module organization are useful conceptual references for decoupling responsibilities and making dependencies explicit. Apply the underlying principles—not Angular-specific APIs or conventions—even when working in React, Vue or another frontend stack. Keep abstractions proportionate to the project and follow its existing framework conventions.
