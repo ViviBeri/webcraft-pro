@@ -4,7 +4,7 @@
 
 The v1.5.0 CI integration validates only the static evaluation corpus. It does not invoke a language model, infer actual skill selection, require provider credentials, or produce routing-accuracy claims.
 
-Live evaluation is an optional, separately invoked layer. The recommended runner to evaluate is [skilldx](https://github.com/skilldx/skilldx), subject to a compatibility and license review before adoption. This repository does not vendor it or add it as a dependency.
+Live evaluation is an optional, separately invoked layer. The recommended runner to evaluate is [skilldx](https://github.com/AndreySukhanov/skilldx), subject to a compatibility and license review before adoption. This repository does not vendor it or add it as a dependency.
 
 ## Runner contract
 
