@@ -8,6 +8,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D22.12.0-brightgreen)](https://nodejs.org/)
 
+**🌐 [View the official WebCraft Pro Website](https://viviberi.github.io/webcraft-pro/)**
+
 ![WebCraft Pro Banner](./assets/banner.png)
 
 **Design with intention. Engineer with discipline. Secure by default.**
@@ -222,6 +224,8 @@ Its core principles are:
 ## Project status
 
 The eight-stage architecture, 43 canonical skills, shared standards, and 13 Stage 5–7 engineering templates are maintained in the repository.
+
+The official [WebCraft Pro landing page](https://viviberi.github.io/webcraft-pro/) is built with zero dependencies and semantic HTML, and passes the project's Playwright accessibility checks.
 
 The latest commit is:
 
