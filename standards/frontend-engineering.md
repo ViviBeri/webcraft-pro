@@ -16,6 +16,7 @@ This standard is the shared baseline for WebCraft Pro frontend engineering skill
 - Keep secrets, authorization and privileged operations on trusted server boundaries.
 - Prefer incremental and reversible migrations.
 - Avoid new dependencies and abstractions without a demonstrated benefit.
+- Exported code from visual builders must be audited for semantic structure, performance bloat, and accessibility before being accepted into production.
 
 ## 3. Component quality
 
