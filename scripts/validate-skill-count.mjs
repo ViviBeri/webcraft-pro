@@ -29,9 +29,20 @@ async function main() {
     }
   }
 
-  const listed = [...index.matchAll(/^\\| \\[([a-z0-9-]+)\\]\\(([a-z0-9-]+)\\/SKILL\\.md\\) \\|/gm)]
-    .map((match) => match[2])
-    .sort();
+  const listed = index.split("\n").flatMap((line) => {
+    if (!line.startsWith("| [")) return [];
+    const labelStart = line.indexOf("[") + 1;
+    const labelEnd = line.indexOf("](", labelStart);
+    const targetStart = labelEnd + 2;
+    const targetEnd = line.indexOf("/SKILL.md)", targetStart);
+    if (labelEnd < 0 || targetEnd < 0) return [];
+    const label = line.slice(labelStart, labelEnd);
+    const target = line.slice(targetStart, targetEnd);
+    if (label !== target) {
+      throw new Error(`Skill index label/path mismatch: ${label} -> ${target}`);
+    }
+    return [target];
+  }).sort();
 
   if (listed.length !== count) {
     throw new Error(`skills/README.md lists ${listed.length} skills, but skills/ contains ${count} directories`);
