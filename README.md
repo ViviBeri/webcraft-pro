@@ -15,7 +15,7 @@
 
 **Design with intention. Engineer with discipline. Secure by default.**
 
-WebCraft Pro is an open-source, framework-agnostic collection of **43 reusable Agent Skills**, shared engineering standards, practical examples, and verification workflows for building distinctive, accessible, performant, and secure web applications.
+WebCraft Pro is an open-source, framework-agnostic collection of **44 reusable Agent Skills**, shared engineering standards, practical examples, and verification workflows for building distinctive, accessible, performant, and secure web applications.
 
 It provides AI coding agents with a structured engineering process covering the complete website delivery lifecycle—from initial design direction through implementation, accessibility, security, performance, browser QA, and release.
 
@@ -105,9 +105,9 @@ Automated checks complement—not replace—manual assistive-technology testing,
 
 ## 3. Skills and engineering templates
 
-### 43 reusable Agent Skills
+### 44 reusable Agent Skills
 
-The canonical `skills/` directory contains 43 portable `SKILL.md` files covering:
+The canonical `skills/` directory contains 44 portable `SKILL.md` files covering:
 
 - Design intelligence and visual quality, including a two-pass design planning and self-critique workflow.
 - Frontend architecture, component engineering, and document head, SEO, and meta tags.
@@ -232,7 +232,7 @@ The official [WebCraft Pro landing page](https://viviberi.github.io/webcraft-pro
 
 The axe-core incomplete result is not a confirmed violation; it still requires manual review. Automated checks complement rather than replace manual assistive-technology testing and human review.
 
-The repository maintains 43 canonical skills, eight lifecycle stages, shared engineering standards, and 13 accessibility, security, and performance templates. Individual applications still require project-specific implementation, testing, and human review before release.
+The repository maintains 44 canonical skills, eight lifecycle stages, shared engineering standards, and 13 accessibility, security, and performance templates. Individual applications still require project-specific implementation, testing, and human review before release.
 
 **WebCraft Pro — Better interfaces. Better engineering. Safer releases.**
 

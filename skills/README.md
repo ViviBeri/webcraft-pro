@@ -15,7 +15,7 @@ Each skill is a folder containing a SKILL.md with YAML frontmatter and task-spec
 | [premium-landing-pages](premium-landing-pages/SKILL.md) | Build responsive marketing and product landing pages with working conversion paths. |
 | [visual-design-review](visual-design-review/SKILL.md) | Review rendered interfaces, responsive behavior, accessibility and interactions. |
 | [design-system-architecture](design-system-architecture/SKILL.md) | Architect semantic tokens, component foundations, themes and design-system governance. |
-| [visual-reference-analysis](visual-reference-analysis/SKILL.md) | Translate screenshots and visual references into original product-specific design decisions. |
+| [visual-reference-analysis](visual-reference-analysis/SKILL.md) | Translate screenshots and visual references into original product-specific design decisions. |\n| [quickstart-onboarding](quickstart-onboarding/SKILL.md) | Turn a short project brief into a confirmed design direction before implementation. |
 
 ### Frontend engineering
 
@@ -75,7 +75,7 @@ Each skill is a folder containing a SKILL.md with YAML frontmatter and task-spec
 | [font-performance](font-performance/SKILL.md) | Improve font loading, fallback behavior and typography stability. |
 | [network-caching](network-caching/SKILL.md) | Tune network delivery, CDN behavior and HTTP caching policies. |
 | [rendering-performance](rendering-performance/SKILL.md) | Diagnose browser rendering, layout, paint and hydration bottlenecks. |
-| [performance-testing](performance-testing/SKILL.md) | Define performance budgets and repeatable CI regression checks. |
+| [performance-testing](performance-testing/SKILL.md) | Define performance budgets and repeatable CI regression checks. |\n\n### Review and quality\n\n| Skill | Purpose |\n|---|---|\n| [independent-review](independent-review/SKILL.md) | Critique prototypes, design systems and security-critical code from a fresh perspective. |
 
 ## Format
 
