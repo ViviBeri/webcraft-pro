@@ -29,8 +29,8 @@ async function main() {
     }
   }
 
-  const listed = [...index.matchAll(/^\| \[([a-z0-9-]+)\]\(\.\/[a-z0-9-]+\/SKILL\.md\) \|/gm)]
-    .map((match) => match[1])
+  const listed = [...index.matchAll(/^\\| \\[([a-z0-9-]+)\\]\\(([a-z0-9-]+)\\/SKILL\\.md\\) \\|/gm)]
+    .map((match) => match[2])
     .sort();
 
   if (listed.length !== count) {
