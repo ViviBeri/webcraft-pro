@@ -14,15 +14,9 @@ python3 -m http.server 8000 --directory docs
 
 Then visit [http://localhost:8000](http://localhost:8000).
 
-## Deploy with GitHub Pages
+## Live website
 
-1. Open the repository on GitHub.
-2. Go to **Settings → Pages**.
-3. Under **Build and deployment**, choose **Deploy from a branch**.
-4. Select the `main` branch and the `/docs` folder.
-5. Save and wait for GitHub Pages to publish the site.
-
-Every commit to the selected branch updates the published static site. No build workflow is required.
+The official WebCraft Pro landing page is published at [https://viviberi.github.io/webcraft-pro/](https://viviberi.github.io/webcraft-pro/).
 
 ## Engineering notes
 
