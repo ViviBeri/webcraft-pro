@@ -1,6 +1,6 @@
 ![WebCraft Pro Logo](./assets/webcraft-pro-icon.png)
 
-# WebCraft Pro — Complete Web Engineering Toolkit for AI Agents
+# WebCraft Pro — Engineering Toolkit for AI Agents
 
 [![Validate Repository](https://github.com/ViviBeri/webcraft-pro/actions/workflows/validate.yml/badge.svg)](https://github.com/ViviBeri/webcraft-pro/actions/workflows/validate.yml)
 [![Security Pattern Audit](https://github.com/ViviBeri/webcraft-pro/actions/workflows/security-audit.yml/badge.svg)](https://github.com/ViviBeri/webcraft-pro/actions/workflows/security-audit.yml)
@@ -55,6 +55,8 @@ The `Validate Repository` workflow checks:
 
 - Skill metadata and required frontmatter.
 - Skill directory and naming consistency.
+- The canonical 44-skill inventory against README and skill-index entries.
+- The routing evaluation corpus structure, prompt-to-skill mappings, and referenced skill directories.
 - Eight-stage repository structure.
 - Skill validator tests.
 - Installer tests.
@@ -84,6 +86,10 @@ The current tests cover:
 - Skip-link keyboard access and focus visibility.
 - Form validation errors and focus management.
 - Dialog focus entry, Escape-key dismissal, and focus restoration.
+
+### Routing evaluation scaffolding
+
+The repository includes a starter routing evaluation corpus in `evals/routing/` with nine prompts, expected skill mappings, and a static validator. CI checks corpus structure, unique prompt IDs, complete mappings, and whether referenced skills exist. This validates the evaluation data—not live model routing accuracy. No live agent runner is implemented or invoked; the optional runner contract and integration notes are documented in `evals/routing/RUNNING.md`.
 
 ### Playwright and axe-core browser checker
 
@@ -117,7 +123,7 @@ The canonical `skills/` directory contains 44 portable `SKILL.md` files covering
 - Application security, authentication, authorization, and API security.
 - Core Web Vitals, rendering, JavaScript, images, fonts, and network performance.
 
-Skills follow the Agent Skills format and are organized by task rather than tied to one frontend framework.
+Skills follow the Agent Skills format and are organized by task rather than tied to one frontend framework. The initial **Common AI failure mode** documentation is present in `keyboard-focus`, `wcag-auditing`, and `core-web-vitals`; rollout to the remaining 41 skills is tracked in [Issue #12](https://github.com/ViviBeri/webcraft-pro/issues/12).
 
 ### 13 engineering templates
 
@@ -198,7 +204,7 @@ Install all skills:
 node scripts/install-skills.mjs --agent all --target /path/to/project
 ```
 
-Use `--agent codex`, `--agent claude`, or `--agent copilot` to install for an individual agent. Existing skill directories are protected from accidental overwrites unless `--overwrite` is explicitly supplied.
+Use `--agent codex`, `--agent claude`, or `--agent copilot` to install for an individual agent. Existing skill directories are protected from accidental overwrites unless `--overwrite` is explicitly supplied. Selective installation by stage or skill is not yet implemented; `--stage` and `--skills` are tracked for v1.6.0 in [Issue #11](https://github.com/ViviBeri/webcraft-pro/issues/11).
 
 ## 5. Engineering standards and project philosophy
 
@@ -224,9 +230,9 @@ Its core principles are:
 
 ## Project status
 
-**Latest release: [v1.4.0 — Two-Pass Design & Self-Critique](https://github.com/ViviBeri/webcraft-pro/releases/tag/v1.4.0).**
+**Latest release: [v1.5.0 — Routing Evaluations & Skill Integrity](https://github.com/ViviBeri/webcraft-pro/releases/tag/v1.5.0).**
 
-The release includes the two-pass design workflow, the anti-slop originality challenge, pre-flight design review requirements, and the official GitHub Pages website.
+The release adds routing evaluation scaffolding with nine starter prompts and static validation, initial skill-specific failure-mode guidance, automated skill inventory validation, and the canonical 44-skill count. Selective installer flags and the rollout of failure-mode documentation to all 44 skills remain tracked for v1.6.0 in [Issue #11](https://github.com/ViviBeri/webcraft-pro/issues/11) and [Issue #12](https://github.com/ViviBeri/webcraft-pro/issues/12).
 
 The official [WebCraft Pro landing page](https://viviberi.github.io/webcraft-pro/) was checked with the on-demand Chromium browser checker on 19 November 2026. The run completed **24 checks with 0 failures** across mobile (390px), tablet (768px), and desktop (1440px), in standard and reduced-motion modes. The report recorded no axe-core violations, 38 passed axe-core rules and 1 incomplete rule per viewport scan, successful keyboard traversal with visible focus indicators, and no uncaught page errors. [View the browser-check run and artifacts](https://github.com/ViviBeri/webcraft-pro/actions/runs/44602749892).
 
