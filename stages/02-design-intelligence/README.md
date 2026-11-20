@@ -13,6 +13,7 @@ Translate product context, user needs and brand constraints into a distinctive v
 - [Visual design review](../../skills/visual-design-review/SKILL.md) — rendered evidence, severity and design scorecard.
 - [Design system architecture](../../skills/design-system-architecture/SKILL.md) — semantic tokens, component foundations and governance.
 - [Visual reference analysis](../../skills/visual-reference-analysis/SKILL.md) — extract principles from screenshots and references without copying.
+- [Quickstart onboarding](../../skills/quickstart-onboarding/SKILL.md) — turn a short project brief into a confirmed design direction before implementation.
 
 ## Shared standard and examples
 
@@ -28,7 +29,7 @@ Apply product-specific visual direction, deliberate page composition, meaningful
 
 ## Stage 2 completion record
 
-- [x] All six skills have activation conditions, workflow guidance and completion criteria.
+- [x] All eight skills have activation conditions, workflow guidance and completion criteria.
 - [x] Guidance is independently authored and links to relevant shared standards.
 - [x] Visual critique requires rendered evidence where available and clearly records evidence limitations.
 - [x] Responsive, accessibility and content-integrity constraints are included.
