@@ -29,7 +29,7 @@ Apply product-specific visual direction, deliberate page composition, meaningful
 
 ## Stage 2 completion record
 
-- [x] All seven skills have activation conditions, workflow guidance and completion criteria.
+- [x] All eight skills have activation conditions, workflow guidance and completion criteria.
 - [x] Guidance is independently authored and links to relevant shared standards.
 - [x] Visual critique requires rendered evidence where available and clearly records evidence limitations.
 - [x] Responsive, accessibility and content-integrity constraints are included.
