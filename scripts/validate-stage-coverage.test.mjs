@@ -162,7 +162,7 @@ test("checks canonical skill sections across all eight stage READMEs", async () 
     if (index === 0 || index === 7) {
       return {
         stage: stageName,
-        content: "## Canonical assets\\n- [Stage index](../../stages/README.md)\\n",
+        content: "## Canonical assets\n- [Stage index](../../stages/README.md)\n",
       };
     }
 
@@ -170,7 +170,7 @@ test("checks canonical skill sections across all eight stage READMEs", async () 
     const heading = index % 2 === 0 ? "Canonical assets" : "Canonical skills";
     return {
       stage: stageName,
-      content: `## ${heading}\\n- [Stage skill](../../skills/${skill}/SKILL.md)\\n`,
+      content: `## ${heading}\n- [Stage skill](../../skills/${skill}/SKILL.md)\n`,
     };
   });
   const root = await createRepository({ skills, sections });
