@@ -70,7 +70,7 @@ test("broken inter-skill links produce error diagnostics with source lines", asy
   const report = await analyzeSkills(root);
   assert.equal(report.summary.errors, 1);
   assert.equal(report.diagnostics[0].ruleId, "SKILL002");
-  assert.equal(report.diagnostics[0].line, 7);
+  assert.equal(report.diagnostics[0].line, 8);
   assert.match(report.diagnostics[0].message, /missing/);
 });
 
