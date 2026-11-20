@@ -10,6 +10,7 @@
   "scripts": {
     "validate": "node scripts/validate-skills.mjs",
     "validate:skill-count": "node scripts/validate-skill-count.mjs",
+    "validate:stage-coverage": "node scripts/validate-stage-coverage.mjs",
     "validate:evals": "node evals/routing/validate-evals.mjs",
     "install:skills": "node scripts/install-skills.mjs",
     "test:installer": "node --test scripts/install-skills.test.mjs",
