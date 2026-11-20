@@ -11,7 +11,7 @@ function parseFrontmatter(content) {
   if (end < 0) return null;
   const block = content.slice(4, end);
   const read = (key) => {
-    const match = block.match(new RegExp("^" + key + ":\s*(.*)$", "m"));
+    const match = block.match(new RegExp("^" + key + ":\\\\s*(.*)$", "m"));
     if (!match) return null;
     const value = match[1].trim();
     return value.replace(/^(['"])(.*)\1$/, "$2");
@@ -38,8 +38,8 @@ function normalizeDescription(value) {
 function resolveSkillReference(destination, sourceFile, skillNames) {
   if (/^(?:https?:|mailto:|#|data:)/i.test(destination)) return null;
   const clean = destination.split(/[?#]/, 1)[0];
-  if (!clean || !/SKILL\\.md$/i.test(clean)) return null;
-  const normalized = clean.replace(/\/g, "/");
+  if (!clean || !/SKILL\.md$/i.test(clean)) return null;
+  const normalized = clean;
   const segments = normalized.split("/");
   const skillsIndex = segments.lastIndexOf("skills");
   let target;
@@ -47,7 +47,7 @@ function resolveSkillReference(destination, sourceFile, skillNames) {
     target = segments[skillsIndex + 1];
   } else {
     const resolved = path.posix.normalize(path.posix.join(path.posix.dirname(sourceFile), normalized));
-    const match = resolved.match(/^skills\/([^/]+)\/SKILL\\.md$/);
+    const match = resolved.match(/^skills\/([^/]+)\/SKILL\.md$/);
     if (match) target = match[1];
   }
   if (!target) return null;
