@@ -6,7 +6,7 @@ No new dependencies or third-party code will be added until the capability revie
 
 ## 1. Existing Capabilities
 
-Repository inspection identified 43 canonical skill directories, an eight-stage architecture, a shared motion standard and a motion examples directory.
+The initial comparison snapshot identified 43 canonical skill directories, an eight-stage architecture, a shared motion standard and a motion examples directory. The current canonical inventory is 44 skills; the historical count in this audit is not the current project count.
 
 ### Motion and interaction
 
