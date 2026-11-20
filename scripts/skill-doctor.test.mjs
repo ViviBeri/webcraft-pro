@@ -116,3 +116,13 @@ test("--json emits parseable contract output without console noise", async (t) =
   assert.ok(Array.isArray(report.diagnostics));
   assert.equal(result.stderr, "");
 });
+
+test("versioned JSON schema declares the stable report contract", async () => {
+  const schemaPath = path.resolve("docs/schemas/skill-doctor-report.v1.json");
+  const schema = JSON.parse(await readFile(schemaPath, "utf8"));
+  assert.equal(schema.$schema, "https://json-schema.org/draft/2020-12/schema");
+  assert.equal(schema.properties.schemaVersion.const, "1.0");
+  assert.equal(schema.properties.tool.const, "webcraft-skill-doctor");
+  assert.deepEqual(schema.required, ["schemaVersion", "tool", "summary", "diagnostics"]);
+  assert.ok(schema.properties.diagnostics.items.required.includes("fixHint"));
+});
