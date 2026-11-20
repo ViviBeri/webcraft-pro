@@ -11,7 +11,7 @@ function parseFrontmatter(content) {
   if (end < 0) return null;
   const block = content.slice(4, end);
   const read = (key) => {
-    const match = block.match(new RegExp("^" + key + ":\\\\s*(.*)$", "m"));
+    const match = block.match(new RegExp("^" + key + ":\\s*(.*)$", "m"));
     if (!match) return null;
     const value = match[1].trim();
     return value.replace(/^(['"])(.*)\1$/, "$2");
