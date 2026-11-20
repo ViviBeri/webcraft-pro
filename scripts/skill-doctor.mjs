@@ -1,6 +1,6 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { pathToFileURL } from "node:url";
 
 const TOOL = "webcraft-skill-doctor";
 const SCHEMA_VERSION = "1.0";
@@ -39,7 +39,7 @@ function resolveSkillReference(destination, sourceFile, skillNames) {
   if (/^(?:https?:|mailto:|#|data:)/i.test(destination)) return null;
   const clean = destination.split(/[?#]/, 1)[0];
   if (!clean || !/SKILL\\.md$/i.test(clean)) return null;
-  const normalized = clean.replace(/\\\\/g, "/");
+  const normalized = clean.replace(/\\/g, "/");
   const segments = normalized.split("/");
   const skillsIndex = segments.lastIndexOf("skills");
   let target;
