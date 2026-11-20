@@ -33,6 +33,12 @@ jobs:
       - name: Test skill validator
         run: npm run test:validate
 
+      - name: Test Skill Doctor
+        run: npm run test:skill-doctor
+
+      - name: Run Skill Doctor (strict)
+        run: npm run validate:skill-doctor
+
       - name: Validate skill metadata and stage structure
         run: npm run validate
 
