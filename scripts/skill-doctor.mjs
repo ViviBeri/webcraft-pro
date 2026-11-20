@@ -61,12 +61,14 @@ export async function analyzeSkills(root = process.cwd()) {
   const skillNames = new Set(directories);
   const records = [];
   const diagnostics = [];
+  let filesScanned = 0;
 
   for (const directory of directories) {
     const relativeFile = `skills/${directory}/SKILL.md`;
     let content;
     try {
       content = await readFile(path.join(root, relativeFile), "utf8");
+      filesScanned += 1;
     } catch {
       continue;
     }
@@ -126,7 +128,7 @@ export async function analyzeSkills(root = process.cwd()) {
   );
 
   const summary = {
-    filesScanned: records.length,
+    filesScanned,
     diagnostics: diagnostics.length,
     errors: diagnostics.filter((item) => item.severity === "error").length,
     warnings: diagnostics.filter((item) => item.severity === "warning").length,
