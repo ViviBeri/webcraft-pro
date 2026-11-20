@@ -39,6 +39,9 @@ jobs:
       - name: Validate skill inventory count
         run: npm run validate:skill-count
 
+      - name: Validate stage skill coverage
+        run: npm run validate:stage-coverage
+
       - name: Validate routing evaluation corpus
         run: npm run validate:evals
 
