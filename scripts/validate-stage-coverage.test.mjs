@@ -154,3 +154,32 @@ test("does not count skill links outside the canonical section", async () => {
     await rm(root, { recursive: true, force: true });
   }
 });
+
+test("checks canonical skill sections across all eight stage READMEs", async () => {
+  const skillStages = stageNames.slice(1, 7);
+  const skills = skillStages.map((stageName) => `${stageName}-skill`);
+  const sections = stageNames.map((stageName, index) => {
+    if (index === 0 || index === 7) {
+      return {
+        stage: stageName,
+        content: "## Canonical assets\\n- [Stage index](../../stages/README.md)\\n",
+      };
+    }
+
+    const skill = `${stageName}-skill`;
+    const heading = index % 2 === 0 ? "Canonical assets" : "Canonical skills";
+    return {
+      stage: stageName,
+      content: `## ${heading}\\n- [Stage skill](../../skills/${skill}/SKILL.md)\\n`,
+    };
+  });
+  const root = await createRepository({ skills, sections });
+
+  try {
+    const result = runValidator(root);
+    assert.equal(result.status, 0, result.stderr);
+    assert.match(result.stdout, /6 canonical skills are assigned across 8 stages/);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
