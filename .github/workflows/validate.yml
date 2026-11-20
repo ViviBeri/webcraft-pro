@@ -42,6 +42,9 @@ jobs:
       - name: Validate stage skill coverage
         run: npm run validate:stage-coverage
 
+      - name: Test stage skill coverage validator
+        run: npm run test:stage-coverage
+
       - name: Validate routing evaluation corpus
         run: npm run validate:evals
 
