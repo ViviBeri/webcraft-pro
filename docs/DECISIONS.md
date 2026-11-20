@@ -11,12 +11,12 @@ This log backfills decisions that are evidenced by the repository's existing fil
 - **Alternatives considered:** A zero-dependency Chrome DevTools Protocol implementation and Puppeteer were considered. CDP would require maintaining browser protocol, navigation, keyboard, screenshot and accessibility integration directly. Puppeteer was not selected because Playwright better aligns with the Stage 8 browser-project and cross-browser direction.
 - **Source:** This decision and implementation are recorded in commit "Add browser checker with Playwright".
 
-### backfilled — Use Node.js 20 or later as the toolchain requirement
+### backfilled — Set Node.js 22.12.0 or later as the current toolchain requirement
 
-- **Decision:** Set Node.js >=20 as the package engine requirement and document Node.js 20 or later for installation and validation.
-- **Rationale:** The repository specifies this minimum version. The reason for selecting Node.js 20 is not documented in repo.
+- **Decision:** Require Node.js >=22.12.0 for the current package toolchain. GitHub Actions workflows explicitly select Node.js 22.
+- **Rationale:** This matches the current package engine constraint and the development dependencies' declared runtime requirement. Earlier Node.js 20 references are superseded.
 - **Alternatives considered:** Not recorded in repo.
-- **Source:** package.json; README.md.
+- **Source:** package.json; package-lock.json; README.md; .github/workflows/validate.yml.
 
 ### backfilled — Distribute original project materials under MIT and preserve applicable third-party notices
 
