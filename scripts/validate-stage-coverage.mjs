@@ -44,38 +44,44 @@ async function main() {
       continue;
     }
 
-    const links = content.matchAll(
-      /\]\((\.\.\/)+skills\/([a-z0-9]+(?:-[a-z0-9]+)*)\/SKILL\.md\)/g,
+    const canonicalSections = content.matchAll(
+      /^## Canonical (?:skills|assets)\s*$([\s\S]*?)(?=^## |\s*$)/gm,
     );
 
-    for (const match of links) {
-      const relativePath = match[0].slice(2, -1);
-      const skillName = match[2];
-      const resolvedPath = path.resolve(path.dirname(readmePath), relativePath);
-      const expectedPath = path.join(skillsRoot, skillName, "SKILL.md");
+    for (const section of canonicalSections) {
+      const links = section[1].matchAll(
+        /\]\(((?:\.\.\/)+skills\/([a-z0-9]+(?:-[a-z0-9]+)*)\/SKILL\.md)(?:#[^)\s]*)?\)/g,
+      );
 
-      if (resolvedPath !== expectedPath) {
-        reportError(
-          `${stageDirectory}: Skill link for "${skillName}" resolves outside its canonical path.`,
-        );
-        continue;
+      for (const match of links) {
+        const relativePath = match[1];
+        const skillName = match[2];
+        const resolvedPath = path.resolve(path.dirname(readmePath), relativePath);
+        const expectedPath = path.join(skillsRoot, skillName, "SKILL.md");
+
+        if (resolvedPath !== expectedPath) {
+          reportError(
+            `${stageDirectory}: Skill link for "${skillName}" resolves outside its canonical path.`,
+          );
+          continue;
+        }
+
+        if (!skillDirectories.includes(skillName)) {
+          reportError(
+            `${stageDirectory}: Unknown skill reference "${skillName}".`,
+          );
+          continue;
+        }
+
+        try {
+          await access(expectedPath);
+        } catch {
+          reportError(`${stageDirectory}: Missing SKILL.md for "${skillName}".`);
+          continue;
+        }
+
+        assignedSkills.add(skillName);
       }
-
-      if (!skillDirectories.includes(skillName)) {
-        reportError(
-          `${stageDirectory}: Unknown skill reference "${skillName}".`,
-        );
-        continue;
-      }
-
-      try {
-        await access(expectedPath);
-      } catch {
-        reportError(`${stageDirectory}: Missing SKILL.md for "${skillName}".`);
-        continue;
-      }
-
-      assignedSkills.add(skillName);
     }
   }
 
