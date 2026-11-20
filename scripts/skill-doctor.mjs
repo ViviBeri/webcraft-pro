@@ -11,10 +11,10 @@ function parseFrontmatter(content) {
   if (end < 0) return null;
   const block = content.slice(4, end);
   const read = (key) => {
-    const match = block.match(new RegExp("^" + key + ":\\s*(.*)$", "m"));
+    const match = block.match(new RegExp("^" + key + ":\s*(.*)$", "m"));
     if (!match) return null;
     const value = match[1].trim();
-    return value.replace(/^(['"])(.*)\\1$/, "$2");
+    return value.replace(/^(['"])(.*)\1$/, "$2");
   };
   return { name: read("name"), description: read("description") };
 }
@@ -32,14 +32,14 @@ function diagnostic(ruleId, severity, file, message, fixHint, relatedFiles = [],
 }
 
 function normalizeDescription(value) {
-  return value.trim().replace(/\\s+/g, " ").toLocaleLowerCase("en-US");
+  return value.trim().replace(/\s+/g, " ").toLocaleLowerCase("en-US");
 }
 
 function resolveSkillReference(destination, sourceFile, skillNames) {
   if (/^(?:https?:|mailto:|#|data:)/i.test(destination)) return null;
   const clean = destination.split(/[?#]/, 1)[0];
   if (!clean || !/SKILL\\.md$/i.test(clean)) return null;
-  const normalized = clean.replace(/\\/g, "/");
+  const normalized = clean.replace(/\/g, "/");
   const segments = normalized.split("/");
   const skillsIndex = segments.lastIndexOf("skills");
   let target;
@@ -47,7 +47,7 @@ function resolveSkillReference(destination, sourceFile, skillNames) {
     target = segments[skillsIndex + 1];
   } else {
     const resolved = path.posix.normalize(path.posix.join(path.posix.dirname(sourceFile), normalized));
-    const match = resolved.match(/^skills\\/([^/]+)\\/SKILL\\.md$/);
+    const match = resolved.match(/^skills\/([^/]+)\/SKILL\\.md$/);
     if (match) target = match[1];
   }
   if (!target) return null;
@@ -101,12 +101,12 @@ export async function analyzeSkills(root = process.cwd()) {
   }
 
   for (const record of records) {
-    const linkPattern = /\\[[^\\]]*\\]\\(([^)]+)\\)/g;
+    const linkPattern = /\[[^\]]*\]\(([^)]+)\)/g;
     for (const match of record.content.matchAll(linkPattern)) {
-      const destination = match[1].trim().replace(/^<|>$/g, "").split(/\\s+/)[0];
+      const destination = match[1].trim().replace(/^<|>$/g, "").split(/\s+/)[0];
       const missing = resolveSkillReference(destination, record.file, skillNames);
       if (!missing) continue;
-      const line = record.content.slice(0, match.index).split("\\n").length;
+      const line = record.content.slice(0, match.index).split("\n").length;
       diagnostics.push(diagnostic(
         "SKILL002",
         "error",
