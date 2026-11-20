@@ -44,12 +44,15 @@ async function main() {
       continue;
     }
 
-    const canonicalSections = content.matchAll(
-      /^## Canonical (?:skills|assets)\s*$([\s\S]*?)(?=^## |\s*$)/gm,
-    );
+    const headings = [...content.matchAll(/^## Canonical (?:skills|assets)\s*$/gm)];
 
-    for (const section of canonicalSections) {
-      const links = section[1].matchAll(
+    for (const heading of headings) {
+      const sectionStart = heading.index + heading[0].length;
+      const nextHeading = content.slice(sectionStart).search(/^## /m);
+      const sectionEnd =
+        nextHeading === -1 ? content.length : sectionStart + nextHeading;
+      const section = content.slice(sectionStart, sectionEnd);
+      const links = section.matchAll(
         /\]\(((?:\.\.\/)+skills\/([a-z0-9]+(?:-[a-z0-9]+)*)\/SKILL\.md)(?:#[^)\s]*)?\)/g,
       );
 
