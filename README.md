@@ -230,7 +230,7 @@ Its core principles are:
 
 ## Project status
 
-**Latest release: [v1.5.0 — Routing Evaluations & Skill Integrity](https://github.com/ViviBeri/webcraft-pro/releases/tag/v1.5.0).**
+**Latest release: [v1.5.1 — Repository Consistency Corrections](https://github.com/ViviBeri/webcraft-pro/releases/tag/v1.5.1).**
 
 The release adds routing evaluation scaffolding with nine starter prompts and static validation, initial skill-specific failure-mode guidance, automated skill inventory validation, and the canonical 44-skill count. Selective installer flags and the rollout of failure-mode documentation to all 44 skills remain tracked for v1.6.0 in [Issue #11](https://github.com/ViviBeri/webcraft-pro/issues/11) and [Issue #12](https://github.com/ViviBeri/webcraft-pro/issues/12).
 
