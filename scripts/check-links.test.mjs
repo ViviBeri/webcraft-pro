@@ -53,6 +53,7 @@ test("generates GitHub-style slugs for punctuation, duplicates, underscores, and
     "api-endpoints",
     "usage",
     "usage-1",
+    "usage-2",
     "usage-1-1",
     "options",
     "hello-world",
