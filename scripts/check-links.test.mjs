@@ -15,22 +15,41 @@ async function createRepository(files) {
   return root;
 }
 
-test("generates GitHub-style slugs for punctuation, duplicate headings, and Unicode", () => {
+test("generates GitHub-style slugs for punctuation, duplicates, underscores, and Unicode", () => {
   const slugs = extractHeadingSlugs([
     "# API: Endpoints",
     "## Usage",
     "## Usage",
+    "## Usage-1",
     "### Hello World",
     "## Café déjà vu",
-    "#### Ignored fourth-level heading",
+    "#### Details",
+    "##### Deep details",
+    "###### Final details",
+    "## my_option",
+    "## Community Standards & Snippet Libraries",
+    "## Double  Spaces",
+    "Heading 1",
+    "=========",
+    "Heading 2",
+    "---------",
   ].join("\n"));
 
   assert.deepEqual([...slugs], [
     "api-endpoints",
     "usage",
     "usage-1",
+    "usage-1-1",
     "hello-world",
     "café-déjà-vu",
+    "details",
+    "deep-details",
+    "final-details",
+    "my_option",
+    "community-standards--snippet-libraries",
+    "double--spaces",
+    "heading-1",
+    "heading-2",
   ]);
 });
 
@@ -170,6 +189,73 @@ test("emits the stable versioned JSON report shape", async () => {
       errors: 1,
       warnings: 0,
     });
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test("ignores inline and indented code link examples", async () => {
+  const root = await createRepository({
+    "README.md": [
+      "Use `[Guide](missing-inline.md)` as an example.",
+      "    [Indented](missing-indented.md)",
+      "\t[Tabbed](missing-tabbed.md)",
+      "[Real link](real.md)",
+    ].join("\n"),
+    "real.md": "# Real guide\n",
+  });
+
+  try {
+    const report = await analyzeLinks(root);
+    assert.deepEqual(report.diagnostics, []);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test("validates the outer destination of image-wrapped and nested-label links", async () => {
+  const root = await createRepository({
+    "README.md": [
+      "[![Badge](badge.svg)](target.md)",
+      "[a [nested] label](target.md)",
+      "[![Broken outer](badge.svg)](missing.md)",
+    ].join("\n"),
+    "target.md": "# Target\n",
+  });
+
+  try {
+    const report = await analyzeLinks(root);
+    assert.equal(report.summary.errors, 1);
+    assert.equal(report.diagnostics[0].target, "missing.md");
+    assert.equal(report.diagnostics[0].line, 3);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test("recognizes Setext headings and anchors with repeated hyphens", async () => {
+  const root = await createRepository({
+    "README.md": [
+      "[Setext one](guide.md#heading-1)",
+      "[Setext two](guide.md#heading-2)",
+      "[Double spaces](guide.md#double--spaces)",
+      "[Underscore](guide.md#my_option)",
+    ].join("\n"),
+    "guide.md": [
+      "Heading 1",
+      "=========",
+      "Heading 2",
+      "---------",
+      "Double  Spaces",
+      "------------",
+      "my_option",
+      "---------",
+    ].join("\n"),
+  });
+
+  try {
+    const report = await analyzeLinks(root);
+    assert.deepEqual(report.diagnostics, []);
   } finally {
     await rm(root, { recursive: true, force: true });
   }
