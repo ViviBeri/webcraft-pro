@@ -22,14 +22,15 @@ function parseList(value, flag) {
 }
 
 export function parseArgs(args) {
+  const commandArgs = args[0] === "install" ? args.slice(1) : args;
   const options = { agent: null, target: process.cwd(), stage: [], skills: [], overwrite: false, dryRun: false, help: false };
-  for (let index = 0; index < args.length; index += 1) {
-    const argument = args[index];
+  for (let index = 0; index < commandArgs.length; index += 1) {
+    const argument = commandArgs[index];
     if (argument === "--help" || argument === "-h") options.help = true;
     else if (argument === "--overwrite" || argument === "--force") options.overwrite = true;
     else if (argument === "--dry-run") options.dryRun = true;
     else if (["--agent", "--target", "--stage", "--skills"].includes(argument)) {
-      const value = args[index + 1];
+      const value = commandArgs[index + 1];
       if (!value || value.startsWith("--")) throw new Error(`Missing value for ${argument}`);
       if (argument === "--agent") options.agent = value;
       if (argument === "--target") options.target = value;
@@ -342,6 +343,7 @@ function printHelp() {
   process.stdout.write(`WebCraft Pro skill installer
 
 Usage:
+  webcraft install --agent <codex|claude|copilot|all> [options]
   node scripts/install-skills.mjs --agent <codex|claude|copilot|all> [options]
 
 Options:
