@@ -3,26 +3,8 @@ name: Security Pattern Audit
 on:
   push:
     branches: [main]
-    paths:
-      - 'skills/**'
-      - 'standards/**'
-      - 'examples/**'
-      - 'scripts/security-audit.mjs'
-      - 'scripts/security-audit.test.mjs'
-      - 'package.json'
-      - 'package-lock.json'
-      - '.github/workflows/security-audit.yml'
   pull_request:
     branches: [main]
-    paths:
-      - 'skills/**'
-      - 'standards/**'
-      - 'examples/**'
-      - 'scripts/security-audit.mjs'
-      - 'scripts/security-audit.test.mjs'
-      - 'package.json'
-      - 'package-lock.json'
-      - '.github/workflows/security-audit.yml'
   workflow_dispatch:
 
 permissions:
