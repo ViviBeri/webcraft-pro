@@ -207,6 +207,7 @@ test("failed overwrite restores the original skill directory", async () => {
         source: missingSource,
         overwrite: true,
       }),
+      (error) => error.code === "ENOENT" && /missing-source/.test(error.message),
     );
     assert.equal(await readFile(path.join(destination, "SKILL.md"), "utf8"), "user version");
     const entries = await (await import("node:fs/promises")).readdir(path.dirname(destination));
@@ -253,6 +254,37 @@ test("every canonical skill is linked from at least one real stage README", asyn
   assert.deepEqual([...covered].sort(), canonical);
 });
 
+
+test("preflight rejects a non-directory manifest parent before changing any agent", async () => {
+  const f = await fixture();
+  const invalidParent = path.join(f.target, ".github/skills/.webcraft");
+  try {
+    await mkdir(path.dirname(invalidParent), { recursive: true });
+    await writeFile(invalidParent, "not a directory");
+    await assert.rejects(
+      installSkills({ agent: "all", targetRoot: f.target, source: f.source, stages: f.stages, skills: ["design-direction"], overwrite: true }),
+      /Unable to read manifest.*ENOTDIR/,
+    );
+    assert.equal(await exists(path.join(f.target, ".agents/skills/design-direction")), false);
+    assert.equal(await exists(path.join(f.target, ".claude/skills/design-direction")), false);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
+});
+
+test("rollback preserves a dangling destination symlink", async () => {
+  const f = await fixture();
+  const destination = path.join(f.target, ".claude/skills/design-direction");
+  const missingSource = path.join(f.root, "missing-source");
+  try {
+    await mkdir(path.dirname(destination), { recursive: true });
+    await (await import("node:fs/promises")).symlink(path.join(f.root, "missing-target"), destination, "dir");
+    await assert.rejects(
+      executeInstall(["design-direction"], { agent: "claude", targetRoot: f.target, source: missingSource }),
+      (error) => error.code === "EEXIST" && /Destination appeared/.test(error.message),
+    );
+    const stat = await (await import("node:fs/promises")).lstat(destination);
+    assert.equal(stat.isSymbolicLink(), true);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
+});
 
 test("manifest persistence failure removes newly copied skill directories", async () => {
   const f = await fixture();
