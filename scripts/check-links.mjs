@@ -30,13 +30,21 @@ function removeFencedCodeBlocks(content) {
       return "";
     }
 
+    // Four-space and tab-indented code blocks are not rendered as links.
+    if (/^(?: {4,}|\t)/.test(line)) return "";
     return line;
   }).join("\n");
 }
 
+function removeInlineCode(content) {
+  return content.replace(/(\x60+)([\s\S]*?)\1/g, (match) =>
+    match.replace(/[^\n]/g, " "),
+  );
+}
+
 function createHeadingSlug(heading) {
   const text = heading
-    .replace(/^ {0,3}#{1,3}[ \t]+/, "")
+    .replace(/^ {0,3}#{1,6}[ \t]+/, "")
     .replace(/[ \t]+#+[ \t]*$/, "")
     .trim()
     .replace(/<[^>]*>/g, "")
@@ -46,27 +54,33 @@ function createHeadingSlug(heading) {
     .toLocaleLowerCase("en-US");
 
   return text
-    .replace(/[^\p{L}\p{N}\p{M}\s-]/gu, "")
-    .trim()
-    .replace(/\s+/gu, "-")
-    .replace(/-+/g, "-");
+    .replace(/\s/g, "-")
+    .replace(/[^\p{L}\p{N}\p{M}_-]/gu, "");
 }
 
 export function extractHeadingSlugs(content) {
   const slugs = new Set();
-  const counts = new Map();
   const clean = removeFencedCodeBlocks(content);
+  const lines = clean.split("\n");
 
-  for (const line of clean.split("\n")) {
-    const match = /^ {0,3}(#{1,3})[ \t]+(.+?)[ \t]*#*[ \t]*$/.exec(line);
-    if (!match) continue;
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    const atx = /^ {0,3}(#{1,6})[ \t]+(.+?)[ \t]*#*[ \t]*$/.exec(line);
+    let heading = atx?.[0];
 
-    const base = createHeadingSlug(match[0]);
+    if (!atx && index + 1 < lines.length &&
+        /^ {0,3}(?:=+|-+)[ \t]*$/.test(lines[index + 1]) &&
+        line.trim() && !/^ {4,}|\t/.test(line)) {
+      heading = line.trim();
+      index += 1;
+    }
+
+    if (!heading) continue;
+    const base = createHeadingSlug(heading);
     if (!base) continue;
 
-    const count = counts.get(base) ?? 0;
-    const slug = count === 0 ? base : base + "-" + count;
-    counts.set(base, count + 1);
+    let slug = base;
+    while (slugs.has(slug)) slug += "-1";
     slugs.add(slug);
   }
 
@@ -101,12 +115,75 @@ function decodeAnchor(value) {
 
 function parseMarkdownLinks(content) {
   const links = [];
-  const pattern = /(?<!!)\[[^\]]*\]\(\s*(<[^>\r\n]+>|(?:\\.|[^)\s])+)(?:\s+[^)]*)?\)/g;
+  const source = removeInlineCode(content);
+  let index = 0;
 
-  for (const match of content.matchAll(pattern)) {
-    const rawTarget = match[1].replace(/^<|>$/g, "").replace(/\\([()\\])/g, "$1");
-    const line = content.slice(0, match.index).split("\n").length;
-    links.push({ target: rawTarget, line });
+  while (index < source.length) {
+    const opening = source[index] === "[" &&
+      (index === 0 || source[index - 1] !== "!");
+
+    if (!opening) {
+      index += 1;
+      continue;
+    }
+
+    // Match balanced label brackets so image links and nested labels work.
+    let depth = 1;
+    let cursor = index + 1;
+    for (; cursor < source.length && depth > 0; cursor += 1) {
+      if (source[cursor] === "\\" && cursor + 1 < source.length) {
+        cursor += 1;
+      } else if (source[cursor] === "[") {
+        depth += 1;
+      } else if (source[cursor] === "]") {
+        depth -= 1;
+      }
+    }
+    if (depth !== 0 || source[cursor] !== "(") {
+      index += 1;
+      continue;
+    }
+
+    cursor += 1;
+    while (/\s/.test(source[cursor] ?? "")) cursor += 1;
+    let target = "";
+    if (source[cursor] === "<") {
+      cursor += 1;
+      const targetStart = cursor;
+      while (cursor < source.length && source[cursor] !== ">") cursor += 1;
+      target = source.slice(targetStart, cursor);
+      if (source[cursor] === ">") cursor += 1;
+    } else {
+      const targetStart = cursor;
+      let parenDepth = 0;
+      while (cursor < source.length) {
+        const character = source[cursor];
+        if (character === "\\" && cursor + 1 < source.length) {
+          cursor += 2;
+          continue;
+        }
+        if (character === "(") parenDepth += 1;
+        if (character === ")") {
+          if (parenDepth === 0) break;
+          parenDepth -= 1;
+        }
+        if (/\s/.test(character) && parenDepth === 0) break;
+        cursor += 1;
+      }
+      target = source.slice(targetStart, cursor);
+    }
+
+    while (cursor < source.length && source[cursor] !== ")") cursor += 1;
+    if (source[cursor] === ")" && target) {
+      const line = content.slice(0, index).split("\n").length;
+      links.push({
+        target: target.replace(/\\([()\\])/g, "$1"),
+        line,
+      });
+      index = cursor + 1;
+    } else {
+      index += 1;
+    }
   }
 
   return links;
