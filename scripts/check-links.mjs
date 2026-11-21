@@ -33,15 +33,12 @@ function removeFencedCodeBlocks(content) {
       return "";
     }
 
-    const indentation = /^( {4,}|\t)/.exec(line);
-    if (indentation) {
+    if (/^(?: {4,}|\t)/.test(line)) {
       let previous = index - 1;
       while (previous >= 0 && lines[previous].trim() === "") previous -= 1;
       const previousLine = lines[previous] ?? "";
-      const inList = /^ {0,3}(?:[-+*]|\d+[.)])\s+/.test(previousLine) ||
-        /^ {0,3}(?:[-+*]|\d+[.)])\s+/.test(line);
-      const inParagraph = previous >= 0 && !/^ {0,3}(?:[-+*]|\d+[.)])\s+/.test(previousLine);
-      if (!inList && !inParagraph) return "";
+      const followsListItem = /^ {0,3}(?:[-+*]|\d+[.)])\s+/.test(previousLine);
+      if (!followsListItem) return "";
     }
     return line;
   }).join("\n");
