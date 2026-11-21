@@ -11,6 +11,8 @@
     "validate": "node scripts/validate-skills.mjs",
     "validate:skill-count": "node scripts/validate-skill-count.mjs",
     "validate:consistency": "node scripts/check-consistency.mjs",
+    "validate:links": "node scripts/check-links.mjs",
+    "test:links": "node --test scripts/check-links.test.mjs",
     "validate:stage-coverage": "node scripts/validate-stage-coverage.mjs",
     "test:stage-coverage": "node --test scripts/validate-stage-coverage.test.mjs",
     "validate:evals": "node evals/routing/validate-evals.mjs",
