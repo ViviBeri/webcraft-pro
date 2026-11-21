@@ -192,6 +192,8 @@ The installer supports three agent environments:
 | Claude Code | `.claude/skills/` |
 | GitHub Copilot | `.github/skills/` |
 
+These are documented installer destinations, not claims of verified agent discovery or invocation. See the [agent compatibility matrix](docs/agent-compatibility.md) for current test status and evidence requirements.
+
 Preview installation:
 
 ```bash
