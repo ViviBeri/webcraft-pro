@@ -212,7 +212,7 @@ node scripts/install-skills.mjs --agent claude --skills design-direction,keyboar
 node scripts/install-skills.mjs --agent all --stage 06 --skills independent-review
 ```
 
-With no selector, the installer retains its existing behavior and installs all canonical skills. Stage 1 and Stage 8 currently have no installable skill links and return an explicit error when selected. Each agent destination receives `.webcraft/manifest.json` with the installer version, agent, timestamp, and installed skill names. Dry runs do not create destination files or manifests. Safe, hash-verified uninstall is intentionally deferred to a separate follow-up.
+With no selector, the installer retains its existing behavior and installs all canonical skills. Stage 1 and Stage 8 currently have no installable skill links and return an explicit error when selected. Each agent destination receives `.webcraft/manifest.json` with the manifest format version (`1.0`), agent, installation timestamp, and installed skill names. Dry runs do not create destination files or manifests. Safe, hash-verified uninstall is intentionally deferred to a separate follow-up.
 
 ## 5. Engineering standards and project philosophy
 
