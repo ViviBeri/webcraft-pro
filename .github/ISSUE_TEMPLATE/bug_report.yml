@@ -1,0 +1,92 @@
+name: Bug report
+description: Report a reproducible problem with WebCraft Pro, its installer, or a skill.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "Report reproducible behavior. Do not include credentials, tokens, private project data, or other secrets."
+  - type: dropdown
+    id: agent
+    attributes:
+      label: Which AI agent are you using?
+      options:
+        - Claude Code
+        - GitHub Copilot
+        - OpenAI Codex
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: agent_version
+    attributes:
+      label: AI agent version
+      description: Include the exact version/build if known.
+      placeholder: "e.g. Claude Code 2.x"
+    validations:
+      required: false
+  - type: input
+    id: webcraft_version
+    attributes:
+      label: WebCraft Pro version
+      description: Include the package/release version or commit.
+      placeholder: "e.g. 1.6.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: install_method
+    attributes:
+      label: How did you install WebCraft Pro?
+      options:
+        - npx
+        - Global npm install
+        - Cloned repository
+        - npm link (local development)
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: skill
+    attributes:
+      label: Which skill were you using?
+      description: Enter the skill directory name, or "installer" if this is an installation issue.
+      placeholder: "e.g. keyboard-focus"
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include operating system, Node.js version, and relevant framework/browser versions.
+      placeholder: "OS, Node.js version, browser/framework..."
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What happened instead? Include exact error text with secrets removed.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Provide the smallest reliable reproduction.
+      placeholder: "1. ...\n2. ...\n3. ..."
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Logs or screenshots
+      description: Add sanitized logs or links to evidence. Remove tokens, credentials, and private paths.
+    validations:
+      required: false
