@@ -251,3 +251,44 @@ test("every canonical skill is linked from at least one real stage README", asyn
     .sort();
   assert.deepEqual([...covered].sort(), canonical);
 });
+
+
+test("manifest persistence failure removes newly copied skill directories", async () => {
+  const f = await fixture();
+  const destination = path.join(f.target, ".claude/skills/design-direction");
+  try {
+    await assert.rejects(
+      executeInstall(["design-direction"], {
+        agent: "claude",
+        targetRoot: f.target,
+        source: f.source,
+        persistManifest: async () => { throw new Error("simulated manifest write failure"); },
+      }),
+      /simulated manifest write failure/,
+    );
+    assert.equal(await exists(destination), false);
+    assert.equal(await exists(path.join(f.target, ".claude/skills/.webcraft/manifest.json")), false);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
+});
+
+test("manifest persistence failure restores overwritten skill directories", async () => {
+  const f = await fixture();
+  const destination = path.join(f.target, ".claude/skills/design-direction");
+  try {
+    await mkdir(destination, { recursive: true });
+    await writeFile(path.join(destination, "SKILL.md"), "user version");
+    await assert.rejects(
+      executeInstall(["design-direction"], {
+        agent: "claude",
+        targetRoot: f.target,
+        source: f.source,
+        overwrite: true,
+        persistManifest: async () => { throw new Error("simulated manifest write failure"); },
+      }),
+      /simulated manifest write failure/,
+    );
+    assert.equal(await readFile(path.join(destination, "SKILL.md"), "utf8"), "user version");
+    const entries = await readdir(path.dirname(destination));
+    assert.equal(entries.some((name) => name.includes("webcraft-backup-")), false);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
+});
