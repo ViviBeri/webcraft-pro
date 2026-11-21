@@ -150,6 +150,20 @@ test("repeated installs retain previously recorded manifest skills", async () =>
   } finally { await rm(f.root, { recursive: true, force: true }); }
 });
 
+test("dry-run rejects an invalid existing manifest without writing files", async () => {
+  const f = await fixture();
+  const destination = path.join(f.target, ".claude/skills");
+  try {
+    await mkdir(path.join(destination, ".webcraft"), { recursive: true });
+    await writeFile(path.join(destination, ".webcraft/manifest.json"), "{invalid");
+    await assert.rejects(
+      installSkills({ agent: "claude", targetRoot: f.target, source: f.source, stages: f.stages, skills: ["design-direction"], dryRun: true }),
+      /manifest is invalid or unsupported/,
+    );
+    assert.equal(await exists(path.join(destination, "design-direction")), false);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
+});
+
 test("invalid existing manifest is rejected before copying any selected skill", async () => {
   const f = await fixture();
   const destination = path.join(f.target, ".claude/skills");
