@@ -23,7 +23,7 @@ test("strips rendered HTML tags from heading text without regex sanitization", (
 
   assert.deepEqual([...slugs], [
     "hello-world",
-    "a-heading-with-an-unmatched",
+    "a-heading-with-an-unmatched-script",
   ]);
 });
 
