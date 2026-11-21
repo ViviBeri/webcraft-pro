@@ -26,17 +26,31 @@ Get up and running in 5 minutes. WebCraft Pro requires Node.js 22.12.0 or higher
 
 ### 1. Install the skills
 
-Run the installer directly in your project root:
+Run the installer directly in your project root. The short npm command is the stable path once the package is published:
 
 ```bash
 npx webcraft-pro install --agent claude
+```
+
+**Until the public npm package is available**, run the same CLI from the GitHub repository without cloning it:
+
+```bash
+npx --yes --package=github:ViviBeri/webcraft-pro webcraft install --agent claude
 ```
 
 Options: use `--agent copilot`, `--agent codex`, or `--agent all`. You can also use `--stage` or `--skills` for selective installation. Use `--dry-run` to preview changes before installing.
 
 ### 2. Use the skills
 
-Open your AI coding agent in the project and prompt it:
+The installer places skill files in the agent-specific project directory:
+
+- Claude Code: `.claude/skills/`
+- OpenAI Codex: `.agents/skills/`
+- GitHub Copilot: `.github/skills/`
+
+File placement does not prove that an agent automatically discovers or invokes a skill. The current end-to-end compatibility status is **Not tested** for Claude Code, Codex, and GitHub Copilot. Check the [agent compatibility matrix](./docs/agent-compatibility.md) before relying on automatic discovery.
+
+Open your AI coding agent in the project and, where the agent supports skill invocation, prompt it:
 
 > Use WebCraft Pro to build a secure login form.
 
@@ -206,7 +220,9 @@ Recommended agent workflow:
 6. **Implement and verify.** Use appropriate tests, browser checks, accessibility reviews, and security or performance evidence.
 7. **Report honestly.** Document what changed, what was tested, what passed, remaining risks, and checks that were not performed.
 
-### CLI reference
+### Installation
+
+#### CLI reference
 
 The npm package exposes the `webcraft` executable. The QuickStart command uses npm's package-to-binary resolution.
 
