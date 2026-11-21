@@ -15,6 +15,18 @@ async function createRepository(files) {
   return root;
 }
 
+test("strips rendered HTML tags from heading text without regex sanitization", () => {
+  const slugs = extractHeadingSlugs([
+    "# Hello <em>World</em>",
+    "# A heading with an unmatched <script",
+  ].join("\n"));
+
+  assert.deepEqual([...slugs], [
+    "hello-world",
+    "a-heading-with-an-unmatched",
+  ]);
+});
+
 test("generates GitHub-style slugs for punctuation, duplicates, underscores, and Unicode", () => {
   const slugs = extractHeadingSlugs([
     "# API: Endpoints",
