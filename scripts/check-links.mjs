@@ -13,13 +13,16 @@ function compareText(left, right) {
 
 function removeFencedCodeBlocks(content) {
   let fence = null;
+  const lines = content.split(/\r?\n/);
 
-  return content.split(/\r?\n/).map((line) => {
+  return lines.map((line, index) => {
     const opening = /^ {0,3}(\x60{3,}|~{3,})/.exec(line);
-
     if (!fence && opening) {
-      fence = { character: opening[1][0], length: opening[1].length };
-      return "";
+      const info = line.slice(opening[0].length);
+      if (opening[1][0] !== "\x60" || !info.includes("\x60")) {
+        fence = { character: opening[1][0], length: opening[1].length };
+        return "";
+      }
     }
 
     if (fence) {
@@ -30,12 +33,19 @@ function removeFencedCodeBlocks(content) {
       return "";
     }
 
-    // Four-space and tab-indented code blocks are not rendered as links.
-    if (/^(?: {4,}|\t)/.test(line)) return "";
+    const indentation = /^( {4,}|\t)/.exec(line);
+    if (indentation) {
+      let previous = index - 1;
+      while (previous >= 0 && lines[previous].trim() === "") previous -= 1;
+      const previousLine = lines[previous] ?? "";
+      const inList = /^ {0,3}(?:[-+*]|\d+[.)])\s+/.test(previousLine) ||
+        /^ {0,3}(?:[-+*]|\d+[.)])\s+/.test(line);
+      const inParagraph = previous >= 0 && !/^ {0,3}(?:[-+*]|\d+[.)])\s+/.test(previousLine);
+      if (!inList && !inParagraph) return "";
+    }
     return line;
   }).join("\n");
 }
-
 function removeInlineCode(content) {
   return content.split(/(\r?\n[ \t]*\r?\n)/).map((block) => {
     if (/^\r?\n[ \t]*\r?\n$/.test(block)) return block;
@@ -78,27 +88,19 @@ function removeInlineCode(content) {
 }
 function stripHtmlTags(value) {
   let result = "";
-  let insideTag = false;
-
-  for (const character of value) {
-    if (character === "<" && !insideTag) {
-      const closing = value.indexOf(">", value.indexOf(character));
-      const newline = value.indexOf("\n", value.indexOf(character));
+  for (let index = 0; index < value.length; index += 1) {
+    if (value[index] === "<") {
+      const closing = value.indexOf(">", index + 1);
+      const newline = value.indexOf("\n", index + 1);
       if (closing !== -1 && (newline === -1 || closing < newline)) {
-        insideTag = true;
+        index = closing;
         continue;
       }
     }
-    if (character === ">" && insideTag) {
-      insideTag = false;
-      continue;
-    }
-    if (!insideTag) result += character;
+    result += value[index];
   }
-
   return result;
 }
-
 function createHeadingSlug(heading) {
   const text = stripHtmlTags(heading)
     .replace(/^ {0,3}#{1,6}[ \t]+/, "")
