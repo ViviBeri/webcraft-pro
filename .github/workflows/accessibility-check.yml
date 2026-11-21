@@ -4,23 +4,9 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "examples/accessibility/fixture/**"
-      - "tests/accessibility/**"
-      - "package.json"
-      - "package-lock.json"
-      - ".github/workflows/accessibility-check.yml"
-      - "stages/05-accessibility/README.md"
   pull_request:
     branches:
       - main
-    paths:
-      - "examples/accessibility/fixture/**"
-      - "tests/accessibility/**"
-      - "package.json"
-      - "package-lock.json"
-      - ".github/workflows/accessibility-check.yml"
-      - "stages/05-accessibility/README.md"
 
 permissions:
   contents: read
