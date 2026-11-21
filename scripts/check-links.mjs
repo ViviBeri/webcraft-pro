@@ -106,7 +106,7 @@ function createHeadingSlug(heading) {
     .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
     .replace(/(\x60+)(.*?)\1/g, "$2")
-    .replace(/\b_([^_\n]+)_\b/g, "$1")
+    .replace(/(^|[^\p{L}\p{N}_])_([^_\n]+)_($|[^\p{L}\p{N}_])/gu, "$1$2$3")
     .replace(/\*([^*\n]+)\*/g, "$1")
     .toLocaleLowerCase("en-US");
 
