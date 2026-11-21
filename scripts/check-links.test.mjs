@@ -40,6 +40,8 @@ test("checks relative Markdown paths and valid anchors", async () => {
       "# Home",
       "[Guide](docs/guide.md)",
       "[Section](docs/guide.md#api-endpoints)",
+      "[Duplicate heading](docs/guide.md#usage-1)",
+      "[Unicode heading](docs/guide.md#café-déjà-vu)",
       "[Directory](docs/)",
       "[Same file](#home)",
       "",
