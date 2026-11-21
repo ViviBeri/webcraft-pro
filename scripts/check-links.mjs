@@ -42,12 +42,30 @@ function removeInlineCode(content) {
   );
 }
 
+function stripHtmlTags(value) {
+  let result = "";
+  let insideTag = false;
+
+  for (const character of value) {
+    if (character === "<" && !insideTag) {
+      insideTag = true;
+      continue;
+    }
+    if (character === ">" && insideTag) {
+      insideTag = false;
+      continue;
+    }
+    if (!insideTag) result += character;
+  }
+
+  return result;
+}
+
 function createHeadingSlug(heading) {
-  const text = heading
+  const text = stripHtmlTags(heading)
     .replace(/^ {0,3}#{1,6}[ \t]+/, "")
     .replace(/[ \t]+#+[ \t]*$/, "")
     .trim()
-    .replace(/<[^>]*>/g, "")
     .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
     .replace(/(\x60+)(.*?)\1/g, "$2")
