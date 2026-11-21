@@ -23,7 +23,9 @@
     "install:browsers": "playwright install --with-deps chromium",
     "browser:check": "node scripts/browser-checker.mjs",
     "validate:skill-doctor": "node scripts/skill-doctor.mjs --strict",
-    "test:skill-doctor": "node --test scripts/skill-doctor.test.mjs"
+    "test:skill-doctor": "node --test scripts/skill-doctor.test.mjs",
+    "validate:version-sync": "node scripts/check-version-sync.mjs",
+    "test:version-sync": "node --test scripts/check-version-sync.test.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",
