@@ -51,6 +51,12 @@ jobs:
       - name: Validate skill catalog index
         run: npm run validate:skill-count
 
+      - name: Test version synchronization
+        run: npm run test:version-sync
+
+      - name: Validate version synchronization
+        run: npm run validate:version-sync
+
       - name: Validate stage skill coverage
         run: npm run validate:stage-coverage
 
