@@ -349,3 +349,54 @@ test("preserves rendered links in indented list content and rejects links hidden
     await rm(root, { recursive: true, force: true });
   }
 });
+
+test("resets indented-code context after headings and fenced blocks", async () => {
+  const root = await createRepository({
+    "README.md": [
+      "## Example",
+      "    [Heading code](missing-heading-code.md)",
+      "",
+      "Paragraph before a fence.",
+      "~~~",
+      "example",
+      "~~~",
+      "    [Fence code](missing-fence-code.md)",
+      "",
+      "[Real link](real.md)",
+    ].join("\\n"),
+    "real.md": "# Real guide\\n",
+  });
+
+  try {
+    const report = await analyzeLinks(root);
+    assert.deepEqual(report.diagnostics, []);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test("ignores indented code nested inside list items but validates list continuations", async () => {
+  const root = await createRepository({
+    "README.md": [
+      "1. Run the example:",
+      "",
+      "    [Rendered continuation](missing-continuation.md)",
+      "",
+      "    1. Nested item:",
+      "",
+      "           [Nested code](missing-nested-code.md)",
+      "",
+      "    [Another continuation](missing-another-continuation.md)",
+    ].join("\\n"),
+  });
+
+  try {
+    const report = await analyzeLinks(root);
+    assert.deepEqual(report.diagnostics.map((item) => item.target), [
+      "missing-continuation.md",
+      "missing-another-continuation.md",
+    ]);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
