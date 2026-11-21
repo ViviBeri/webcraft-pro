@@ -106,7 +106,7 @@ export async function executeInstall(selectedSkills, { agent, targetRoot, overwr
     const destinationRoot = path.join(targetRoot, destinations[selected]);
     const manifestPath = path.join(destinationRoot, ".webcraft", "manifest.json");
     let previousSkills = [];
-    if (!dryRun && await pathExists(manifestPath)) {
+    if (await pathExists(manifestPath)) {
       try {
         const previous = JSON.parse(await readFile(manifestPath, "utf8"));
         if (previous.version !== "1.0" || previous.agent !== selected || !Array.isArray(previous.skills)) throw new Error("Unsupported manifest.");
