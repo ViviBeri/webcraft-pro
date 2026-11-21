@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { access, cp, mkdir, open, readdir, readFile, rename, rm, writeFile } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
 import { setTimeout as delay } from "node:timers/promises";
