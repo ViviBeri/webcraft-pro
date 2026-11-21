@@ -37,19 +37,57 @@ function removeFencedCodeBlocks(content) {
 }
 
 function removeInlineCode(content) {
-  return content.replace(/(\x60+)([\s\S]*?)\1/g, (match) =>
-    match.replace(/[^\n]/g, " "),
-  );
+  return content.split(/(\r?\n[ \t]*\r?\n)/).map((block) => {
+    if (/^\r?\n[ \t]*\r?\n$/.test(block)) return block;
+    let output = "";
+    let index = 0;
+    while (index < block.length) {
+      if (block[index] !== "\x60") {
+        output += block[index];
+        index += 1;
+        continue;
+      }
+      let runEnd = index;
+      while (block[runEnd] === "\x60") runEnd += 1;
+      const runLength = runEnd - index;
+      let search = runEnd;
+      let closeStart = -1;
+      while (search < block.length) {
+        const candidate = block.indexOf("\x60", search);
+        if (candidate === -1) break;
+        let candidateEnd = candidate;
+        while (block[candidateEnd] === "\x60") candidateEnd += 1;
+        if (candidateEnd - candidate === runLength) {
+          closeStart = candidate;
+          break;
+        }
+        search = candidateEnd;
+      }
+      if (closeStart === -1) {
+        output += block.slice(index, runEnd);
+        index = runEnd;
+        continue;
+      }
+      output += " ".repeat(runLength);
+      output += block.slice(runEnd, closeStart).replace(/[^\n]/g, " ");
+      output += " ".repeat(runLength);
+      index = closeStart + runLength;
+    }
+    return output;
+  }).join("");
 }
-
 function stripHtmlTags(value) {
   let result = "";
   let insideTag = false;
 
   for (const character of value) {
     if (character === "<" && !insideTag) {
-      insideTag = true;
-      continue;
+      const closing = value.indexOf(">", value.indexOf(character));
+      const newline = value.indexOf("\n", value.indexOf(character));
+      if (closing !== -1 && (newline === -1 || closing < newline)) {
+        insideTag = true;
+        continue;
+      }
     }
     if (character === ">" && insideTag) {
       insideTag = false;
@@ -69,6 +107,8 @@ function createHeadingSlug(heading) {
     .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
     .replace(/(\x60+)(.*?)\1/g, "$2")
+    .replace(/\b_([^_\n]+)_\b/g, "$1")
+    .replace(/\*([^*\n]+)\*/g, "$1")
     .toLocaleLowerCase("en-US");
 
   return text
@@ -88,7 +128,7 @@ export function extractHeadingSlugs(content) {
 
     if (!atx && index + 1 < lines.length &&
         /^ {0,3}(?:=+|-+)[ \t]*$/.test(lines[index + 1]) &&
-        line.trim() && !/^ {4,}|\t/.test(line)) {
+        line.trim() && !/^(?: {4,}|\t)/.test(line)) {
       heading = line.trim();
       index += 1;
     }
@@ -98,7 +138,11 @@ export function extractHeadingSlugs(content) {
     if (!base) continue;
 
     let slug = base;
-    while (slugs.has(slug)) slug += "-1";
+    let suffix = 1;
+    while (slugs.has(slug)) {
+      slug = base + "-" + suffix;
+      suffix += 1;
+    }
     slugs.add(slug);
   }
 
@@ -168,9 +212,13 @@ function parseMarkdownLinks(content) {
     if (source[cursor] === "<") {
       cursor += 1;
       const targetStart = cursor;
-      while (cursor < source.length && source[cursor] !== ">") cursor += 1;
+      while (cursor < source.length && source[cursor] !== ">" && source[cursor] !== "\n") cursor += 1;
+      if (source[cursor] !== ">") {
+        index += 1;
+        continue;
+      }
       target = source.slice(targetStart, cursor);
-      if (source[cursor] === ">") cursor += 1;
+      cursor += 1;
     } else {
       const targetStart = cursor;
       let parenDepth = 0;
