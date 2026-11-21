@@ -301,7 +301,6 @@ test("preserves rendered links in indented list content and rejects links hidden
   const root = await createRepository({
     "README.md": [
       "1. Documentation",
-      "",
       "    [Nested guide](missing-list.md)",
       "",
       "A paragraph with an unmatched ` delimiter.",
