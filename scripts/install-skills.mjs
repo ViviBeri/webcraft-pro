@@ -61,7 +61,7 @@ function canonicalSkillLinks(content) {
   const remainder = content.slice(match.index + match[0].length);
   const nextHeading = remainder.search(/^## /m);
   const section = nextHeading === -1 ? remainder : remainder.slice(0, nextHeading);
-  const pattern = /\]\((?:\.\.\/)+skills\/([a-z0-9]+(?:-[a-z0-9]+)*)\/SKILL\.md(?:#[^)\\s]*)?\)/g;
+  const pattern = /\]\((?:\.\.\/)+skills\/([a-z0-9]+(?:-[a-z0-9]+)*)\/SKILL\.md(?:#[^)\s]*)?\)/g;
   return [...section.matchAll(pattern)].map((link) => link[1]);
 }
 
