@@ -20,6 +20,44 @@ WebCraft Pro is an open-source, framework-agnostic collection of **44 reusable A
 It provides AI coding agents with a structured engineering process covering the complete website delivery lifecycle—from initial design direction through implementation, accessibility, security, performance, browser QA, and release.
 
 
+## QuickStart
+
+Get up and running in 5 minutes. WebCraft Pro requires Node.js 22.12.0 or higher.
+
+### 1. Install the skills
+
+Run the installer directly in your project root. The short npm command is the stable path once the package is published:
+
+```bash
+npx webcraft-pro install --agent claude
+```
+
+**Until the public npm package is available**, run the same CLI from the GitHub repository without cloning it:
+
+```bash
+npx --yes --package=github:ViviBeri/webcraft-pro webcraft install --agent claude
+```
+
+Options: use `--agent copilot`, `--agent codex`, or `--agent all`. You can also use `--stage` or `--skills` for selective installation. Use `--dry-run` to preview changes before installing.
+
+### 2. Use the skills
+
+The installer places skill files in the agent-specific project directory:
+
+- Claude Code: `.claude/skills/`
+- OpenAI Codex: `.agents/skills/`
+- GitHub Copilot: `.github/skills/`
+
+File placement does not prove that an agent automatically discovers or invokes a skill. The current end-to-end compatibility status is **Not tested** for Claude Code, Codex, and GitHub Copilot. Check the [agent compatibility matrix](./docs/agent-compatibility.md) before relying on automatic discovery.
+
+Open your AI coding agent in the project and, where the agent supports skill invocation, prompt it:
+
+> Use WebCraft Pro to build a secure login form.
+
+### 3. Verify the output
+
+Run your project's standard linters and tests. Consult the relevant WebCraft Pro standards and skill verification guidance, then review the generated code before merging or releasing it.
+
 ## Why this exists (LLMs already know this)
 
 LLMs are trained on extensive software-engineering material, including semantic HTML, accessibility, security, and performance practices. Knowing a rule is not the same as applying it consistently. Under context pressure, speed-oriented generation, ambiguous requirements, or hallucinated assumptions, an agent can still omit labels, choose non-semantic controls, skip focus states, or leave risky patterns unchecked.
@@ -184,37 +222,27 @@ Recommended agent workflow:
 
 ### Installation
 
-The installer supports three agent environments:
+#### CLI reference
 
-| Agent | Project-local destination |
-|---|---|
-| OpenAI Codex | `.agents/skills/` |
-| Claude Code | `.claude/skills/` |
-| GitHub Copilot | `.github/skills/` |
+The npm package exposes the `webcraft` executable. The QuickStart command uses npm's package-to-binary resolution.
 
-These are documented installer destinations, not claims of verified agent discovery or invocation. See the [agent compatibility matrix](docs/agent-compatibility.md) for current test status and evidence requirements.
-
-Preview installation:
+Install all skills for one agent:
 
 ```bash
-node scripts/install-skills.mjs --agent all --target /path/to/project --dry-run
+npx webcraft-pro install --agent claude
 ```
 
-Install all skills:
+Supported agents are `codex`, `claude`, `copilot`, and `all`. Use `--target <path>` to select a project root. Existing skill directories are protected from accidental overwrites unless `--overwrite` is explicitly supplied (`--force` is an alias).
+
+Select skills by stage number or directory name, by exact skill name, or by combining both selectors:
 
 ```bash
-node scripts/install-skills.mjs --agent all --target /path/to/project
+npx webcraft-pro install --agent claude --stage 02,05 --dry-run
+npx webcraft-pro install --agent claude --skills design-direction,keyboard-focus
+npx webcraft-pro install --agent all --stage 06 --skills independent-review
 ```
 
-Use `--agent codex`, `--agent claude`, or `--agent copilot` to install for an individual agent. Existing skill directories are protected from accidental overwrites unless `--overwrite` is explicitly supplied (`--force` is an alias). Select skills by stage number or directory name, by exact skill name, or by combining both selectors:
-
-```bash
-node scripts/install-skills.mjs --agent claude --stage 02,05 --dry-run
-node scripts/install-skills.mjs --agent claude --skills design-direction,keyboard-focus
-node scripts/install-skills.mjs --agent all --stage 06 --skills independent-review
-```
-
-With no selector, the installer retains its existing behavior and installs all canonical skills. Stage 1 and Stage 8 currently have no installable skill links and return an explicit error when selected. Each agent destination receives `.webcraft/manifest.json` with the manifest format version (`1.0`), agent, installation timestamp, and installed skill names. Dry runs do not create destination files or manifests. Safe, hash-verified uninstall is intentionally deferred to a separate follow-up.
+With no selector, the installer installs all canonical skills. Stage 1 and Stage 8 currently have no installable skill links and return an explicit error when selected. Each agent destination receives `.webcraft/manifest.json` with the manifest format version (`1.0`), agent, installation timestamp, and installed skill names. Dry runs do not create destination files or manifests. Safe, hash-verified uninstall is intentionally deferred to a separate follow-up.
 
 ## 5. Engineering standards and project philosophy
 
