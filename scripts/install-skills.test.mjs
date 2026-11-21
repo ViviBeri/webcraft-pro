@@ -277,10 +277,12 @@ test("rollback preserves a dangling destination symlink", async () => {
   try {
     await mkdir(path.dirname(destination), { recursive: true });
     await (await import("node:fs/promises")).symlink(path.join(f.root, "missing-target"), destination, "dir");
-    await assert.rejects(
-      executeInstall(["design-direction"], { agent: "claude", targetRoot: f.target, source: missingSource }),
-      (error) => error.code === "EEXIST" && /Destination appeared/.test(error.message),
-    );
+    const result = await executeInstall(["design-direction"], {
+      agent: "claude",
+      targetRoot: f.target,
+      source: missingSource,
+    });
+    assert.deepEqual(result.skipped, ["claude:design-direction"]);
     const stat = await (await import("node:fs/promises")).lstat(destination);
     assert.equal(stat.isSymbolicLink(), true);
   } finally { await rm(f.root, { recursive: true, force: true }); }
