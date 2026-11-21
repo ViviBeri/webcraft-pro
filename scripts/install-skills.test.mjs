@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { access, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { access, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
@@ -227,4 +227,27 @@ test("successful manifest replacement leaves no temporary files", async () => {
     const entries = await (await import("node:fs/promises")).readdir(metadata);
     assert.deepEqual(entries, ["manifest.json"]);
   } finally { await rm(f.root, { recursive: true, force: true }); }
+});
+
+
+test("every canonical skill is linked from at least one real stage README", async () => {
+  const repositoryRoot = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
+  const stagesRoot = path.join(repositoryRoot, "stages");
+  const skillsRoot = path.join(repositoryRoot, "skills");
+  const stages = (await readdir(stagesRoot, { withFileTypes: true }))
+    .filter((entry) => entry.isDirectory() && /^\d{2}-/.test(entry.name))
+    .map((entry) => entry.name);
+  const covered = new Set();
+  for (const stage of stages) {
+    try {
+      for (const skill of await resolveSelection({ stage: [stage], skills: [] })) covered.add(skill);
+    } catch (error) {
+      if (!/has no installable skills/.test(error.message)) throw error;
+    }
+  }
+  const canonical = (await readdir(skillsRoot, { withFileTypes: true }))
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .sort();
+  assert.deepEqual([...covered].sort(), canonical);
 });
