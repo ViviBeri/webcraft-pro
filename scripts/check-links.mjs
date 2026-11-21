@@ -15,7 +15,11 @@ function removeFencedCodeBlocks(content) {
   let fence = null;
   const lines = content.split(/\r?\n/);
 
-  return lines.map((line, index) => {
+  let paragraphOpen = false;
+  let listContext = false;
+  let indentedCodeBlock = false;
+
+  return lines.map((line) => {
     const opening = /^ {0,3}(\x60{3,}|~{3,})/.exec(line);
     if (!fence && opening) {
       const info = line.slice(opening[0].length);
@@ -33,13 +37,31 @@ function removeFencedCodeBlocks(content) {
       return "";
     }
 
-    if (/^(?: {4,}|\t)/.test(line)) {
-      // A blank line starts an indented code block; only a directly preceding
-      // list marker makes this indentation a list-item continuation.
-      const previousLine = lines[index - 1] ?? "";
-      const followsListItem = /^ {0,3}(?:[-+*]|\d+[.)])\s+/.test(previousLine);
-      if (!followsListItem) return "";
+    if (!line.trim()) {
+      paragraphOpen = false;
+      indentedCodeBlock = false;
+      return line;
     }
+
+    const isIndented = /^(?: {4,}|\t)/.test(line);
+    const isListItem = /^ {0,3}(?:[-+*]|\d+[.)])\s+/.test(line);
+
+    if (isIndented) {
+      // Preserve paragraph and list continuations; standalone indented blocks
+      // after a blank line are code and must not contribute Markdown links.
+      if (!paragraphOpen && !listContext) {
+        indentedCodeBlock = true;
+        return "";
+      }
+      if (indentedCodeBlock) return "";
+      paragraphOpen = true;
+      return line;
+    }
+
+    indentedCodeBlock = false;
+    if (!isListItem) listContext = false;
+    else listContext = true;
+    paragraphOpen = true;
     return line;
   }).join("\n");
 }
@@ -106,7 +128,7 @@ function createHeadingSlug(heading) {
     .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
     .replace(/(\x60+)(.*?)\1/g, "$2")
-    .replace(/(^|[^\p{L}\p{N}_])_([^_\n]+)_($|[^\p{L}\p{N}_])/gu, "$1$2$3")
+    .replace(/(?<![\p{L}\p{N}_])_([^_\n]+)_(?![\p{L}\p{N}_])/gu, "$1")
     .replace(/\*([^*\n]+)\*/g, "$1")
     .toLocaleLowerCase("en-US");
 
