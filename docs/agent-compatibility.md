@@ -61,7 +61,7 @@ The response passes only if it:
 4. Preserves a usable fallback for browsers or controls where the preferred selector is unavailable.
 5. Includes verification using keyboard-only navigation and checks that focus remains visible on the button.
 
-A reviewer must inspect the proposed CSS and run the verification in a real browser before marking output validation as passed. A textual checklist alone is not browser evidence.
+Evaluate the automatic-discovery response and the explicit-invocation response independently against all five criteria. The automatic-discovery response must satisfy them for automatic discovery to pass; the explicit-invocation response must also satisfy them for invocation to pass. A passing explicit-invocation response cannot compensate for a failed or inconclusive automatic-discovery response. A reviewer must inspect the proposed CSS and run the verification in a real browser before marking browser verification as passed. A textual checklist alone is not browser evidence.
 
 ## Per-agent evidence record
 
@@ -72,8 +72,8 @@ For each run, attach or link:
 - Fixture setup steps and terminal/result evidence (redact local usernames and private paths).
 - Screenshot or transcript showing the initial task prompt and automatic-discovery result, before explicit invocation.
 - Separate explicit-invocation prompt and complete agent response.
-- Reviewer decision against all five output criteria.
-- Browser evidence for the final focus treatment.
+- Separate reviewer decisions against all five output criteria for the automatic-discovery and explicit-invocation responses.
+- Browser evidence for the final focus treatment, linked to the exact CSS revision tested.
 - Limitations, setup requirements, and any manual discovery steps.
 
 Keep failed attempts; do not replace them with a later passing run without documenting the change.
@@ -82,9 +82,10 @@ Keep failed attempts; do not replace them with a later passing run without docum
 
 | Status | Required evidence |
 |---|---|
-| **Verified** | Installation, automatic discovery, representative invocation, all output criteria, and browser verification pass. |
-| **Partial** | At least one test stage has been attempted, but the complete Verified criteria have not all passed. |
-| **Not tested** | No test stage has been attempted for that agent. |
+| **Verified** | Installation, automatic discovery, explicit invocation, both response evaluations, and browser verification all pass with evidence. |
+| **Partial** | At least one required stage passes, but one or more Verified criteria remain incomplete, inconclusive, or fail. |
+| **Failed** | Testing was attempted, but no required stage passed; record the failed stages and evidence. |
+| **Not tested** | No test stage has been attempted. Once any stage is attempted, use Partial or Failed instead. |
 
 ## Current limitations
 
