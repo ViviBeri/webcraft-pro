@@ -8,6 +8,10 @@ const SCHEMA_VERSION = "1.0";
 const SCRIPT_DIRECTORY = path.dirname(fileURLToPath(import.meta.url));
 const REPOSITORY_ROOT = path.resolve(SCRIPT_DIRECTORY, "..");
 
+function compareText(left, right) {
+  return left < right ? -1 : left > right ? 1 : 0;
+}
+
 function diagnostic(ruleId, severity, file, message, fixHint, relatedFiles = [], line) {
   return {
     ruleId,
@@ -15,7 +19,7 @@ function diagnostic(ruleId, severity, file, message, fixHint, relatedFiles = [],
     file,
     ...(Number.isInteger(line) && line > 0 ? { line } : {}),
     message,
-    relatedFiles: [...new Set(relatedFiles)].sort(),
+    relatedFiles: [...new Set(relatedFiles)].sort(compareText),
     fixHint,
   };
 }
@@ -25,21 +29,51 @@ function normalizeDescription(value) {
 }
 
 function resolveSkillReference(destination, sourceFile, skillNames) {
-  if (/^(?:https?:|mailto:|#|data:)/i.test(destination)) return null;
-  const clean = destination.split(/[?#]/, 1)[0];
-  if (!clean || !/SKILL\.md$/i.test(clean)) return null;
-  const segments = clean.split("/");
-  const skillsIndex = segments.lastIndexOf("skills");
-  let target;
-  if (skillsIndex >= 0 && segments[skillsIndex + 1]) {
-    target = segments[skillsIndex + 1];
-  } else {
-    const resolved = path.posix.normalize(path.posix.join(path.posix.dirname(sourceFile), clean));
-    const match = resolved.match(/^skills\/([^/]+)\/SKILL\.md$/);
-    if (match) target = match[1];
+  if (destination.startsWith("#") || destination.startsWith("//")) {
+    return null;
   }
-  if (!target) return null;
-  return skillNames.has(target) ? null : target;
+
+  const clean = destination.split(/[?#]/, 1)[0];
+  if (!clean || !/SKILL\.md$/.test(clean)) return null;
+
+  if (
+    clean.startsWith("/") ||
+    /^[a-zA-Z]:[\\/]/.test(clean) ||
+    clean.includes("\\")
+  ) {
+    return clean;
+  }
+  if (/^[a-z][a-z0-9+.-]*:/i.test(clean)) return null;
+
+  const resolved = path.posix.normalize(
+    path.posix.join(path.posix.dirname(sourceFile), clean),
+  );
+  const match = /^skills\/([^/]+)\/SKILL\.md$/.exec(resolved);
+  if (!match) return resolved;
+
+  return skillNames.has(match[1]) ? null : match[1];
+}
+function removeFencedCodeBlocks(content) {
+  let fence = null;
+
+  return content.split("\n").map((line) => {
+    const opening = /^ {0,3}([\x60]{3,}|~{3,})/.exec(line);
+
+    if (!fence && opening) {
+      fence = { character: opening[1][0], length: opening[1].length };
+      return "";
+    }
+
+    if (fence) {
+      const closing = new RegExp(
+        "^ {0,3}" + fence.character + "{" + fence.length + ",}[ \\t]*$",
+      );
+      if (closing.test(line)) fence = null;
+      return "";
+    }
+
+    return line;
+  }).join("\n");
 }
 
 export async function analyzeSkills(root = REPOSITORY_ROOT) {
@@ -73,8 +107,8 @@ export async function analyzeSkills(root = REPOSITORY_ROOT) {
     description: skill.description,
   }));
   const diagnostics = [];
-
   const descriptions = new Map();
+
   for (const record of records) {
     const key = normalizeDescription(record.description);
     if (!key) continue;
@@ -85,7 +119,7 @@ export async function analyzeSkills(root = REPOSITORY_ROOT) {
 
   for (const group of descriptions.values()) {
     if (group.length < 2) continue;
-    const files = group.map((item) => item.file).sort();
+    const files = group.map((item) => item.file).sort(compareText);
     for (const item of group) {
       diagnostics.push(diagnostic(
         "SKILL001",
@@ -101,7 +135,9 @@ export async function analyzeSkills(root = REPOSITORY_ROOT) {
 
   const loadedRecords = await Promise.all(records.map(async (record) => ({
     ...record,
-    content: await readFile(path.join(root, record.file), "utf8"),
+    content: removeFencedCodeBlocks(
+      await readFile(path.join(root, record.file), "utf8"),
+    ),
   })));
 
   for (const record of loadedRecords) {
@@ -115,8 +151,8 @@ export async function analyzeSkills(root = REPOSITORY_ROOT) {
         "SKILL002",
         "error",
         record.file,
-        "Inter-skill reference targets unknown skill \"" + missing + "\".",
-        "Change the link to an existing canonical skills/<name>/SKILL.md path, or remove the stale reference.",
+        "Inter-skill reference does not resolve to an existing canonical skill: " + missing + ".",
+        "Use a relative Markdown link that resolves to an existing skills/<name>/SKILL.md file.",
         [],
         line,
       ));
@@ -124,9 +160,9 @@ export async function analyzeSkills(root = REPOSITORY_ROOT) {
   }
 
   diagnostics.sort((a, b) =>
-    a.file.localeCompare(b.file) ||
+    compareText(a.file, b.file) ||
     (a.line ?? Number.MAX_SAFE_INTEGER) - (b.line ?? Number.MAX_SAFE_INTEGER) ||
-    a.ruleId.localeCompare(b.ruleId)
+    compareText(a.ruleId, b.ruleId)
   );
 
   const summary = {
