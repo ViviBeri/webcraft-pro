@@ -1,4 +1,6 @@
-import { access, cp, mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import { access, cp, mkdir, open, readdir, readFile, rename, rm, writeFile } from "node:fs/promises";
+import { randomUUID } from "node:crypto";
+import { setTimeout as delay } from "node:timers/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -92,64 +94,149 @@ export async function resolveSelection(options, { source = sourceRoot, stages = 
   return [...selected].sort();
 }
 
+async function acquireManifestLock(lockPath, timeoutMs = 10000) {
+  const deadline = Date.now() + timeoutMs;
+  while (true) {
+    try {
+      await mkdir(lockPath);
+      return async () => rm(lockPath, { recursive: true, force: true });
+    } catch (error) {
+      if (error.code !== "EEXIST") throw error;
+      if (Date.now() >= deadline) {
+        throw new Error(\`Timed out waiting for installer lock: \${lockPath}\`);
+      }
+      await delay(50);
+    }
+  }
+}
+
+async function writeManifestAtomically(manifestPath, manifest) {
+  const temporaryPath = \`\${manifestPath}.\${randomUUID()}.tmp\`;
+  let handle;
+  try {
+    handle = await open(temporaryPath, "wx");
+    await handle.writeFile(\`\${JSON.stringify(manifest, null, 2)}\\n\`, "utf8");
+    await handle.close();
+    handle = undefined;
+    await rename(temporaryPath, manifestPath);
+  } finally {
+    if (handle) await handle.close().catch(() => {});
+    await rm(temporaryPath, { force: true }).catch(() => {});
+  }
+}
+
+async function readManifest(manifestPath, agent) {
+  if (!(await pathExists(manifestPath))) return [];
+  try {
+    const previous = JSON.parse(await readFile(manifestPath, "utf8"));
+    if (
+      previous.version !== "1.0" ||
+      previous.agent !== agent ||
+      !Array.isArray(previous.skills) ||
+      previous.skills.some((name) => typeof name !== "string")
+    ) throw new Error("Unsupported manifest.");
+    return previous.skills;
+  } catch {
+    throw new Error(\`Existing manifest is invalid or unsupported: \${manifestPath}\`);
+  }
+}
+
 export async function executeInstall(selectedSkills, { agent, targetRoot, overwrite = false, dryRun = false, source = sourceRoot }) {
   const agents = agent === "all" ? Object.keys(destinations) : [agent];
   for (const selected of agents) {
-    if (!Object.hasOwn(destinations, selected)) throw new Error(`Unsupported agent "${selected}". Use codex, claude, copilot or all.`);
+    if (!Object.hasOwn(destinations, selected)) throw new Error(\`Unsupported agent "\${selected}". Use codex, claude, copilot or all.\`);
   }
 
   const installed = [];
   const skipped = [];
   const planned = [];
-  const plans = [];
+
   for (const selected of agents) {
     const destinationRoot = path.join(targetRoot, destinations[selected]);
     const manifestPath = path.join(destinationRoot, ".webcraft", "manifest.json");
-    let previousSkills = [];
-    if (await pathExists(manifestPath)) {
-      try {
-        const previous = JSON.parse(await readFile(manifestPath, "utf8"));
-        if (previous.version !== "1.0" || previous.agent !== selected || !Array.isArray(previous.skills)) throw new Error("Unsupported manifest.");
-        previousSkills = previous.skills.filter((name) => typeof name === "string");
-      } catch {
-        throw new Error(`Existing manifest is invalid or unsupported: ${manifestPath}`);
-      }
-    }
-    plans.push({ selected, destinationRoot, manifestPath, previousSkills });
-  }
+    const lockPath = \`\${manifestPath}.lock\`;
 
-  for (const { selected, destinationRoot, manifestPath, previousSkills } of plans) {
     if (dryRun) {
+      await readManifest(manifestPath, selected);
       for (const skill of selectedSkills) {
         const target = path.join(destinationRoot, skill);
-        if (await pathExists(target) && !overwrite) skipped.push(`${selected}:${skill}`);
+        if (await pathExists(target) && !overwrite) skipped.push(\`\${selected}:\${skill}\`);
         else {
-          planned.push(`${selected}:${skill}`);
-          process.stdout.write(`[DRY RUN] Would install ${skill} for ${selected}.\n`);
+          planned.push(\`\${selected}:\${skill}\`);
+          process.stdout.write(\`[DRY RUN] Would install \${skill} for \${selected}.\\n\`);
         }
       }
       continue;
     }
-    await mkdir(destinationRoot, { recursive: true });
-    for (const skill of selectedSkills) {
-      const sourcePath = path.join(source, skill);
-      const destinationPath = path.join(destinationRoot, skill);
-      if (await pathExists(destinationPath) && !overwrite) {
-        skipped.push(`${selected}:${skill}`);
-        process.stdout.write(`[SKIP] ${skill} already exists for ${selected}.\n`);
-        continue;
-      }
-      await cp(sourcePath, destinationPath, { recursive: true, force: overwrite, errorOnExist: !overwrite });
-      installed.push(`${selected}:${skill}`);
-    }
-    const newlyInstalled = installed.filter((entry) => entry.startsWith(`${selected}:`)).map((entry) => entry.slice(selected.length + 1));
-    const manifestSkills = [...new Set([...previousSkills, ...newlyInstalled])].sort();
+
     await mkdir(path.dirname(manifestPath), { recursive: true });
-    await writeFile(manifestPath, `${JSON.stringify({ version: "1.0", agent: selected, installedAt: new Date().toISOString(), skills: manifestSkills }, null, 2)}\n`, "utf8");
+    const releaseLock = await acquireManifestLock(lockPath);
+    const createdPaths = [];
+    const backups = [];
+    let manifestCommitted = false;
+
+    try {
+      const previousSkills = await readManifest(manifestPath, selected);
+      for (const skill of selectedSkills) {
+        const sourcePath = path.join(source, skill);
+        const destinationPath = path.join(destinationRoot, skill);
+        const exists = await pathExists(destinationPath);
+        if (exists && !overwrite) {
+          skipped.push(\`\${selected}:\${skill}\`);
+          process.stdout.write(\`[SKIP] \${skill} already exists for \${selected}.\\n\`);
+          continue;
+        }
+
+        if (exists) {
+          const backupPath = \`\${destinationPath}.webcraft-backup-\${randomUUID()}\`;
+          await rename(destinationPath, backupPath);
+          backups.push({ destinationPath, backupPath });
+        } else {
+          createdPaths.push(destinationPath);
+        }
+        await cp(sourcePath, destinationPath, { recursive: true, force: false, errorOnExist: true });
+        installed.push(\`\${selected}:\${skill}\`);
+      }
+
+      const newlyInstalled = installed
+        .filter((entry) => entry.startsWith(\`\${selected}:\`))
+        .map((entry) => entry.slice(selected.length + 1));
+      const manifestSkills = [...new Set([...previousSkills, ...newlyInstalled])].sort();
+      await writeManifestAtomically(manifestPath, {
+        version: "1.0",
+        agent: selected,
+        installedAt: new Date().toISOString(),
+        skills: manifestSkills,
+      });
+      manifestCommitted = true;
+    } catch (error) {
+      const rollbackErrors = [];
+      for (const destinationPath of createdPaths.reverse()) {
+        try { await rm(destinationPath, { recursive: true, force: true }); }
+        catch (rollbackError) { rollbackErrors.push(rollbackError.message); }
+      }
+      for (const { destinationPath, backupPath } of backups.reverse()) {
+        try {
+          await rm(destinationPath, { recursive: true, force: true });
+          await rename(backupPath, destinationPath);
+        } catch (rollbackError) { rollbackErrors.push(rollbackError.message); }
+      }
+      if (rollbackErrors.length > 0) {
+        throw new Error(\`Installation failed: \${error.message}. Rollback also failed: \${rollbackErrors.join("; ")}\`);
+      }
+      throw error;
+    } finally {
+      if (manifestCommitted) {
+        for (const { backupPath } of backups) {
+          await rm(backupPath, { recursive: true, force: true });
+        }
+      }
+      await releaseLock();
+    }
   }
+
   return { installed, skipped, planned, dryRun };
 }
-
 export async function installSkills(options) {
   return executeInstall(await resolveSelection(options, options), options);
 }
