@@ -141,7 +141,7 @@ async function resolveMarkdownTarget(root, sourceFile, targetPath) {
       if (readmeStat?.isFile()) {
         return { file: path.relative(root, readme).split(path.sep).join("/") };
       }
-      return { error: "Target directory does not contain a README.md file" };
+      return { ignored: true };
     }
     if (!targetStat.isFile()) return { ignored: true };
     if (!absolute.toLocaleLowerCase("en-US").endsWith(".md")) return { ignored: true };
@@ -184,6 +184,7 @@ export async function analyzeLinks(root = REPOSITORY_ROOT) {
       const pathWithoutQuery = pathPart.split("?", 1)[0];
 
       let targetFile = file;
+      if (pathWithoutQuery.startsWith("/") || /^[a-zA-Z]:[\\\\/]/.test(pathWithoutQuery)) continue;
       if (pathWithoutQuery) {
         const resolved = await resolveMarkdownTarget(repositoryRoot, file, pathWithoutQuery);
         if (resolved.ignored) continue;
