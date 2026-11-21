@@ -1,0 +1,58 @@
+name: Feature request
+description: Propose a skill, standard, or workflow improvement for WebCraft Pro.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: "Describe the developer problem first. Keep proposals framework-agnostic unless a specific technology is essential."
+  - type: textarea
+    id: problem
+    attributes:
+      label: What developer problem should this solve?
+      description: Describe the task, failure mode, or workflow gap and who is affected.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed skill, standard, or improvement
+      description: Explain the proposed behavior and why an existing skill or standard does not already cover it.
+    validations:
+      required: true
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Example use case
+      description: Provide a concrete scenario or example prompt.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: List observable outcomes or verification evidence that would demonstrate completion.
+      placeholder: "- [ ] ...\n- [ ] ..."
+    validations:
+      required: true
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Suggested scope
+      options:
+        - New skill
+        - Update existing skill
+        - Engineering standard
+        - Installer or CLI
+        - CI or verification workflow
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: related
+    attributes:
+      label: Related skills, issues, or references
+      description: Link relevant repository files, issues, or authoritative documentation.
+    validations:
+      required: false
