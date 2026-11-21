@@ -216,7 +216,7 @@ test("emits the stable versioned JSON report shape", async () => {
 
 test("validates links in indented list-item continuations", async () => {
   const root = await createRepository({
-    "README.md": "- List item\\n    [List continuation](missing-list.md)\\n",
+    "README.md": "- List item\n    [List continuation](missing-list.md)\n",
   });
 
   try {
