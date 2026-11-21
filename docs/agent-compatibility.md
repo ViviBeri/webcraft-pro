@@ -20,18 +20,17 @@ Use the canonical `keyboard-focus` skill for all three agents so the task and ac
 
 ### Installation fixture
 
-The compatibility test isolates agent discovery from installer behavior. Until selective installation is available on the tested base revision, create a clean fixture project and copy only the canonical skill directory into the expected agent destination.
+Use the WebCraft Pro selective installer to create a clean fixture for each agent. This tests the installer and gives the compatibility run a reproducible starting point. Use a separate empty fixture directory for every agent; do not reuse a destination containing previous skills.
 
-From the repository root in a POSIX-compatible shell, repeat the following for each agent in a separate, empty fixture project. Set `AGENT_SKILLS_DIR` to exactly one of `.agents/skills`, `.claude/skills`, or `.github/skills` for the agent under test:
+From the repository root, run the matching command:
 
 ```bash
-FIXTURE=/path/to/fixture-project
-AGENT_SKILLS_DIR=.agents/skills
-mkdir -p "$FIXTURE/$AGENT_SKILLS_DIR"
-cp -R skills/keyboard-focus "$FIXTURE/$AGENT_SKILLS_DIR/"
+node scripts/install-skills.mjs --agent codex --target /path/to/codex-fixture --skills keyboard-focus
+node scripts/install-skills.mjs --agent claude --target /path/to/claude-fixture --skills keyboard-focus
+node scripts/install-skills.mjs --agent copilot --target /path/to/copilot-fixture --skills keyboard-focus
 ```
 
-This manual fixture setup does not test the WebCraft Pro installer. Record it as a limitation and do not use it as installer evidence. Confirm that the fixture contains only `keyboard-focus/SKILL.md` and that its content matches the canonical repository file. Run each agent test in a fresh fixture.
+For a non-mutating preflight, add `--dry-run` before the actual installation. Verify that each fixture contains only `keyboard-focus/SKILL.md` under its agent-specific destination and that the file matches the canonical `skills/keyboard-focus/SKILL.md`. Record the installer command, exit status, destination listing, and agent version in the evidence record. The installer's file-placement tests do not prove that an agent discovers or invokes the skill; those remain separate test stages.
 
 ### Automatic discovery test
 
