@@ -47,7 +47,7 @@ test("checks relative Markdown paths and valid anchors", async () => {
       "",
     ].join("\n"),
     "docs/README.md": "# Docs index\n",
-    "docs/guide.md": "# API: Endpoints\n## Usage\n## Usage\n### Hello World\n",
+    "docs/guide.md": "# API: Endpoints\n## Usage\n## Usage\n### Hello World\n## Café déjà vu\n",
   });
 
   try {
