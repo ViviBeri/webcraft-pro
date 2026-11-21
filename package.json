@@ -1,6 +1,6 @@
 {
   "name": "webcraft-pro",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "private": false,
   "description": "Framework-agnostic AI agent skills for website design, engineering and security.",
   "license": "MIT",
