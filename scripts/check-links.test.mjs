@@ -41,6 +41,8 @@ test("generates GitHub-style slugs for punctuation, duplicates, underscores, and
     "##### Deep details",
     "###### Final details",
     "## my_option",
+    "## café_bar",
+    "## café_x_",
     "## Community Standards & Snippet Libraries",
     "## Double  Spaces",
     "Heading 1",
@@ -62,6 +64,8 @@ test("generates GitHub-style slugs for punctuation, duplicates, underscores, and
     "deep-details",
     "final-details",
     "my_option",
+    "café_bar",
+    "café_x_",
     "community-standards--snippet-libraries",
     "double--spaces",
     "heading-1",
@@ -205,6 +209,21 @@ test("emits the stable versioned JSON report shape", async () => {
       errors: 1,
       warnings: 0,
     });
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test("validates links in indented list-item continuations", async () => {
+  const root = await createRepository({
+    "README.md": "- List item\\n    [List continuation](missing-list.md)\\n",
+  });
+
+  try {
+    const report = await analyzeLinks(root);
+    assert.equal(report.summary.errors, 1);
+    assert.equal(report.diagnostics[0].target, "missing-list.md");
+    assert.equal(report.diagnostics[0].line, 2);
   } finally {
     await rm(root, { recursive: true, force: true });
   }
