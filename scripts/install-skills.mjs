@@ -226,12 +226,15 @@ export async function executeInstall(selectedSkills, { agent, targetRoot, overwr
       }
       throw error;
     } finally {
-      if (manifestCommitted) {
-        for (const { backupPath } of backups) {
-          await rm(backupPath, { recursive: true, force: true });
+      try {
+        if (manifestCommitted) {
+          for (const { backupPath } of backups) {
+            await rm(backupPath, { recursive: true, force: true });
+          }
         }
+      } finally {
+        await releaseLock();
       }
-      await releaseLock();
     }
   }
 
