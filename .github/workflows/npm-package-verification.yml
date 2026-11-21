@@ -1,0 +1,67 @@
+name: npm Package Verification
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: npm-package-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify-package:
+    name: Verify npm package and linked CLI
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22"
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Verify package contents
+        run: npm pack --dry-run
+
+      - name: Link package globally
+        run: npm link
+
+      - name: Test linked CLI in a disposable project
+        shell: bash
+        run: |
+          set -euo pipefail
+          TEST_DIR="$(mktemp -d)"
+          trap 'rm -rf "$TEST_DIR"' EXIT
+          cd "$TEST_DIR"
+          webcraft install --agent claude
+          node --input-type=module -e '
+            import assert from "node:assert/strict";
+            import { readFile, readdir } from "node:fs/promises";
+            import path from "node:path";
+
+            const skillsRoot = path.join(process.cwd(), ".claude", "skills");
+            const manifestPath = path.join(skillsRoot, ".webcraft", "manifest.json");
+            const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
+            const entries = await readdir(skillsRoot, { withFileTypes: true });
+            const installed = entries.filter((entry) => entry.isDirectory() && entry.name !== ".webcraft");
+
+            assert.equal(manifest.agent, "claude");
+            assert.equal(manifest.version, "1.0");
+            assert.ok(manifest.skills.length > 0, "manifest must record installed skills");
+            assert.equal(installed.length, manifest.skills.length);
+            for (const skill of manifest.skills) {
+              const skillFile = path.join(skillsRoot, skill, "SKILL.md");
+              await readFile(skillFile, "utf8");
+            }
+            console.log("Linked CLI installation verified:", installed.length, "skills");
+          '

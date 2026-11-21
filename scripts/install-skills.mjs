@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+import { realpathSync } from "node:fs";
 import { access, cp, mkdir, open, readdir, readFile, rename, rm, writeFile } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
 import { setTimeout as delay } from "node:timers/promises";
@@ -21,14 +23,15 @@ function parseList(value, flag) {
 }
 
 export function parseArgs(args) {
+  const commandArgs = args[0] === "install" ? args.slice(1) : args;
   const options = { agent: null, target: process.cwd(), stage: [], skills: [], overwrite: false, dryRun: false, help: false };
-  for (let index = 0; index < args.length; index += 1) {
-    const argument = args[index];
+  for (let index = 0; index < commandArgs.length; index += 1) {
+    const argument = commandArgs[index];
     if (argument === "--help" || argument === "-h") options.help = true;
     else if (argument === "--overwrite" || argument === "--force") options.overwrite = true;
     else if (argument === "--dry-run") options.dryRun = true;
     else if (["--agent", "--target", "--stage", "--skills"].includes(argument)) {
-      const value = args[index + 1];
+      const value = commandArgs[index + 1];
       if (!value || value.startsWith("--")) throw new Error(`Missing value for ${argument}`);
       if (argument === "--agent") options.agent = value;
       if (argument === "--target") options.target = value;
@@ -341,6 +344,7 @@ function printHelp() {
   process.stdout.write(`WebCraft Pro skill installer
 
 Usage:
+  webcraft install --agent <codex|claude|copilot|all> [options]
   node scripts/install-skills.mjs --agent <codex|claude|copilot|all> [options]
 
 Options:
@@ -367,7 +371,7 @@ async function main() {
   if (result.skipped.length > 0) process.stdout.write(`Skipped existing skills: ${result.skipped.join(", ")}\n`);
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (process.argv[1] && realpathSync(process.argv[1]) === fileURLToPath(import.meta.url)) {
   main().catch((error) => {
     process.stderr.write(`ERROR: ${error.message}\n`);
     process.exitCode = 1;

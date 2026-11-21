@@ -42,6 +42,12 @@ test("parseArgs preserves flags and parses comma-separated selectors", () => {
   assert.deepEqual(repeated.stage, ["2", "03"]);
   assert.deepEqual(repeated.skills, ["design-direction", "api-security"]);
 });
+test("accepts the npm CLI install subcommand", () => {
+  const options = parseArgs(["install", "--agent", "claude", "--stage", "02"]);
+  assert.equal(options.agent, "claude");
+  assert.deepEqual(options.stage, ["02"]);
+});
+
 test("requires agent and selector values", () => {
   assert.throws(() => parseArgs([]), /Specify --agent/);
   assert.throws(() => parseArgs(["--agent", "claude", "--skills"]), /Missing value/);

@@ -1,12 +1,22 @@
 {
   "name": "webcraft-pro",
   "version": "1.5.1",
-  "private": true,
+  "private": false,
   "description": "Framework-agnostic AI agent skills for website design, engineering and security.",
   "license": "MIT",
   "engines": {
     "node": ">=22.12.0"
   },
+  "bin": {
+    "webcraft": "./scripts/install-skills.mjs"
+  },
+  "files": [
+    "scripts/install-skills.mjs",
+    "skills/",
+    "stages/",
+    "standards/",
+    "README.md"
+  ],
   "scripts": {
     "validate": "node scripts/validate-skills.mjs",
     "validate:skill-count": "node scripts/validate-skill-count.mjs",
