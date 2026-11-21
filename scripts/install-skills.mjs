@@ -47,8 +47,8 @@ export function parseArgs(args) {
       }
       if (argument === "--agent") options.agent = value;
       if (argument === "--target") options.target = value;
-      if (argument === "--stage") options.stage = parseList(value, argument);
-      if (argument === "--skills") options.skills = parseList(value, argument);
+      if (argument === "--stage") options.stage.push(...parseList(value, argument));
+      if (argument === "--skills") options.skills.push(...parseList(value, argument));
       index += 1;
     } else {
       throw new Error(`Unknown argument: ${argument}`);
@@ -116,7 +116,8 @@ export async function resolveSelection(options, {
       .sort();
 
     for (const requested of options.stage) {
-      const stage = availableStages.find((name) => name === requested || name.startsWith(`${requested}-`));
+      const normalized = /^\\d{1,2}$/.test(requested) ? requested.padStart(2, "0") : requested;
+      const stage = availableStages.find((name) => name === normalized || name.startsWith(`${normalized}-`));
       if (!stage) {
         throw new Error(`Unknown stage "${requested}". Valid stages: ${availableStages.join(", ")}.`);
       }
@@ -157,18 +158,26 @@ export async function executeInstall(selectedSkills, {
   source = sourceRoot,
 }) {
   const selectedAgents = agent === "all" ? Object.keys(destinations) : [agent];
-  for (const selected of selectedAgents) {
-    if (!Object.hasOwn(destinations, selected)) {
-      throw new Error(`Unsupported agent "${selected}". Use codex, claude, copilot or all.`);
-    }
-  }
-
-  const installed = [];
-  const skipped = [];
-  const planned = [];
-
+  const plans = [];
   for (const selected of selectedAgents) {
     const destinationRoot = path.join(targetRoot, destinations[selected]);
+    const manifestPath = path.join(destinationRoot, ".webcraft", "manifest.json");
+    let previousSkills = [];
+    if (!dryRun && await pathExists(manifestPath)) {
+      try {
+        const previous = JSON.parse(await readFile(manifestPath, "utf8"));
+        if (previous.version !== "1.0" || previous.agent !== selected || !Array.isArray(previous.skills)) {
+          throw new Error("Unsupported manifest format or agent.");
+        }
+        previousSkills = previous.skills.filter((name) => typeof name === "string");
+      } catch {
+        throw new Error(`Existing manifest is invalid or unsupported: ${manifestPath}`);
+      }
+    }
+    plans.push({ selected, destinationRoot, manifestPath, previousSkills });
+  }
+
+  for (const { selected, destinationRoot, manifestPath, previousSkills } of plans) {
     if (dryRun) {
       for (const skill of selectedSkills) {
         const destinationSkill = path.join(destinationRoot, skill);
@@ -176,14 +185,13 @@ export async function executeInstall(selectedSkills, {
           skipped.push(`${selected}:${skill}`);
         } else {
           planned.push(`${selected}:${skill}`);
-          process.stdout.write(`[DRY RUN] Would install ${skill} for ${selected}.\n`);
+          process.stdout.write(`[DRY RUN] Would install ${skill} for ${selected}.\\n`);
         }
       }
       continue;
     }
 
     await mkdir(destinationRoot, { recursive: true });
-    for (const skill of selectedSkills) {
       const sourcePath = path.join(source, skill);
       const destinationPath = path.join(destinationRoot, skill);
       const exists = await pathExists(destinationPath);
@@ -200,19 +208,7 @@ export async function executeInstall(selectedSkills, {
       installed.push(`${selected}:${skill}`);
     }
 
-    const manifestDirectory = path.join(destinationRoot, ".webcraft");
-    const manifestPath = path.join(manifestDirectory, "manifest.json");
-    let previousSkills = [];
-    if (await pathExists(manifestPath)) {
-      try {
-        const previous = JSON.parse(await readFile(manifestPath, "utf8"));
-        if (previous.version === "1.0" && previous.agent === selected && Array.isArray(previous.skills)) {
-          previousSkills = previous.skills.filter((name) => typeof name === "string");
-        }
-      } catch {
-        throw new Error(`Existing manifest is invalid: ${manifestPath}`);
-      }
-    }
+    const manifestDirectory = path.dirname(manifestPath);
     const newlyInstalled = installed
       .filter((entry) => entry.startsWith(`${selected}:`))
       .map((entry) => entry.slice(selected.length + 1));
