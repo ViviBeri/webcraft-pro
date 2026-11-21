@@ -27,17 +27,17 @@ function removeFencedCodeBlocks(content) {
 
     if (fence) {
       const closing = new RegExp(
-        "^ {0,3}" + fence.character + "{" + fence.length + ",}[ \\t]*$",
+        "^ {0,3}" + fence.character + "{" + fence.length + ",}[ \t]*$",
       );
       if (closing.test(line)) fence = null;
       return "";
     }
 
-    if (/^(?: {4,}|\\t)/.test(line)) {
+    if (/^(?: {4,}|\t)/.test(line)) {
       // A blank line starts an indented code block; only a directly preceding
       // list marker makes this indentation a list-item continuation.
       const previousLine = lines[index - 1] ?? "";
-      const followsListItem = /^ {0,3}(?:[-+*]|\\d+[.)])\\s+/.test(previousLine);
+      const followsListItem = /^ {0,3}(?:[-+*]|\d+[.)])\s+/.test(previousLine);
       if (!followsListItem) return "";
     }
     return line;
