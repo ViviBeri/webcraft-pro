@@ -35,7 +35,9 @@ test("parseArgs preserves flags and parses comma-separated selectors", () => {
   assert.deepEqual(options.skills, ["api-security", "keyboard-focus"]);
   assert.equal(options.dryRun, true);
   assert.equal(options.overwrite, true);
-  assert.equal(parseArgs(["--agent", "claude", "--force"]).overwrite, true);\n  const repeated = parseArgs(["--agent", "claude", "--stage", "2", "--stage", "03", "--skills", "design-direction", "--skills", "api-security"]);\n  assert.deepEqual(repeated.stage, ["2", "03"]);\n  assert.deepEqual(repeated.skills, ["design-direction", "api-security"]);
+  assert.equal(parseArgs(["--agent", "claude", "--force"]).overwrite, true);
+  const repeated = parseArgs(["--agent", "claude", "--stage", "2", "--stage", "03", "--skills", "design-direction", "--skills", "api-security"]);\n  assert.deepEqual(repeated.stage, ["2", "03"]);
+  assert.deepEqual(repeated.skills, ["design-direction", "api-security"]);
 });
 test("requires agent and selector values", () => {
   assert.throws(() => parseArgs([]), /Specify --agent/);
