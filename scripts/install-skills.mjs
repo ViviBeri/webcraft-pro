@@ -273,7 +273,18 @@ export async function executeInstall(selectedSkills, { agent, targetRoot, overwr
           }
           createdPaths.push(destinationPath);
         }
-        await cp(sourcePath, destinationPath, { recursive: true, force: false, errorOnExist: true });
+        if (exists) {
+          await cp(sourcePath, destinationPath, { recursive: true, force: false, errorOnExist: true });
+        } else {
+          const entries = await readdir(sourcePath);
+          for (const entry of entries) {
+            await cp(path.join(sourcePath, entry), path.join(destinationPath, entry), {
+              recursive: true,
+              force: false,
+              errorOnExist: true,
+            });
+          }
+        }
         installed.push(`${selected}:${skill}`);
       }
 
