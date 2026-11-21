@@ -1,146 +1,146 @@
 import assert from "node:assert/strict";
-import { mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { access, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
-import { installSkills } from "./install-skills.mjs";
+import { executeInstall, installSkills, parseArgs, resolveSelection } from "./install-skills.mjs";
 
-async function createSource(root) {
-  for (const name of ["design-direction", "api-security"]) {
-    const directory = path.join(root, name);
+async function fixture() {
+  const root = await mkdtemp(path.join(os.tmpdir(), "webcraft-test-"));
+  const source = path.join(root, "source");
+  const stages = path.join(root, "stages");
+  const target = path.join(root, "target");
+  for (const name of ["design-direction", "api-security", "keyboard-focus"]) {
+    const directory = path.join(source, name);
     await mkdir(directory, { recursive: true });
-    await writeFile(
-      path.join(directory, "SKILL.md"),
-      `---\nname: ${name}\ndescription: Test skill description for installer.\n---\n\n# ${name}\n`,
-    );
+    await writeFile(path.join(directory, "SKILL.md"), `# ${name}\n`);
   }
+  for (const [stage, names] of [["01-foundation", []], ["02-design", ["design-direction", "keyboard-focus"]], ["03-security", ["api-security", "keyboard-focus"]], ["08-release", []]]) {
+    const directory = path.join(stages, stage);
+    await mkdir(directory, { recursive: true });
+    const links = names.map((name) => `- [${name}](../../skills/${name}/SKILL.md)`).join("\n");
+    await writeFile(path.join(directory, "README.md"), `# ${stage}\n\n## Canonical skills\n\n${links}\n\n## Other content\n`);
+  }
+  return { root, source, stages, target };
+}
+async function exists(file) {
+  try { await access(file); return true; } catch { return false; }
 }
 
-test("installs selected skills to the Codex project path", async () => {
-  const root = await mkdtemp(path.join(os.tmpdir(), "webcraft-install-"));
-  const source = path.join(root, "source");
-  const target = path.join(root, "target");
-
-  try {
-    await createSource(source);
-    const result = await installSkills({ agent: "codex", source, targetRoot: target });
-
-    assert.equal(result.installed.length, 2);
-    assert.equal(result.skipped.length, 0);
-    const installed = await readFile(
-      path.join(target, ".agents", "skills", "design-direction", "SKILL.md"),
-      "utf8",
-    );
-    assert.match(installed, /# design-direction/);
-  } finally {
-    await rm(root, { recursive: true, force: true });
-  }
+test("parseArgs preserves flags and parses comma-separated selectors", () => {
+  const options = parseArgs(["--agent", "claude", "--target", "/tmp/project", "--stage", "02,03", "--skills", "api-security,keyboard-focus", "--dry-run", "--overwrite"]);
+  assert.equal(options.agent, "claude");
+  assert.equal(options.target, "/tmp/project");
+  assert.deepEqual(options.stage, ["02", "03"]);
+  assert.deepEqual(options.skills, ["api-security", "keyboard-focus"]);
+  assert.equal(options.dryRun, true);
+  assert.equal(options.overwrite, true);
+  assert.equal(parseArgs(["--agent", "claude", "--force"]).overwrite, true);
 });
-
-test("preserves existing skill directories by default", async () => {
-  const root = await mkdtemp(path.join(os.tmpdir(), "webcraft-install-"));
-  const source = path.join(root, "source");
-  const target = path.join(root, "target");
-  const existing = path.join(target, ".claude", "skills", "design-direction");
-
+test("requires agent and selector values", () => {
+  assert.throws(() => parseArgs([]), /Specify --agent/);
+  assert.throws(() => parseArgs(["--agent", "claude", "--skills"]), /Missing value/);
+});
+test("installs all skills by default and writes manifest", async () => {
+  const f = await fixture();
   try {
-    await createSource(source);
+    const selected = await resolveSelection({ stage: [], skills: [] }, f);
+    assert.deepEqual(selected, ["api-security", "design-direction", "keyboard-focus"]);
+    const result = await installSkills({ agent: "codex", targetRoot: f.target, source: f.source, stages: f.stages });
+    assert.equal(result.installed.length, 3);
+    const manifest = JSON.parse(await readFile(path.join(f.target, ".agents/skills/.webcraft/manifest.json"), "utf8"));
+    assert.equal(manifest.version, "1.0");
+    assert.equal(manifest.agent, "codex");
+    assert.deepEqual(manifest.skills, selected);
+    assert.ok(manifest.installedAt);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
+});
+test("--skills installs only the requested subset", async () => {
+  const f = await fixture();
+  try {
+    const result = await installSkills({ agent: "claude", targetRoot: f.target, source: f.source, stages: f.stages, skills: ["api-security", "keyboard-focus"] });
+    assert.equal(result.installed.length, 2);
+    assert.equal(await exists(path.join(f.target, ".claude/skills/design-direction")), false);
+    assert.equal(await exists(path.join(f.target, ".claude/skills/api-security/SKILL.md")), true);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
+});
+test("--stage resolves canonical skill links from numeric prefix", async () => {
+  const f = await fixture();
+  try {
+    assert.deepEqual(await resolveSelection({ stage: ["02"], skills: [] }, f), ["design-direction", "keyboard-focus"]);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
+});
+test("combined selectors form a sorted deduplicated union", async () => {
+  const f = await fixture();
+  try {
+    assert.deepEqual(await resolveSelection({ stage: ["02", "03"], skills: ["api-security", "design-direction"] }, f), ["api-security", "design-direction", "keyboard-focus"]);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
+});
+test("Stage 1 and Stage 8 return explicit empty-stage errors", async () => {
+  const f = await fixture();
+  try {
+    await assert.rejects(resolveSelection({ stage: ["01"], skills: [] }, f), /has no installable skills/);
+    await assert.rejects(resolveSelection({ stage: ["08"], skills: [] }, f), /has no installable skills/);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
+});
+test("unknown skills and stages fail clearly", async () => {
+  const f = await fixture();
+  try {
+    await assert.rejects(resolveSelection({ stage: [], skills: ["missing-skill"] }, f), /Unknown skill "missing-skill"/);
+    await assert.rejects(resolveSelection({ stage: ["99"], skills: [] }, f), /Unknown stage "99"/);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
+});
+test("dry-run writes no target directory or manifest", async () => {
+  const f = await fixture();
+  try {
+    const result = await installSkills({ agent: "claude", targetRoot: f.target, source: f.source, stages: f.stages, skills: ["design-direction"], dryRun: true });
+    assert.equal(result.planned.length, 1);
+    assert.equal(result.installed.length, 0);
+    assert.equal(await exists(f.target), false);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
+});
+test("existing skills are skipped and preserved without overwrite", async () => {
+  const f = await fixture();
+  const existing = path.join(f.target, ".claude/skills/design-direction");
+  try {
     await mkdir(existing, { recursive: true });
     await writeFile(path.join(existing, "SKILL.md"), "local version");
-
-    const result = await installSkills({ agent: "claude", source, targetRoot: target });
-
-    assert.equal(result.skipped.length, 1);
+    const result = await installSkills({ agent: "claude", targetRoot: f.target, source: f.source, stages: f.stages, skills: ["design-direction"] });
+    assert.deepEqual(result.skipped, ["claude:design-direction"]);
     assert.equal(await readFile(path.join(existing, "SKILL.md"), "utf8"), "local version");
-  } finally {
-    await rm(root, { recursive: true, force: true });
-  }
+    const manifest = JSON.parse(await readFile(path.join(f.target, ".claude/skills/.webcraft/manifest.json"), "utf8"));
+    assert.deepEqual(manifest.skills, []);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
 });
-
-test("overwrites only when explicitly requested", async () => {
-  const root = await mkdtemp(path.join(os.tmpdir(), "webcraft-install-"));
-  const source = path.join(root, "source");
-  const target = path.join(root, "target");
-  const existing = path.join(target, ".github", "skills", "api-security");
-
+test("--overwrite replaces content and --force is its CLI alias", async () => {
+  const f = await fixture();
+  const existing = path.join(f.target, ".github/skills/api-security");
   try {
-    await createSource(source);
     await mkdir(existing, { recursive: true });
     await writeFile(path.join(existing, "SKILL.md"), "old version");
-
-    const result = await installSkills({
-      agent: "copilot",
-      source,
-      targetRoot: target,
-      overwrite: true,
-    });
-
-    assert.equal(result.installed.length, 2);
-    assert.equal(result.skipped.length, 0);
-    assert.match(
-      await readFile(path.join(existing, "SKILL.md"), "utf8"),
-      /# api-security/,
-    );
-  } finally {
-    await rm(root, { recursive: true, force: true });
-  }
+    const options = parseArgs(["--agent", "copilot", "--force"]);
+    const result = await executeInstall(["api-security"], { ...options, targetRoot: f.target, source: f.source });
+    assert.deepEqual(result.installed, ["copilot:api-security"]);
+    assert.match(await readFile(path.join(existing, "SKILL.md"), "utf8"), /# api-security/);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
 });
-
-test("installs to all supported agent locations", async () => {
-  const root = await mkdtemp(path.join(os.tmpdir(), "webcraft-install-"));
-  const source = path.join(root, "source");
-  const target = path.join(root, "target");
-
+test("all-agent installation retains the three existing destinations", async () => {
+  const f = await fixture();
   try {
-    await createSource(source);
-    const result = await installSkills({ agent: "all", source, targetRoot: target });
-
-    assert.equal(result.installed.length, 6);
+    const result = await installSkills({ agent: "all", targetRoot: f.target, source: f.source, stages: f.stages, skills: ["design-direction"] });
+    assert.equal(result.installed.length, 3);
     for (const directory of [".agents", ".claude", ".github"]) {
-      assert.equal(
-        await readFile(
-          path.join(target, directory, "skills", "design-direction", "SKILL.md"),
-          "utf8",
-        ).then(() => true),
-        true,
-      );
+      assert.equal(await exists(path.join(f.target, directory, "skills/design-direction/SKILL.md")), true);
     }
-  } finally {
-    await rm(root, { recursive: true, force: true });
-  }
+  } finally { await rm(f.root, { recursive: true, force: true }); }
 });
-
-test("dry run reports planned changes without creating the target", async () => {
-  const root = await mkdtemp(path.join(os.tmpdir(), "webcraft-install-"));
-  const source = path.join(root, "source");
-  const target = path.join(root, "target");
-
+test("repeated installs retain previously recorded manifest skills", async () => {
+  const f = await fixture();
   try {
-    await createSource(source);
-    const result = await installSkills({
-      agent: "codex",
-      source,
-      targetRoot: target,
-      dryRun: true,
-    });
-
-    assert.equal(result.installed.length, 2);
-    await assert.rejects(readFile(path.join(target, ".agents", "skills", "design-direction", "SKILL.md")));
-  } finally {
-    await rm(root, { recursive: true, force: true });
-  }
-});
-
-test("rejects unsupported agent names", async () => {
-  const root = await mkdtemp(path.join(os.tmpdir(), "webcraft-install-"));
-
-  try {
-    await createSource(path.join(root, "source"));
-    await assert.rejects(
-      installSkills({ agent: "unknown", source: path.join(root, "source"), targetRoot: root }),
-      /Unsupported agent/,
-    );
-  } finally {
-    await rm(root, { recursive: true, force: true });
-  }
+    const options = { agent: "claude", targetRoot: f.target, source: f.source, stages: f.stages };
+    await installSkills({ ...options, skills: ["design-direction"] });
+    await installSkills({ ...options, skills: ["api-security"] });
+    const manifest = JSON.parse(await readFile(path.join(f.target, ".claude/skills/.webcraft/manifest.json"), "utf8"));
+    assert.deepEqual(manifest.skills, ["api-security", "design-direction"]);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
 });
