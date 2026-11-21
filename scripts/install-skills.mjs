@@ -96,14 +96,48 @@ export async function resolveSelection(options, { source = sourceRoot, stages = 
 
 async function acquireManifestLock(lockPath, timeoutMs = 10000) {
   const deadline = Date.now() + timeoutMs;
+  const token = randomUUID();
   while (true) {
     try {
       await mkdir(lockPath);
-      return async () => rm(lockPath, { recursive: true, force: true });
+      await writeFile(
+        path.join(lockPath, "owner.json"),
+        JSON.stringify({ pid: process.pid, token, acquiredAt: new Date().toISOString() }),
+        { flag: "wx" },
+      );
+      return async () => {
+        let owner;
+        try {
+          owner = JSON.parse(await readFile(path.join(lockPath, "owner.json"), "utf8"));
+        } catch {
+          throw new Error(`Installer lock ownership is unreadable; inspect manually: ${lockPath}`);
+        }
+        if (owner.token !== token || owner.pid !== process.pid) {
+          throw new Error(`Installer lock ownership changed; refusing to release another process lock: ${lockPath}`);
+        }
+        await rm(lockPath, { recursive: true, force: true });
+      };
     } catch (error) {
-      if (error.code !== "EEXIST") throw error;
+      if (error.code !== "EEXIST") {
+        await rm(lockPath, { recursive: true, force: true }).catch(() => {});
+        throw error;
+      }
+      let owner;
+      try {
+        owner = JSON.parse(await readFile(path.join(lockPath, "owner.json"), "utf8"));
+      } catch {
+        owner = null;
+      }
+      if (owner && Number.isInteger(owner.pid)) {
+        let active = true;
+        try { process.kill(owner.pid, 0); }
+        catch (probeError) { if (probeError.code === "ESRCH") active = false; }
+        if (!active) {
+          throw new Error(`Abandoned installer lock detected for PID ${owner.pid}. Remove it manually after confirming no installer is running: ${lockPath}`);
+        }
+      }
       if (Date.now() >= deadline) {
-        throw new Error(`Timed out waiting for installer lock: ${lockPath}`);
+        throw new Error(`Timed out waiting for installer lock: ${lockPath}${owner ? ` (owned by PID ${owner.pid})` : " (owner metadata unavailable; manual inspection required)"}`);
       }
       await delay(50);
     }
@@ -150,6 +184,13 @@ export async function executeInstall(selectedSkills, { agent, targetRoot, overwr
   const installed = [];
   const skipped = [];
   const planned = [];
+
+  // Preflight every destination before changing any of them. Each manifest is
+  // checked again after acquiring its destination lock to close the race.
+  for (const selected of agents) {
+    const manifestPath = path.join(targetRoot, destinations[selected], ".webcraft", "manifest.json");
+    await readManifest(manifestPath, selected);
+  }
 
   for (const selected of agents) {
     const destinationRoot = path.join(targetRoot, destinations[selected]);
