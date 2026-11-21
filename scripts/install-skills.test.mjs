@@ -3,6 +3,7 @@ import { access, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from "node:f
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 import { executeInstall, installSkills, parseArgs, resolveSelection } from "./install-skills.mjs";
 
 async function fixture() {
@@ -231,7 +232,7 @@ test("successful manifest replacement leaves no temporary files", async () => {
 
 
 test("every canonical skill is linked from at least one real stage README", async () => {
-  const repositoryRoot = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
+  const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
   const stagesRoot = path.join(repositoryRoot, "stages");
   const skillsRoot = path.join(repositoryRoot, "skills");
   const stages = (await readdir(stagesRoot, { withFileTypes: true }))
@@ -290,5 +291,45 @@ test("manifest persistence failure restores overwritten skill directories", asyn
     assert.equal(await readFile(path.join(destination, "SKILL.md"), "utf8"), "user version");
     const entries = await readdir(path.dirname(destination));
     assert.equal(entries.some((name) => name.includes("webcraft-backup-")), false);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
+});
+
+test("preflights every agent manifest before changing any destination", async () => {
+  const f = await fixture();
+  const invalidManifest = path.join(f.target, ".github/skills/.webcraft/manifest.json");
+  try {
+    await mkdir(path.dirname(invalidManifest), { recursive: true });
+    await writeFile(invalidManifest, "{invalid");
+    await assert.rejects(
+      installSkills({
+        agent: "all",
+        targetRoot: f.target,
+        source: f.source,
+        stages: f.stages,
+        skills: ["design-direction"],
+        overwrite: true,
+      }),
+      /manifest is invalid or unsupported/,
+    );
+    assert.equal(await exists(path.join(f.target, ".agents/skills/design-direction")), false);
+    assert.equal(await exists(path.join(f.target, ".claude/skills/design-direction")), false);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
+});
+
+test("lock timeout reports the active owner and does not steal its lock", async () => {
+  const f = await fixture();
+  const lockPath = path.join(f.target, ".claude/skills/.webcraft/manifest.json.lock");
+  try {
+    await mkdir(lockPath, { recursive: true });
+    await writeFile(path.join(lockPath, "owner.json"), JSON.stringify({ pid: process.pid, token: "active-owner" }));
+    await assert.rejects(
+      executeInstall(["design-direction"], {
+        agent: "claude",
+        targetRoot: f.target,
+        source: f.source,
+      }),
+      /Timed out waiting for installer lock.*owned by PID/,
+    );
+    assert.equal(JSON.parse(await readFile(path.join(lockPath, "owner.json"), "utf8")).token, "active-owner");
   } finally { await rm(f.root, { recursive: true, force: true }); }
 });
