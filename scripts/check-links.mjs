@@ -33,11 +33,11 @@ function removeFencedCodeBlocks(content) {
       return "";
     }
 
-    if (/^(?: {4,}|\t)/.test(line)) {
-      let previous = index - 1;
-      while (previous >= 0 && lines[previous].trim() === "") previous -= 1;
-      const previousLine = lines[previous] ?? "";
-      const followsListItem = /^ {0,3}(?:[-+*]|\d+[.)])\s+/.test(previousLine);
+    if (/^(?: {4,}|\\t)/.test(line)) {
+      // A blank line starts an indented code block; only a directly preceding
+      // list marker makes this indentation a list-item continuation.
+      const previousLine = lines[index - 1] ?? "";
+      const followsListItem = /^ {0,3}(?:[-+*]|\\d+[.)])\\s+/.test(previousLine);
       if (!followsListItem) return "";
     }
     return line;
