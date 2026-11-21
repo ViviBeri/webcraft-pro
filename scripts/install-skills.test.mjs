@@ -177,3 +177,54 @@ test("invalid existing manifest is rejected before copying any selected skill", 
     assert.equal(await exists(path.join(destination, "design-direction")), false);
   } finally { await rm(f.root, { recursive: true, force: true }); }
 });
+
+
+test("concurrent installs serialize manifest updates and retain the union", async () => {
+  const f = await fixture();
+  try {
+    const base = { agent: "claude", targetRoot: f.target, source: f.source, stages: f.stages };
+    await Promise.all([
+      installSkills({ ...base, skills: ["design-direction"] }),
+      installSkills({ ...base, skills: ["api-security"] }),
+    ]);
+    const manifest = JSON.parse(await readFile(path.join(f.target, ".claude/skills/.webcraft/manifest.json"), "utf8"));
+    assert.deepEqual(manifest.skills, ["api-security", "design-direction"]);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
+});
+
+test("failed overwrite restores the original skill directory", async () => {
+  const f = await fixture();
+  const destination = path.join(f.target, ".claude/skills/design-direction");
+  const missingSource = path.join(f.root, "missing-source");
+  try {
+    await mkdir(destination, { recursive: true });
+    await writeFile(path.join(destination, "SKILL.md"), "user version");
+    await assert.rejects(
+      executeInstall(["design-direction"], {
+        agent: "claude",
+        targetRoot: f.target,
+        source: missingSource,
+        overwrite: true,
+      }),
+    );
+    assert.equal(await readFile(path.join(destination, "SKILL.md"), "utf8"), "user version");
+    const entries = await (await import("node:fs/promises")).readdir(path.dirname(destination));
+    assert.equal(entries.some((name) => name.includes("webcraft-backup-")), false);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
+});
+
+test("successful manifest replacement leaves no temporary files", async () => {
+  const f = await fixture();
+  const metadata = path.join(f.target, ".claude/skills/.webcraft");
+  try {
+    await installSkills({
+      agent: "claude",
+      targetRoot: f.target,
+      source: f.source,
+      stages: f.stages,
+      skills: ["design-direction"],
+    });
+    const entries = await (await import("node:fs/promises")).readdir(metadata);
+    assert.deepEqual(entries, ["manifest.json"]);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
+});
