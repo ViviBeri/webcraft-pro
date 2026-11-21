@@ -19,7 +19,8 @@ async function fixture() {
     const directory = path.join(stages, stage);
     await mkdir(directory, { recursive: true });
     const links = names.map((name) => `- [${name}](../../skills/${name}/SKILL.md)`).join("\n");
-    await writeFile(path.join(directory, "README.md"), `# ${stage}\n\n## Canonical skills\n\n${links}\n\n## Other content\n`);
+    const heading = stage === "04-motion" ? "Canonical assets" : "Canonical skills";
+    await writeFile(path.join(directory, "README.md"), `# ${stage}\n\n## ${heading}\n\n${links}\n\n## Other content\n`);
   }
   return { root, source, stages, target };
 }
