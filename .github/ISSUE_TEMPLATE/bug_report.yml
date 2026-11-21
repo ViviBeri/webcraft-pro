@@ -5,7 +5,7 @@ labels: ["bug"]
 body:
   - type: markdown
     attributes:
-      value: "Report reproducible behavior. Do not include credentials, tokens, private project data, or other secrets."
+      value: "Report reproducible behavior. Do not include credentials, tokens, private project data, or other secrets. **Do not report exploitable security vulnerabilities publicly.** Follow [SECURITY.md](https://github.com/ViviBeri/webcraft-pro/blob/main/SECURITY.md) for private vulnerability reporting."
   - type: dropdown
     id: agent
     attributes:
