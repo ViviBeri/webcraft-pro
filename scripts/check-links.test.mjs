@@ -119,6 +119,21 @@ test("ignores external URLs, HTML targets, and links inside fenced code blocks",
   }
 });
 
+test("ignores existing directories without a Markdown README", async () => {
+  const root = await createRepository({
+    "README.md": "[Fixture directory](fixture/)\\n",
+    "fixture/example.txt": "Not a Markdown target.\\n",
+  });
+
+  try {
+    const report = await analyzeLinks(root);
+    assert.equal(report.summary.errors, 0);
+    assert.deepEqual(report.diagnostics, []);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
 test("reports links that escape the repository root", async () => {
   const root = await createRepository({
     "README.md": "[Outside](../../outside.md)\n",
