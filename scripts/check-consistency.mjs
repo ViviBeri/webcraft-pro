@@ -99,7 +99,7 @@ async function main() {
 
     for (const error of errors) {
       console.error(
-        `- ${error.file}:${error.line}: expected ${error.expected}, found ${error.found} (" ${error.claim} ")`,
+        `- ${error.file}:${error.line}: expected ${error.expected}, found ${error.found} ("${error.claim}")`,
       );
     }
 
