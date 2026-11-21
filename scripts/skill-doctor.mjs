@@ -1,23 +1,12 @@
-import { readdir, readFile } from "node:fs/promises";
+import { spawnSync } from "node:child_process";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { pathToFileURL } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const TOOL = "webcraft-skill-doctor";
 const SCHEMA_VERSION = "1.0";
-
-function parseFrontmatter(content) {
-  if (!content.startsWith("---\n")) return null;
-  const end = content.indexOf("\n---\n", 4);
-  if (end < 0) return null;
-  const block = content.slice(4, end);
-  const read = (key) => {
-    const match = block.match(new RegExp("^" + key + ":\\s*(.*)$", "m"));
-    if (!match) return null;
-    const value = match[1].trim();
-    return value.replace(/^(['"])(.*)\1$/, "$2");
-  };
-  return { name: read("name"), description: read("description") };
-}
+const SCRIPT_DIRECTORY = path.dirname(fileURLToPath(import.meta.url));
+const REPOSITORY_ROOT = path.resolve(SCRIPT_DIRECTORY, "..");
 
 function diagnostic(ruleId, severity, file, message, fixHint, relatedFiles = [], line) {
   return {
@@ -39,14 +28,13 @@ function resolveSkillReference(destination, sourceFile, skillNames) {
   if (/^(?:https?:|mailto:|#|data:)/i.test(destination)) return null;
   const clean = destination.split(/[?#]/, 1)[0];
   if (!clean || !/SKILL\.md$/i.test(clean)) return null;
-  const normalized = clean;
-  const segments = normalized.split("/");
+  const segments = clean.split("/");
   const skillsIndex = segments.lastIndexOf("skills");
   let target;
   if (skillsIndex >= 0 && segments[skillsIndex + 1]) {
     target = segments[skillsIndex + 1];
   } else {
-    const resolved = path.posix.normalize(path.posix.join(path.posix.dirname(sourceFile), normalized));
+    const resolved = path.posix.normalize(path.posix.join(path.posix.dirname(sourceFile), clean));
     const match = resolved.match(/^skills\/([^/]+)\/SKILL\.md$/);
     if (match) target = match[1];
   }
@@ -54,28 +42,37 @@ function resolveSkillReference(destination, sourceFile, skillNames) {
   return skillNames.has(target) ? null : target;
 }
 
-export async function analyzeSkills(root = process.cwd()) {
-  const skillsRoot = path.join(root, "skills");
-  const entries = await readdir(skillsRoot, { withFileTypes: true });
-  const directories = entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name).sort();
-  const skillNames = new Set(directories);
-  const records = [];
-  const diagnostics = [];
-  let filesScanned = 0;
+export async function analyzeSkills(root = REPOSITORY_ROOT) {
+  const validatorPath = path.join(root, "scripts", "validate-skills.mjs");
+  const result = spawnSync(process.execPath, [validatorPath, "--json"], {
+    cwd: root,
+    encoding: "utf8",
+  });
 
-  for (const directory of directories) {
-    const relativeFile = `skills/${directory}/SKILL.md`;
-    let content;
-    try {
-      content = await readFile(path.join(root, relativeFile), "utf8");
-      filesScanned += 1;
-    } catch {
-      continue;
-    }
-    const metadata = parseFrontmatter(content);
-    if (!metadata?.description) continue;
-    records.push({ directory, file: relativeFile, description: metadata.description, content });
+  if (result.error) {
+    throw new Error("Unable to run the existing skill validator: " + result.error.message);
   }
+  if (result.status !== 0) {
+    const detail = result.stderr.trim() || result.stdout.trim() || ("exit code " + result.status);
+    throw new Error("Existing skill validation failed: " + detail);
+  }
+
+  let validation;
+  try {
+    validation = JSON.parse(result.stdout);
+  } catch (error) {
+    throw new Error("Existing skill validator returned invalid JSON: " + error.message);
+  }
+  if (!validation.valid || !Array.isArray(validation.skills)) {
+    throw new Error("Existing skill validator returned an invalid metadata report.");
+  }
+
+  const skillNames = new Set(validation.skills.map((skill) => skill.directory));
+  const records = validation.skills.map((skill) => ({
+    file: skill.file,
+    description: skill.description,
+  }));
+  const diagnostics = [];
 
   const descriptions = new Map();
   for (const record of records) {
@@ -102,7 +99,12 @@ export async function analyzeSkills(root = process.cwd()) {
     }
   }
 
-  for (const record of records) {
+  const loadedRecords = await Promise.all(records.map(async (record) => ({
+    ...record,
+    content: await readFile(path.join(root, record.file), "utf8"),
+  })));
+
+  for (const record of loadedRecords) {
     const linkPattern = /\[[^\]]*\]\(([^)]+)\)/g;
     for (const match of record.content.matchAll(linkPattern)) {
       const destination = match[1].trim().replace(/^<|>$/g, "").split(/\s+/)[0];
@@ -113,7 +115,7 @@ export async function analyzeSkills(root = process.cwd()) {
         "SKILL002",
         "error",
         record.file,
-        `Inter-skill reference targets unknown skill "${missing}".`,
+        "Inter-skill reference targets unknown skill \"" + missing + "\".",
         "Change the link to an existing canonical skills/<name>/SKILL.md path, or remove the stale reference.",
         [],
         line,
@@ -128,7 +130,7 @@ export async function analyzeSkills(root = process.cwd()) {
   );
 
   const summary = {
-    filesScanned,
+    filesScanned: records.length,
     diagnostics: diagnostics.length,
     errors: diagnostics.filter((item) => item.severity === "error").length,
     warnings: diagnostics.filter((item) => item.severity === "warning").length,
@@ -139,18 +141,24 @@ export async function analyzeSkills(root = process.cwd()) {
 }
 
 function usage() {
-  return `Usage: node scripts/skill-doctor.mjs [--json] [--strict] [--help]
-
-  --json    Emit only the versioned JSON report to stdout.
-  --strict  Treat warnings as failures (exit 1).
-  --help    Show this help text.`;
+  return "Usage: node scripts/skill-doctor.mjs [--json] [--strict] [--root <path>] [--help]\n\n" +
+    "  --json       Emit only the versioned JSON report to stdout.\n" +
+    "  --strict     Treat warnings as failures (exit 1).\n" +
+    "  --root PATH  Validate the specified repository root (defaults to this repository).\n" +
+    "  --help       Show this help text.";
 }
 
 async function main() {
   const args = process.argv.slice(2);
-  if (args.some((arg) => !["--json", "--strict", "--help"].includes(arg)) ||
-      args.filter((arg) => arg === "--json").length > 1 ||
-      args.filter((arg) => arg === "--strict").length > 1) {
+  const rootIndex = args.indexOf("--root");
+  const root = rootIndex >= 0 ? path.resolve(args[rootIndex + 1] ?? "") : REPOSITORY_ROOT;
+  const allowed = new Set(["--json", "--strict", "--help", "--root"]);
+  if (
+    args.some((arg, index) => !allowed.has(arg) && !(rootIndex >= 0 && index === rootIndex + 1)) ||
+    args.filter((arg) => arg === "--json").length > 1 ||
+    args.filter((arg) => arg === "--strict").length > 1 ||
+    (rootIndex >= 0 && (!args[rootIndex + 1] || args.indexOf("--root", rootIndex + 1) >= 0))
+  ) {
     console.error(usage());
     process.exitCode = 2;
     return;
@@ -162,9 +170,9 @@ async function main() {
 
   let report;
   try {
-    report = await analyzeSkills();
+    report = await analyzeSkills(root);
   } catch (error) {
-    console.error(`Skill Doctor failed: ${error.message}`);
+    console.error("Skill Doctor failed: " + error.message);
     process.exitCode = 2;
     return;
   }
@@ -172,15 +180,15 @@ async function main() {
   if (args.includes("--json")) {
     console.log(JSON.stringify(report, null, 2));
   } else if (report.diagnostics.length === 0) {
-    console.log(`Skill Doctor passed: scanned ${report.summary.filesScanned} skill files; no cross-skill diagnostics.`);
+    console.log("Skill Doctor passed: scanned " + report.summary.filesScanned + " skill files; no cross-skill diagnostics.");
   } else {
     for (const item of report.diagnostics) {
-      const location = item.line ? `:${item.line}` : "";
-      console.log(`[${item.severity.toUpperCase()}] ${item.ruleId} ${item.file}${location}: ${item.message}`);
-      console.log(`  Fix: ${item.fixHint}`);
-      if (item.relatedFiles.length) console.log(`  Related: ${item.relatedFiles.join(", ")}`);
+      const location = item.line ? ":" + item.line : "";
+      console.log("[" + item.severity.toUpperCase() + "] " + item.ruleId + " " + item.file + location + ": " + item.message);
+      console.log("  Fix: " + item.fixHint);
+      if (item.relatedFiles.length) console.log("  Related: " + item.relatedFiles.join(", "));
     }
-    console.log(`Scanned ${report.summary.filesScanned} skill files; ${report.summary.errors} error(s), ${report.summary.warnings} warning(s), ${report.summary.info} info.`);
+    console.log("Scanned " + report.summary.filesScanned + " skill files; " + report.summary.errors + " error(s), " + report.summary.warnings + " warning(s), " + report.summary.info + " info.");
   }
 
   const failed = report.summary.errors > 0 ||

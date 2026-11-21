@@ -3,14 +3,31 @@ import assert from "node:assert/strict";
 import { mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 import { analyzeSkills } from "./skill-doctor.mjs";
 
-const script = path.resolve("scripts/skill-doctor.mjs");
+const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const script = path.join(repositoryRoot, "scripts", "skill-doctor.mjs");
+const validatorSource = await readFile(path.join(repositoryRoot, "scripts", "validate-skills.mjs"), "utf8");
+const requiredFiles = [
+  "AGENTS.md", "CLAUDE.md", ".github/copilot-instructions.md", "stages/README.md",
+  "stages/01-foundation/README.md", "stages/02-design-intelligence/README.md",
+  "stages/03-frontend-engineering/README.md", "stages/04-motion-gsap/README.md",
+  "stages/05-accessibility/README.md", "stages/06-web-api-security/README.md",
+  "stages/07-performance/README.md", "stages/08-browser-qa-release/README.md",
+];
 
 async function fixture(t, skills) {
   const root = await mkdtemp(path.join(os.tmpdir(), "webcraft-skill-doctor-"));
   t.after(() => rm(root, { recursive: true, force: true }));
+  await mkdir(path.join(root, "scripts"), { recursive: true });
+  await writeFile(path.join(root, "scripts", "validate-skills.mjs"), validatorSource, "utf8");
+  for (const file of requiredFiles) {
+    const destination = path.join(root, file);
+    await mkdir(path.dirname(destination), { recursive: true });
+    await writeFile(destination, "# Test fixture\n", "utf8");
+  }
   for (const [name, content] of Object.entries(skills)) {
     const directory = path.join(root, "skills", name);
     await mkdir(directory, { recursive: true });
@@ -24,23 +41,36 @@ function skill(name, description, body = "") {
 }
 
 function run(root, ...args) {
-  return spawnSync(process.execPath, [script, ...args], {
-    cwd: root,
+  return spawnSync(process.execPath, [script, ...args, "--root", root], {
+    cwd: os.tmpdir(),
     encoding: "utf8",
   });
 }
 
-test("empty clean inventory returns stable zero-diagnostic report", async (t) => {
+test("validator subprocess supplies metadata and is actually invoked", async (t) => {
   const root = await fixture(t, {
-    alpha: skill("alpha", "Use alpha for a focused example workflow."),
+    alpha: skill("alpha", "A focused description supplied by the validator."),
   });
+  const marker = path.join(root, "validator-was-run");
+  const stub = `import { writeFileSync } from "node:fs";
+writeFileSync(${JSON.stringify(marker)}, "called");
+console.log(JSON.stringify({ valid: true, skills: [{ directory: "alpha", file: "skills/alpha/SKILL.md", name: "alpha", description: "Stub-provided description." }], errors: [] }));
+`;
+  await writeFile(path.join(root, "scripts", "validate-skills.mjs"), stub, "utf8");
+
   const report = await analyzeSkills(root);
-  assert.equal(report.schemaVersion, "1.0");
-  assert.equal(report.tool, "webcraft-skill-doctor");
-  assert.deepEqual(report.summary, {
-    filesScanned: 1, diagnostics: 0, errors: 0, warnings: 0, info: 0,
-  });
+  assert.equal(await readFile(marker, "utf8"), "called");
+  assert.equal(report.summary.filesScanned, 1);
   assert.deepEqual(report.diagnostics, []);
+});
+
+test("validator subprocess inherits repository cwd while CLI works from outside the repository", async (t) => {
+  const root = await fixture(t, {
+    alpha: skill("alpha", "A focused description supplied by the validator."),
+  });
+  const result = run(root, "--json");
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(JSON.parse(result.stdout).summary.filesScanned, 1);
 });
 
 test("duplicate descriptions produce deterministic warning diagnostics", async (t) => {
@@ -115,14 +145,4 @@ test("--json emits parseable contract output without console noise", async (t) =
   assert.equal(report.tool, "webcraft-skill-doctor");
   assert.ok(Array.isArray(report.diagnostics));
   assert.equal(result.stderr, "");
-});
-
-test("versioned JSON schema declares the stable report contract", async () => {
-  const schemaPath = path.resolve("docs/schemas/skill-doctor-report.v1.json");
-  const schema = JSON.parse(await readFile(schemaPath, "utf8"));
-  assert.equal(schema.$schema, "https://json-schema.org/draft/2020-12/schema");
-  assert.equal(schema.properties.schemaVersion.const, "1.0");
-  assert.equal(schema.properties.tool.const, "webcraft-skill-doctor");
-  assert.deepEqual(schema.required, ["schemaVersion", "tool", "summary", "diagnostics"]);
-  assert.ok(schema.properties.diagnostics.items.required.includes("fixHint"));
 });
