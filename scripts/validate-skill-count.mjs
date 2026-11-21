@@ -6,28 +6,21 @@ const skillRoot = path.join(root, "skills");
 
 async function main() {
   const entries = await readdir(skillRoot, { withFileTypes: true });
-  const directories = entries
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-    .sort();
-  const count = directories.length;
+  const directories = [];
 
-  const [readme, index] = await Promise.all([
-    readFile(path.join(root, "README.md"), "utf8"),
-    readFile(path.join(skillRoot, "README.md"), "utf8"),
-  ]);
+  for (const entry of entries
+    .filter((item) => item.isDirectory())
+    .sort((left, right) => left.name.localeCompare(right.name))) {
+    const files = await readdir(path.join(skillRoot, entry.name), {
+      withFileTypes: true,
+    });
 
-  const requiredClaims = [
-    `${count} reusable Agent Skills`,
-    `${count} portable \`SKILL.md\` files`,
-    `${count} canonical skills`,
-  ];
-
-  for (const claim of requiredClaims) {
-    if (!readme.includes(claim)) {
-      throw new Error(`README.md is missing the current inventory claim: "${claim}"`);
+    if (files.some((file) => file.isFile() && file.name === "SKILL.md")) {
+      directories.push(entry.name);
     }
   }
+
+  const index = await readFile(path.join(skillRoot, "README.md"), "utf8");
 
   const listed = index.split("\n").flatMap((line) => {
     if (!line.startsWith("| [")) return [];
@@ -44,18 +37,24 @@ async function main() {
     return [target];
   }).sort();
 
-  if (listed.length !== count) {
-    throw new Error(`skills/README.md lists ${listed.length} skills, but skills/ contains ${count} directories`);
+  if (listed.length !== directories.length) {
+    throw new Error(
+      `skills/README.md lists ${listed.length} skills, but skills/ contains ${directories.length} canonical SKILL.md files`,
+    );
   }
 
   const missing = directories.filter((name) => !listed.includes(name));
   const stale = listed.filter((name) => !directories.includes(name));
 
   if (missing.length || stale.length) {
-    throw new Error(`Skill index mismatch. Missing: ${missing.join(", ") || "none"}. Stale: ${stale.join(", ") || "none"}.`);
+    throw new Error(
+      `Skill index mismatch. Missing: ${missing.join(", ") || "none"}. Stale: ${stale.join(", ") || "none"}.`,
+    );
   }
 
-  console.log(`Skill inventory count passed: ${count} directories match README claims and index entries.`);
+  console.log(
+    `Skill index passed: ${directories.length} canonical SKILL.md files match skills/README.md.`,
+  );
 }
 
 main().catch((error) => {

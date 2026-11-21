@@ -42,13 +42,19 @@ jobs:
       - name: Validate skill metadata and stage structure
         run: npm run validate
 
-      - name: Validate skill inventory count
+      - name: Test skill-count consistency
+        run: npm run test:consistency
+
+      - name: Validate public skill-count claims
+        run: npm run validate:consistency
+
+      - name: Validate skill catalog index
         run: npm run validate:skill-count
 
       - name: Validate stage skill coverage
         run: npm run validate:stage-coverage
 
-      - name: Test stage skill coverage validator
+      - name: Test stage skill coverage
         run: npm run test:stage-coverage
 
       - name: Validate routing evaluation corpus
