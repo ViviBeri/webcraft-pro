@@ -204,7 +204,15 @@ Install all skills:
 node scripts/install-skills.mjs --agent all --target /path/to/project
 ```
 
-Use `--agent codex`, `--agent claude`, or `--agent copilot` to install for an individual agent. Existing skill directories are protected from accidental overwrites unless `--overwrite` is explicitly supplied. Selective installation by stage or skill is not yet implemented; `--stage` and `--skills` are tracked for v1.6.0 in [Issue #11](https://github.com/ViviBeri/webcraft-pro/issues/11).
+Use `--agent codex`, `--agent claude`, or `--agent copilot` to install for an individual agent. Existing skill directories are protected from accidental overwrites unless `--overwrite` is explicitly supplied (`--force` is an alias). Select skills by stage number or directory name, by exact skill name, or by combining both selectors:
+
+```bash
+node scripts/install-skills.mjs --agent claude --stage 02,05 --dry-run
+node scripts/install-skills.mjs --agent claude --skills design-direction,keyboard-focus
+node scripts/install-skills.mjs --agent all --stage 06 --skills independent-review
+```
+
+With no selector, the installer retains its existing behavior and installs all canonical skills. Stage 1 and Stage 8 currently have no installable skill links and return an explicit error when selected. Each agent destination receives `.webcraft/manifest.json` with the manifest format version (`1.0`), agent, installation timestamp, and installed skill names. Dry runs do not create destination files or manifests. Safe, hash-verified uninstall is intentionally deferred to a separate follow-up.
 
 ## 5. Engineering standards and project philosophy
 
