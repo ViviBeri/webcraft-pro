@@ -43,6 +43,7 @@ test("generates GitHub-style slugs for punctuation, duplicates, underscores, and
     "## my_option",
     "## café_bar",
     "## café_x_",
+    "## _Foo_ _Bar_",
     "## Community Standards & Snippet Libraries",
     "## Double  Spaces",
     "Heading 1",
@@ -66,6 +67,7 @@ test("generates GitHub-style slugs for punctuation, duplicates, underscores, and
     "my_option",
     "café_bar",
     "café_x_",
+    "foo-bar",
     "community-standards--snippet-libraries",
     "double--spaces",
     "heading-1",
@@ -224,6 +226,34 @@ test("validates links in indented list-item continuations", async () => {
     assert.equal(report.summary.errors, 1);
     assert.equal(report.diagnostics[0].target, "missing-list.md");
     assert.equal(report.diagnostics[0].line, 2);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test("preserves paragraph and loose-list continuations while ignoring indented code", async () => {
+  const root = await createRepository({
+    "README.md": [
+      "See the setup notes and",
+      "    the [paragraph continuation](missing-paragraph.md).",
+      "",
+      "    [Indented code](missing-code.md)",
+      "",
+      "- List item",
+      "",
+      "    [Loose list continuation](missing-list.md)",
+      "",
+      "[Real link](real.md)",
+    ].join("\n"),
+    "real.md": "# Real guide\n",
+  });
+
+  try {
+    const report = await analyzeLinks(root);
+    assert.deepEqual(report.diagnostics.map((item) => item.target), [
+      "missing-paragraph.md",
+      "missing-list.md",
+    ]);
   } finally {
     await rm(root, { recursive: true, force: true });
   }
