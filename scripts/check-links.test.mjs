@@ -363,8 +363,8 @@ test("resets indented-code context after headings and fenced blocks", async () =
       "    [Fence code](missing-fence-code.md)",
       "",
       "[Real link](real.md)",
-    ].join("\\n"),
-    "real.md": "# Real guide\\n",
+    ].join("\n"),
+    "real.md": "# Real guide\n",
   });
 
   try {
@@ -387,7 +387,7 @@ test("ignores indented code nested inside list items but validates list continua
       "           [Nested code](missing-nested-code.md)",
       "",
       "    [Another continuation](missing-another-continuation.md)",
-    ].join("\\n"),
+    ].join("\n"),
   });
 
   try {
