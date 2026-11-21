@@ -71,7 +71,8 @@ test("--skills installs only the requested subset", async () => {
 test("--stage resolves canonical skill links from numeric prefix", async () => {
   const f = await fixture();
   try {
-    assert.deepEqual(await resolveSelection({ stage: ["2"], skills: [] }, f), ["design-direction", "keyboard-focus"]);\n    assert.deepEqual(await resolveSelection({ stage: ["04"], skills: [] }, f), ["design-direction"]);
+    assert.deepEqual(await resolveSelection({ stage: ["2"], skills: [] }, f), ["design-direction", "keyboard-focus"]);
+    assert.deepEqual(await resolveSelection({ stage: ["04"], skills: [] }, f), ["design-direction"]);
   } finally { await rm(f.root, { recursive: true, force: true }); }
 });
 test("combined selectors form a sorted deduplicated union", async () => {
@@ -147,7 +148,8 @@ test("repeated installs retain previously recorded manifest skills", async () =>
     const manifest = JSON.parse(await readFile(path.join(f.target, ".claude/skills/.webcraft/manifest.json"), "utf8"));
     assert.deepEqual(manifest.skills, ["api-security", "design-direction"]);
   } finally { await rm(f.root, { recursive: true, force: true }); }
-});\n
+});
+
 test("invalid existing manifest is rejected before copying any selected skill", async () => {
   const f = await fixture();
   const destination = path.join(f.target, ".claude/skills");
