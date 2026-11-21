@@ -47,6 +47,11 @@ async function pathExists(target) {
   try { await access(target); return true; } catch { return false; }
 }
 
+async function pathOccupied(target) {
+  try { await (await import("node:fs/promises")).lstat(target); return true; }
+  catch (error) { if (error.code === "ENOENT") return false; throw error; }
+}
+
 async function listSkillNames(source) {
   const entries = await readdir(source, { withFileTypes: true });
   const skills = entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name).sort();
@@ -98,49 +103,72 @@ async function acquireManifestLock(lockPath, timeoutMs = 10000) {
   const deadline = Date.now() + timeoutMs;
   const token = randomUUID();
   while (true) {
+    let created = false;
     try {
       await mkdir(lockPath);
-      await writeFile(
-        path.join(lockPath, "owner.json"),
-        JSON.stringify({ pid: process.pid, token, acquiredAt: new Date().toISOString() }),
-        { flag: "wx" },
-      );
-      return async () => {
-        let owner;
-        try {
-          owner = JSON.parse(await readFile(path.join(lockPath, "owner.json"), "utf8"));
-        } catch {
-          throw new Error(`Installer lock ownership is unreadable; inspect manually: ${lockPath}`);
-        }
-        if (owner.token !== token || owner.pid !== process.pid) {
-          throw new Error(`Installer lock ownership changed; refusing to release another process lock: ${lockPath}`);
-        }
-        await rm(lockPath, { recursive: true, force: true });
-      };
+      created = true;
     } catch (error) {
-      if (error.code !== "EEXIST") {
-        await rm(lockPath, { recursive: true, force: true }).catch(() => {});
+      if (error.code !== "EEXIST") throw error;
+    }
+
+    if (created) {
+      try {
+        await writeFile(
+          path.join(lockPath, "owner.json"),
+          JSON.stringify({ pid: process.pid, token, acquiredAt: new Date().toISOString() }),
+          { flag: "wx" },
+        );
+        return async () => {
+          let owner;
+          try {
+            owner = JSON.parse(await readFile(path.join(lockPath, "owner.json"), "utf8"));
+          } catch {
+            throw new Error(`Installer lock ownership is unreadable; inspect manually: ${lockPath}`);
+          }
+          if (owner.token !== token || owner.pid !== process.pid) {
+            throw new Error(`Installer lock ownership changed; refusing to release another process lock: ${lockPath}`);
+          }
+          await rm(lockPath, { recursive: true, force: true });
+        };
+      } catch (error) {
+        if (error.code === "ENOENT") {
+          if (Date.now() >= deadline) throw new Error(`Timed out acquiring installer lock: ${lockPath}`);
+          await delay(50);
+          continue;
+        }
+        let owner;
+        try { owner = JSON.parse(await readFile(path.join(lockPath, "owner.json"), "utf8")); }
+        catch { owner = null; }
+        if (owner?.token === token && owner?.pid === process.pid) {
+          await rm(lockPath, { recursive: true, force: true });
+        }
         throw error;
       }
-      let owner;
-      try {
-        owner = JSON.parse(await readFile(path.join(lockPath, "owner.json"), "utf8"));
-      } catch {
-        owner = null;
-      }
-      if (owner && Number.isInteger(owner.pid)) {
-        let active = true;
-        try { process.kill(owner.pid, 0); }
-        catch (probeError) { if (probeError.code === "ESRCH") active = false; }
-        if (!active) {
-          throw new Error(`Abandoned installer lock detected for PID ${owner.pid}. Remove it manually after confirming no installer is running: ${lockPath}`);
-        }
-      }
-      if (Date.now() >= deadline) {
-        throw new Error(`Timed out waiting for installer lock: ${lockPath}${owner ? ` (owned by PID ${owner.pid})` : " (owner metadata unavailable; manual inspection required)"}`);
-      }
-      await delay(50);
     }
+
+    let owner;
+    try { owner = JSON.parse(await readFile(path.join(lockPath, "owner.json"), "utf8")); }
+    catch { owner = null; }
+    if (owner && Number.isInteger(owner.pid)) {
+      let active = true;
+      try { process.kill(owner.pid, 0); }
+      catch (probeError) { if (probeError.code === "ESRCH") active = false; }
+      if (!active) {
+        let currentOwner;
+        try { currentOwner = JSON.parse(await readFile(path.join(lockPath, "owner.json"), "utf8")); }
+        catch { currentOwner = null; }
+        if (!currentOwner || currentOwner.token !== owner.token || currentOwner.pid !== owner.pid) {
+          if (Date.now() >= deadline) throw new Error(`Timed out waiting for installer lock: ${lockPath}`);
+          await delay(50);
+          continue;
+        }
+        throw new Error(`Abandoned installer lock detected for PID ${owner.pid}. Remove it manually after confirming no installer is running: ${lockPath}`);
+      }
+    }
+    if (Date.now() >= deadline) {
+      throw new Error(`Timed out waiting for installer lock: ${lockPath}${owner ? ` (owned by PID ${owner.pid})` : " (owner metadata unavailable; manual inspection required)"}`);
+    }
+    await delay(50);
   }
 }
 
@@ -160,9 +188,14 @@ async function writeManifestAtomically(manifestPath, manifest) {
 }
 
 async function readManifest(manifestPath, agent) {
-  if (!(await pathExists(manifestPath))) return [];
+  let content;
+  try { content = await readFile(manifestPath, "utf8"); }
+  catch (error) {
+    if (error.code === "ENOENT") return [];
+    throw new Error(`Unable to read manifest at ${manifestPath}: ${error.message}`);
+  }
   try {
-    const previous = JSON.parse(await readFile(manifestPath, "utf8"));
+    const previous = JSON.parse(content);
     if (
       previous.version !== "1.0" ||
       previous.agent !== agent ||
@@ -221,7 +254,7 @@ export async function executeInstall(selectedSkills, { agent, targetRoot, overwr
       for (const skill of selectedSkills) {
         const sourcePath = path.join(source, skill);
         const destinationPath = path.join(destinationRoot, skill);
-        const exists = await pathExists(destinationPath);
+        const exists = await pathOccupied(destinationPath);
         if (exists && !overwrite) {
           skipped.push(`${selected}:${skill}`);
           process.stdout.write(`[SKIP] ${skill} already exists for ${selected}.\n`);
@@ -233,6 +266,11 @@ export async function executeInstall(selectedSkills, { agent, targetRoot, overwr
           await rename(destinationPath, backupPath);
           backups.push({ destinationPath, backupPath });
         } else {
+          try { await mkdir(destinationPath); }
+          catch (error) {
+            if (error.code === "EEXIST") throw new Error(`Destination appeared during installation; refusing to overwrite: ${destinationPath}`);
+            throw error;
+          }
           createdPaths.push(destinationPath);
         }
         await cp(sourcePath, destinationPath, { recursive: true, force: false, errorOnExist: true });
@@ -270,7 +308,10 @@ export async function executeInstall(selectedSkills, { agent, targetRoot, overwr
       try {
         if (manifestCommitted) {
           for (const { backupPath } of backups) {
-            await rm(backupPath, { recursive: true, force: true });
+            try { await rm(backupPath, { recursive: true, force: true }); }
+            catch (error) {
+              process.stderr.write(`WARNING: Installation committed, but backup cleanup failed at ${backupPath}: ${error.message}\n`);
+            }
           }
         }
       } finally {
