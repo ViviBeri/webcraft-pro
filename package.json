@@ -19,7 +19,9 @@
     "test:security": "node --test scripts/security-audit.test.mjs",
     "test:accessibility": "node --test tests/accessibility/keyboard.test.mjs",
     "install:browsers": "playwright install --with-deps chromium",
-    "browser:check": "node scripts/browser-checker.mjs"
+    "browser:check": "node scripts/browser-checker.mjs",
+    "validate:skill-doctor": "node scripts/skill-doctor.mjs --strict",
+    "test:skill-doctor": "node --test scripts/skill-doctor.test.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",

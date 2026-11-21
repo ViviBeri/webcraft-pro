@@ -47,8 +47,8 @@ async function createRepository({ skills = [], omitFiles = [] } = {}) {
   return root;
 }
 
-function runValidator(root) {
-  return spawnSync(process.execPath, [validatorPath], {
+function runValidator(root, args = []) {
+  return spawnSync(process.execPath, [validatorPath, ...args], {
     cwd: root,
     encoding: "utf8",
   });
@@ -66,6 +66,36 @@ test("accepts a valid skill and complete repository structure", async () => {
     const result = runValidator(root);
     assert.equal(result.status, 0, result.stderr);
     assert.match(result.stdout, /Validated 1 skill/);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test("JSON mode exposes validated metadata while default output remains byte-for-byte stable", async () => {
+  const root = await createRepository({
+    skills: [{ directory: "example-skill", content: validSkill("example-skill") }],
+  });
+
+  try {
+    const defaultResult = runValidator(root);
+    const jsonResult = runValidator(root, ["--json"]);
+    assert.equal(defaultResult.status, 0, defaultResult.stderr);
+    assert.equal(jsonResult.status, 0, jsonResult.stderr);
+    assert.equal(
+      defaultResult.stdout,
+      "Repository validation passed. Validated 1 skill(s), 8 stage index file(s), and 3 agent entry point(s).\n",
+    );
+    const report = JSON.parse(jsonResult.stdout);
+    assert.deepEqual(report, {
+      valid: true,
+      skills: [{
+        directory: "example-skill",
+        file: "skills/example-skill/SKILL.md",
+        name: "example-skill",
+        description: "A sufficiently descriptive test skill for validation.",
+      }],
+      errors: [],
+    });
   } finally {
     await rm(root, { recursive: true, force: true });
   }

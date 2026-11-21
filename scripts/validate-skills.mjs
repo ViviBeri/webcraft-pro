@@ -3,9 +3,10 @@ import path from "node:path";
 
 const root = process.cwd();
 const skillsRoot = path.join(root, "skills");
-
+const jsonOutput = process.argv.slice(2).includes("--json");
 const errors = [];
 const names = new Set();
+const skills = [];
 
 function reportError(message) {
   errors.push(message);
@@ -33,6 +34,7 @@ function readScalar(frontmatter, key) {
 async function validateSkill(directory) {
   const skillDirectory = path.join(skillsRoot, directory);
   const skillFile = path.join(skillDirectory, "SKILL.md");
+  const relativeFile = `skills/${directory}/SKILL.md`;
 
   let content;
 
@@ -98,6 +100,8 @@ async function validateSkill(directory) {
   if (instructions.length === 0) {
     reportError(`${directory}: Skill instructions are empty`);
   }
+
+  skills.push({ directory, file: relativeFile, name, description });
 }
 
 const requiredRepositoryFiles = [
@@ -124,13 +128,19 @@ async function validateRepositoryStructure() {
     }
   }
 }
+
 async function main() {
   let entries;
 
   try {
     entries = await readdir(skillsRoot, { withFileTypes: true });
   } catch {
-    console.error("ERROR: skills/ directory does not exist.");
+    const message = "ERROR: skills/ directory does not exist.";
+    if (jsonOutput) {
+      console.log(JSON.stringify({ valid: false, skills: [], errors: [message] }));
+    } else {
+      console.error(message);
+    }
     process.exitCode = 1;
     return;
   }
@@ -145,6 +155,16 @@ async function main() {
   }
 
   await validateRepositoryStructure();
+
+  if (jsonOutput) {
+    console.log(JSON.stringify({
+      valid: errors.length === 0,
+      skills,
+      errors,
+    }));
+    process.exitCode = errors.length > 0 ? 1 : 0;
+    return;
+  }
 
   if (errors.length > 0) {
     console.error("Skill validation failed:");
