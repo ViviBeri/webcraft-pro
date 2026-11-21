@@ -6,7 +6,7 @@ We are proud to announce v1.6.0. This release focuses on making WebCraft Pro eas
 
 - **Selective Installer:** Install specific skills with `--skills` and `--stage` instead of installing all 44 skills every time.
 - **npx Distribution:** Install the published package with `npx webcraft-pro install --agent claude` without cloning the repository.
-- **Skill Doctor:** Run `node scripts/skill-doctor.mjs` to validate skill metadata and report duplicate descriptions and unresolved inter-skill references. Strict mode is available through `npm run validate:skill-doctor`.
+- **Skill Doctor:** From a repository checkout, run `node scripts/skill-doctor.mjs` to validate skill metadata and report duplicate descriptions and unresolved inter-skill references. The published npm package does not include this repository script. Strict mode is available through `npm run validate:skill-doctor` when working in the repository.
 - **Agent Compatibility Matrix:** Added a structured test procedure and evidence requirements for Claude Code, GitHub Copilot, and OpenAI Codex. All three remain explicitly **Not tested** until real agent and browser evidence is available.
 
 ## 🛡️ Engineering & CI Architecture
