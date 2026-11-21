@@ -103,7 +103,7 @@ async function acquireManifestLock(lockPath, timeoutMs = 10000) {
     } catch (error) {
       if (error.code !== "EEXIST") throw error;
       if (Date.now() >= deadline) {
-        throw new Error(\`Timed out waiting for installer lock: \${lockPath}\`);
+        throw new Error(`Timed out waiting for installer lock: ${lockPath}`);
       }
       await delay(50);
     }
@@ -111,11 +111,11 @@ async function acquireManifestLock(lockPath, timeoutMs = 10000) {
 }
 
 async function writeManifestAtomically(manifestPath, manifest) {
-  const temporaryPath = \`\${manifestPath}.\${randomUUID()}.tmp\`;
+  const temporaryPath = `${manifestPath}.${randomUUID()}.tmp`;
   let handle;
   try {
     handle = await open(temporaryPath, "wx");
-    await handle.writeFile(\`\${JSON.stringify(manifest, null, 2)}\\n\`, "utf8");
+    await handle.writeFile(`${JSON.stringify(manifest, null, 2)}\n`, "utf8");
     await handle.close();
     handle = undefined;
     await rename(temporaryPath, manifestPath);
@@ -137,14 +137,14 @@ async function readManifest(manifestPath, agent) {
     ) throw new Error("Unsupported manifest.");
     return previous.skills;
   } catch {
-    throw new Error(\`Existing manifest is invalid or unsupported: \${manifestPath}\`);
+    throw new Error(`Existing manifest is invalid or unsupported: ${manifestPath}`);
   }
 }
 
 export async function executeInstall(selectedSkills, { agent, targetRoot, overwrite = false, dryRun = false, source = sourceRoot }) {
   const agents = agent === "all" ? Object.keys(destinations) : [agent];
   for (const selected of agents) {
-    if (!Object.hasOwn(destinations, selected)) throw new Error(\`Unsupported agent "\${selected}". Use codex, claude, copilot or all.\`);
+    if (!Object.hasOwn(destinations, selected)) throw new Error(`Unsupported agent "${selected}". Use codex, claude, copilot or all.`);
   }
 
   const installed = [];
@@ -154,16 +154,16 @@ export async function executeInstall(selectedSkills, { agent, targetRoot, overwr
   for (const selected of agents) {
     const destinationRoot = path.join(targetRoot, destinations[selected]);
     const manifestPath = path.join(destinationRoot, ".webcraft", "manifest.json");
-    const lockPath = \`\${manifestPath}.lock\`;
+    const lockPath = `${manifestPath}.lock`;
 
     if (dryRun) {
       await readManifest(manifestPath, selected);
       for (const skill of selectedSkills) {
         const target = path.join(destinationRoot, skill);
-        if (await pathExists(target) && !overwrite) skipped.push(\`\${selected}:\${skill}\`);
+        if (await pathExists(target) && !overwrite) skipped.push(`${selected}:${skill}`);
         else {
-          planned.push(\`\${selected}:\${skill}\`);
-          process.stdout.write(\`[DRY RUN] Would install \${skill} for \${selected}.\\n\`);
+          planned.push(`${selected}:${skill}`);
+          process.stdout.write(`[DRY RUN] Would install ${skill} for ${selected}.\n`);
         }
       }
       continue;
@@ -182,24 +182,24 @@ export async function executeInstall(selectedSkills, { agent, targetRoot, overwr
         const destinationPath = path.join(destinationRoot, skill);
         const exists = await pathExists(destinationPath);
         if (exists && !overwrite) {
-          skipped.push(\`\${selected}:\${skill}\`);
-          process.stdout.write(\`[SKIP] \${skill} already exists for \${selected}.\\n\`);
+          skipped.push(`${selected}:${skill}`);
+          process.stdout.write(`[SKIP] ${skill} already exists for ${selected}.\n`);
           continue;
         }
 
         if (exists) {
-          const backupPath = \`\${destinationPath}.webcraft-backup-\${randomUUID()}\`;
+          const backupPath = `${destinationPath}.webcraft-backup-${randomUUID()}`;
           await rename(destinationPath, backupPath);
           backups.push({ destinationPath, backupPath });
         } else {
           createdPaths.push(destinationPath);
         }
         await cp(sourcePath, destinationPath, { recursive: true, force: false, errorOnExist: true });
-        installed.push(\`\${selected}:\${skill}\`);
+        installed.push(`${selected}:${skill}`);
       }
 
       const newlyInstalled = installed
-        .filter((entry) => entry.startsWith(\`\${selected}:\`))
+        .filter((entry) => entry.startsWith(`${selected}:`))
         .map((entry) => entry.slice(selected.length + 1));
       const manifestSkills = [...new Set([...previousSkills, ...newlyInstalled])].sort();
       await writeManifestAtomically(manifestPath, {
@@ -222,7 +222,7 @@ export async function executeInstall(selectedSkills, { agent, targetRoot, overwr
         } catch (rollbackError) { rollbackErrors.push(rollbackError.message); }
       }
       if (rollbackErrors.length > 0) {
-        throw new Error(\`Installation failed: \${error.message}. Rollback also failed: \${rollbackErrors.join("; ")}\`);
+        throw new Error(`Installation failed: ${error.message}. Rollback also failed: ${rollbackErrors.join("; ")}`);
       }
       throw error;
     } finally {
