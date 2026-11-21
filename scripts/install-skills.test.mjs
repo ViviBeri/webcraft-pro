@@ -15,7 +15,7 @@ async function fixture() {
     await mkdir(directory, { recursive: true });
     await writeFile(path.join(directory, "SKILL.md"), `# ${name}\n`);
   }
-  for (const [stage, names] of [["01-foundation", []], ["02-design", ["design-direction", "keyboard-focus"]], ["03-security", ["api-security", "keyboard-focus"]], ["08-release", []]]) {
+  for (const [stage, names] of [["01-foundation", []], ["02-design", ["design-direction", "keyboard-focus"]], ["03-security", ["api-security", "keyboard-focus"]], ["04-motion", ["design-direction"]], ["08-release", []]]) {
     const directory = path.join(stages, stage);
     await mkdir(directory, { recursive: true });
     const links = names.map((name) => `- [${name}](../../skills/${name}/SKILL.md)`).join("\n");
@@ -35,7 +35,7 @@ test("parseArgs preserves flags and parses comma-separated selectors", () => {
   assert.deepEqual(options.skills, ["api-security", "keyboard-focus"]);
   assert.equal(options.dryRun, true);
   assert.equal(options.overwrite, true);
-  assert.equal(parseArgs(["--agent", "claude", "--force"]).overwrite, true);
+  assert.equal(parseArgs(["--agent", "claude", "--force"]).overwrite, true);\n  const repeated = parseArgs(["--agent", "claude", "--stage", "2", "--stage", "03", "--skills", "design-direction", "--skills", "api-security"]);\n  assert.deepEqual(repeated.stage, ["2", "03"]);\n  assert.deepEqual(repeated.skills, ["design-direction", "api-security"]);
 });
 test("requires agent and selector values", () => {
   assert.throws(() => parseArgs([]), /Specify --agent/);
@@ -67,7 +67,7 @@ test("--skills installs only the requested subset", async () => {
 test("--stage resolves canonical skill links from numeric prefix", async () => {
   const f = await fixture();
   try {
-    assert.deepEqual(await resolveSelection({ stage: ["02"], skills: [] }, f), ["design-direction", "keyboard-focus"]);
+    assert.deepEqual(await resolveSelection({ stage: ["2"], skills: [] }, f), ["design-direction", "keyboard-focus"]);\n    assert.deepEqual(await resolveSelection({ stage: ["04"], skills: [] }, f), ["design-direction"]);
   } finally { await rm(f.root, { recursive: true, force: true }); }
 });
 test("combined selectors form a sorted deduplicated union", async () => {
@@ -142,5 +142,18 @@ test("repeated installs retain previously recorded manifest skills", async () =>
     await installSkills({ ...options, skills: ["api-security"] });
     const manifest = JSON.parse(await readFile(path.join(f.target, ".claude/skills/.webcraft/manifest.json"), "utf8"));
     assert.deepEqual(manifest.skills, ["api-security", "design-direction"]);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
+});\n
+test("invalid existing manifest is rejected before copying any selected skill", async () => {
+  const f = await fixture();
+  const destination = path.join(f.target, ".claude/skills");
+  try {
+    await mkdir(path.join(destination, ".webcraft"), { recursive: true });
+    await writeFile(path.join(destination, ".webcraft/manifest.json"), "{invalid");
+    await assert.rejects(
+      installSkills({ agent: "claude", targetRoot: f.target, source: f.source, stages: f.stages, skills: ["design-direction"] }),
+      /manifest is invalid or unsupported/,
+    );
+    assert.equal(await exists(path.join(destination, "design-direction")), false);
   } finally { await rm(f.root, { recursive: true, force: true }); }
 });
