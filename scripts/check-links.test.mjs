@@ -52,6 +52,8 @@ test("generates GitHub-style slugs for punctuation, duplicates, underscores, and
     "usage",
     "usage-1",
     "usage-1-1",
+    "usage-2",
+    "options",
     "hello-world",
     "café-déjà-vu",
     "details",
@@ -210,6 +212,7 @@ test("ignores inline and indented code link examples", async () => {
   const root = await createRepository({
     "README.md": [
       "Use `[Guide](missing-inline.md)` as an example.",
+      "",
       "    [Indented](missing-indented.md)",
       "\t[Tabbed](missing-tabbed.md)",
       "[Real link](real.md)",
@@ -268,6 +271,30 @@ test("recognizes Setext headings and anchors with repeated hyphens", async () =>
   try {
     const report = await analyzeLinks(root);
     assert.deepEqual(report.diagnostics, []);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test("preserves rendered links in indented list content and rejects links hidden by unmatched code ticks", async () => {
+  const root = await createRepository({
+    "README.md": [
+      "1. Documentation",
+      "",
+      "    [Nested guide](missing-list.md)",
+      "",
+      "A paragraph with an unmatched ` delimiter.",
+      "",
+      "A real [broken link](missing-after-code.md).",
+    ].join("\n"),
+  });
+
+  try {
+    const report = await analyzeLinks(root);
+    assert.deepEqual(report.diagnostics.map((item) => item.target), [
+      "missing-list.md",
+      "missing-after-code.md",
+    ]);
   } finally {
     await rm(root, { recursive: true, force: true });
   }
