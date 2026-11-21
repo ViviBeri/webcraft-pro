@@ -103,6 +103,6 @@ Before opening a pull request, also run the relevant repository validation comma
 2. Create `skills/<kebab-case-name>/SKILL.md` with YAML frontmatter containing `name` and `description`.
 3. Write task-specific activation conditions, actionable steps, verification criteria, and honest limitations.
 4. Add the skill to the appropriate category in `skills/README.md` and update any affected stage index or tests.
-5. Run repository validation and installer tests. Include evidence and note checks that were not performed.
+5. Run the baseline repository validation with `npm run validate` and the installer regression suite with `npm run test:installer`. Run any additional checks relevant to the changed files. Include evidence and note checks that were not performed.
 
 Keep the canonical skill agent-neutral. Do not duplicate its contents into agent-specific directories.
