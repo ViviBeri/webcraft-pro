@@ -141,7 +141,7 @@ async function readManifest(manifestPath, agent) {
   }
 }
 
-export async function executeInstall(selectedSkills, { agent, targetRoot, overwrite = false, dryRun = false, source = sourceRoot }) {
+export async function executeInstall(selectedSkills, { agent, targetRoot, overwrite = false, dryRun = false, source = sourceRoot, persistManifest = writeManifestAtomically }) {
   const agents = agent === "all" ? Object.keys(destinations) : [agent];
   for (const selected of agents) {
     if (!Object.hasOwn(destinations, selected)) throw new Error(`Unsupported agent "${selected}". Use codex, claude, copilot or all.`);
@@ -202,7 +202,7 @@ export async function executeInstall(selectedSkills, { agent, targetRoot, overwr
         .filter((entry) => entry.startsWith(`${selected}:`))
         .map((entry) => entry.slice(selected.length + 1));
       const manifestSkills = [...new Set([...previousSkills, ...newlyInstalled])].sort();
-      await writeManifestAtomically(manifestPath, {
+      await persistManifest(manifestPath, {
         version: "1.0",
         agent: selected,
         installedAt: new Date().toISOString(),
