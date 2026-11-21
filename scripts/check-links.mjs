@@ -16,7 +16,7 @@ function removeFencedCodeBlocks(content) {
   const lines = content.split(/\r?\n/);
   let paragraphOpen = false;
   let listContentIndent = null;
-  let indentedCodeBlock = false;
+  let indentedCodeIndent = null;
 
   return lines.map((line) => {
     const opening = /^ {0,3}(\x60{3,}|~{3,})/.exec(line);
@@ -26,7 +26,7 @@ function removeFencedCodeBlocks(content) {
         fence = { character: opening[1][0], length: opening[1].length };
         paragraphOpen = false;
         listContentIndent = null;
-        indentedCodeBlock = false;
+        indentedCodeIndent = null;
         return "";
       }
     }
@@ -39,64 +39,66 @@ function removeFencedCodeBlocks(content) {
         fence = null;
         paragraphOpen = false;
         listContentIndent = null;
-        indentedCodeBlock = false;
+        indentedCodeIndent = null;
       }
       return "";
     }
 
     if (!line.trim()) {
       paragraphOpen = false;
-      indentedCodeBlock = false;
       return line;
     }
 
-    const heading = /^ {0,3}#{1,6}(?:[ \\t]+|$)/.test(line) ||
-      (line.trim() && /^ {0,3}(?:=+|-+)[ \\t]*$/.test(line));
-    if (heading) {
+    const atxHeading = /^ {0,3}#{1,6}(?:[ \t]+|$)/.test(line);
+    const setextUnderline = /^ {0,3}(?:=+|-+)[ \t]*$/.test(line);
+    if (atxHeading || setextUnderline) {
       paragraphOpen = false;
       listContentIndent = null;
-      indentedCodeBlock = false;
+      indentedCodeIndent = null;
       return line;
     }
 
-    const listItem = /^( {0,3})([-+*]|\\d+[.)])([ \\t]+)/.exec(line);
+    const listItem = /^( {0,3})([-+*]|\d+[.)])([ \t]+)/.exec(line);
     if (listItem) {
       const markerIndent = listItem[1].length;
       const markerWidth = listItem[2].length;
-      const whitespaceWidth = listItem[3].replace(/\\t/g, "    ").length;
+      const whitespaceWidth = listItem[3].replace(/\t/g, "    ").length;
       listContentIndent = markerIndent + markerWidth + whitespaceWidth;
       paragraphOpen = true;
-      indentedCodeBlock = false;
+      indentedCodeIndent = null;
       return line;
     }
 
-    const indentation = /^( *)(.*)$/.exec(line);
-    const leadingSpaces = indentation[1].length;
-    const isIndented = leadingSpaces >= 4 || line.startsWith("\\t");
+    const leadingSpaces = /^( *)/.exec(line)[1].length;
+    const effectiveIndent = line.startsWith("\t") ? 4 : leadingSpaces;
+    const isIndented = effectiveIndent >= 4;
 
     if (isIndented) {
-      const effectiveIndent = line.startsWith("\\t") ? 4 : leadingSpaces;
+      if (indentedCodeIndent !== null) {
+        if (effectiveIndent >= indentedCodeIndent) return "";
+        indentedCodeIndent = null;
+      }
+
       const continuesList = listContentIndent !== null &&
         effectiveIndent >= listContentIndent &&
         effectiveIndent < listContentIndent + 4;
-      if (!paragraphOpen && !continuesList) {
-        indentedCodeBlock = true;
+      const nestedListCode = listContentIndent !== null &&
+        effectiveIndent >= listContentIndent + 4;
+
+      if (nestedListCode || (!paragraphOpen && !continuesList)) {
+        indentedCodeIndent = effectiveIndent;
         return "";
       }
-      if (indentedCodeBlock || (listContentIndent !== null &&
-          effectiveIndent >= listContentIndent + 4)) {
-        indentedCodeBlock = true;
-        return "";
-      }
+
       paragraphOpen = true;
       return line;
     }
 
-    indentedCodeBlock = false;
+    indentedCodeIndent = null;
     if (listContentIndent !== null && leadingSpaces < listContentIndent) {
       listContentIndent = null;
     }
     paragraphOpen = true;
     return line;
-  }).join("\\n");
+  }).join("\n");
 }
