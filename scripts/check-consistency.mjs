@@ -44,7 +44,7 @@ function scanClaims(file, content, actualCount, errors, lineOffset = 0) {
 
       for (const match of line.matchAll(pattern)) {
         // "Top 10 skills" describes a ranked list, not the repository inventory.
-        if (/\btop\s*$/i.test(line.slice(0, match.index))) continue;
+        if (/\b(?:top|remaining)\s*$/i.test(line.slice(0, match.index))) continue;
 
         const found = Number(match[1]);
         if (found !== actualCount) {

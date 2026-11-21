@@ -86,7 +86,7 @@ test("reports a mismatched public claim with its file and line number", async ()
 
 test("does not treat a ranked Top 10 skills list as the repository inventory", async () => {
   const root = await createRepository({
-    readme: "Top 10 skills for accessible interfaces.\n",
+    readme: "Top 10 skills for accessible interfaces.\nRollout to the remaining 41 skills is tracked separately.\n",
     landing: "<p>Top 10 skills selected by popularity.</p>\n",
     catalog: "Browse the skills catalog.\n",
     description: "A framework-agnostic engineering toolkit.",
