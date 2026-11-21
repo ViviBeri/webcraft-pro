@@ -333,3 +333,39 @@ test("lock timeout reports the active owner and does not steal its lock", async 
     assert.equal(JSON.parse(await readFile(path.join(lockPath, "owner.json"), "utf8")).token, "active-owner");
   } finally { await rm(f.root, { recursive: true, force: true }); }
 });
+
+test("detects an abandoned lock and refuses unsafe automatic deletion", async () => {
+  const f = await fixture();
+  const lockPath = path.join(f.target, ".claude/skills/.webcraft/manifest.json.lock");
+  let stalePid = process.pid + 1000000;
+  while (true) {
+    try {
+      process.kill(stalePid, 0);
+      stalePid += 1;
+    } catch (error) {
+      if (error.code === "ESRCH") break;
+      if (error.code === "EPERM") {
+        stalePid += 1;
+        continue;
+      }
+      throw error;
+    }
+  }
+  try {
+    await mkdir(lockPath, { recursive: true });
+    await writeFile(
+      path.join(lockPath, "owner.json"),
+      JSON.stringify({ pid: stalePid, token: "abandoned-owner" }),
+    );
+    await assert.rejects(
+      executeInstall(["design-direction"], {
+        agent: "claude",
+        targetRoot: f.target,
+        source: f.source,
+      }),
+      /Abandoned installer lock detected.*Remove it manually after confirming no installer is running/,
+    );
+    assert.equal(await exists(lockPath), true);
+    assert.equal(await exists(path.join(f.target, ".claude/skills/design-direction")), false);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
+});
