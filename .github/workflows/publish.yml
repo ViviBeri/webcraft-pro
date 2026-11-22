@@ -1,0 +1,61 @@
+name: Stage npm Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: npm-stage-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  stage:
+    name: Validate and stage npm package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22.14.0"
+          registry-url: https://registry.npmjs.org/
+
+      - name: Install npm CLI with staged publishing support
+        run: npm install --global npm@11.21.3
+
+      - name: Verify toolchain
+        run: |
+          node --version
+          npm --version
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Test package validators
+        run: |
+          npm run test:validate
+          npm run test:consistency
+          npm run test:version-sync
+          npm run test:installer
+
+      - name: Validate package metadata and contents
+        run: |
+          npm run validate
+          npm run validate:consistency
+          npm run validate:version-sync
+          npm pack --dry-run
+
+      - name: Stage public npm package
+        run: npm stage publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
