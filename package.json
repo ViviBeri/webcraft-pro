@@ -8,7 +8,7 @@
     "node": ">=22.12.0"
   },
   "bin": {
-    "webcraft": "./scripts/install-skills.mjs"
+    "webcraft": "scripts/install-skills.mjs"
   },
   "files": [
     "scripts/install-skills.mjs",
