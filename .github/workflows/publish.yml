@@ -55,6 +55,11 @@ jobs:
           npm run validate:version-sync
           npm pack --dry-run
 
+      - name: Verify npm authentication
+        run: npm whoami --registry=https://registry.npmjs.org/
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Stage public npm package
         run: npm stage publish --access public
         env:
