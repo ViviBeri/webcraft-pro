@@ -268,9 +268,9 @@ Its core principles are:
 
 ## Project status
 
-**Latest release: [v1.6.0 — Technical Excellence & International Adoption](https://github.com/ViviBeri/webcraft-pro/releases/tag/v1.6.0) (publication pending).**
+**Latest release: [v1.6.1 — OIDC staging validation](https://github.com/ViviBeri/webcraft-pro/releases/tag/v1.6.1) (publication pending).**
 
-The v1.6.0 release candidate adds selective skill installation, the Skill Doctor diagnostic, expanded installer safety checks, repository consistency validation, and contributor onboarding. The agent compatibility matrix remains explicitly Not tested pending real agent sessions. The remaining 41 skill failure-mode updates are deferred to v1.6.1 in [Issue #12](https://github.com/ViviBeri/webcraft-pro/issues/12) and will be delivered in reviewable batches.
+The v1.6.0 release candidate adds selective skill installation, the Skill Doctor diagnostic, expanded installer safety checks, repository consistency validation, and contributor onboarding. The agent compatibility matrix remains explicitly Not tested pending real agent sessions. The remaining 41 skill failure-mode updates remain tracked in [Issue #12](https://github.com/ViviBeri/webcraft-pro/issues/12) and will be delivered in reviewable batches.
 
 The official [WebCraft Pro landing page](https://viviberi.github.io/webcraft-pro/) was checked with the on-demand Chromium browser checker on 19 November 2026. The run completed **24 checks with 0 failures** across mobile (390px), tablet (768px), and desktop (1440px), in standard and reduced-motion modes. The report recorded no axe-core violations, 38 passed axe-core rules and 1 incomplete rule per viewport scan, successful keyboard traversal with visible focus indicators, and no uncaught page errors. [View the browser-check run and artifacts](https://github.com/ViviBeri/webcraft-pro/actions/runs/44602749892).
 
