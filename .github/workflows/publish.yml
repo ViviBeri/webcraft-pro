@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 concurrency:
   group: npm-stage-${{ github.ref }}
@@ -19,6 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      id-token: write
 
     steps:
       - name: Check out source
@@ -29,6 +31,7 @@ jobs:
         with:
           node-version: "22.14.0"
           registry-url: https://registry.npmjs.org/
+          package-manager-cache: false
 
       - name: Install npm CLI with staged publishing support
         run: npm install --global npm@11.21.3
@@ -55,12 +58,5 @@ jobs:
           npm run validate:version-sync
           npm pack --dry-run
 
-      - name: Verify npm authentication
-        run: npm whoami --registry=https://registry.npmjs.org/
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Stage public npm package
+      - name: Stage public npm package with GitHub OIDC
         run: npm stage publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
