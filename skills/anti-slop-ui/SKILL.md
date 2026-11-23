@@ -41,7 +41,7 @@ Describe the problem with evidence from the page. Avoid vague feedback such as "
 
 **Why it matters:** Generic interfaces survive review but fail in market: users cannot distinguish the product from its competitors, the primary action competes with decoration for attention, and any design investment in the page produces no differentiation. The failure is not "the UI looks plain" — it is "the UI could be swapped for a competitor's without anyone noticing."
 
-**Correction:** Establish the real offering, audience, differentiator, and primary action from supplied facts, then apply the existing *Improvement workflow* section rather than restating it here. As you differentiate, do not over-correct by stripping familiar patterns that serve clarity — keep what serves the task, change what does not, and verify the before/after at matching viewport sizes. Do not invent proof points, customer logos, awards, metrics, or testimonials.
+**Correction:** Apply the existing *Improvement workflow* section for product truth, composition, content, and responsive rework. The failure-specific addition is the over-correction guardrail: when differentiating, do not strip familiar patterns that serve clarity. Keep what serves the task, change what does not, and compare the before/after at matching viewport sizes — the comparison is the check that differentiation improved usability rather than degrading it. Do not invent proof points, customer logos, awards, metrics, or testimonials.
 
 ## Improvement workflow
 
