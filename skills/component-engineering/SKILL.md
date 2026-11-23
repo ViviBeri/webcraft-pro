@@ -56,20 +56,25 @@ Build components with clear contracts, predictable state, accessible semantics a
 - Are defaults safe and visually consistent?
 - Is the component testable without mocking its entire implementation?
 
-## Anti-patterns
+## Common AI failure mode
 
-- A universal component with dozens of unrelated props.
-- Boolean prop combinations that create undocumented states.
-- Reimplementing native buttons, inputs or links without a compelling requirement.
-- Styling based only on DOM position or fragile selectors.
-- Hidden side effects during render.
-- Exporting internal state setters as a broad public API.
-- Treating a passing snapshot as proof of accessibility.
+**Failure:** The agent turns a single repeated pattern into a universal component with dozens of unrelated props and boolean combinations.
+
+**Symptoms:**
+- Boolean prop combinations make invalid or impossible states easy to express.
+- The prop surface grows every time a new consumer adopts the component.
+- Props describe *how* the component works (variant, size, padding) rather than *what* the consumer needs.
+- Internal state setters or mutable internals are exposed as public API.
+- Behavior differs across consumers in ways no single prop was designed to express.
+- A change required by one consumer breaks another, and no test caught it.
+
+**Why it matters:** Consumers inherit an unpredictable API, invalid states become easy to express, and every change risks breaking unrelated use cases. The abstraction increases maintenance cost instead of reducing inconsistency.
+
+**Prevention:** Confirm that multiple consumers share the same behavior before extracting a component. Define a small typed contract, model mutually exclusive states explicitly, and use composition for variable content. Keep one-off composition local. Preserve native semantics, keep state ownership private, and test observable behavior—including keyboard and accessible-name paths—in a real consuming context.
 
 ## Completion criteria
 
 A component has a documented, minimal contract; predictable behavior; semantic and keyboard-accessible interactions; responsive styling; and tests that cover its meaningful states.
-
 
 ## State and contract matrix
 

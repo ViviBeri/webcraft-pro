@@ -24,27 +24,24 @@ Inspect the actual page and relevant source files. Identify specific issues in:
 
 Describe the problem with evidence from the page. Avoid vague feedback such as "make it modern" or "add wow factor."
 
-## Common symptoms to investigate
+## Common AI failure mode
 
-These are warning signs, not automatic violations:
+**Anti-pattern:** The agent produces a visually polished interface with no product-specific rationale — familiar gradients, uniform card grids, stock typography, and copy that could describe any company in the category — without checking whether those choices serve this product, audience, or task.
 
-- Every section uses the same centered heading and three-card grid.
-- Decorative gradients, glows, blobs or glass panels have no functional role.
+**Symptoms:**
+- Every section uses the same centered heading and three-card grid, regardless of content hierarchy.
+- Decorative gradients, glows, blobs, or glass panels have no functional role.
 - Typography relies on one oversized heading style everywhere.
-- Generic placeholder copy could describe any company.
-- Repeated rounded containers create excessive visual nesting.
-- Icons are used where clear labels or real content would be better.
-- Large empty areas conceal a weak information hierarchy.
-- Animations distract from reading or delay interaction.
-- Mobile layouts merely stack desktop cards without rethinking priority.
+- Placeholder copy could describe any company in the category.
+- Repeated rounded containers create visual nesting without information gain.
+- Icons replace labels or meaningful content.
+- Large empty areas conceal a weak hierarchy.
+- Animation delays reading or interaction instead of supporting it.
+- Mobile layouts stack desktop cards without reprioritizing content.
 
-Do not remove a pattern simply because it is common. Retain it when it is the clearest solution for the task.
+**Why it matters:** Generic interfaces survive review but fail in market: users cannot distinguish the product from its competitors, the primary action competes with decoration for attention, and any design investment in the page produces no differentiation. The failure is not "the UI looks plain" — it is "the UI could be swapped for a competitor's without anyone noticing."
 
-## Distinctiveness challenge
-
-Challenge predictable AI gradients, identical card grids, and template-like layouts. Before finalizing, ask yourself: **"Could this design belong to any other product?"** If yes, rewrite it. Ground the revision in the actual product, audience, content and primary user task; do not add novelty or decoration without a clear purpose.
-
-
+**Correction:** Establish the real offering, audience, differentiator, and primary action from supplied facts, then apply the existing *Improvement workflow* section rather than restating it here. As you differentiate, do not over-correct by stripping familiar patterns that serve clarity — keep what serves the task, change what does not, and verify the before/after at matching viewport sizes. Do not invent proof points, customer logos, awards, metrics, or testimonials.
 
 ## Improvement workflow
 

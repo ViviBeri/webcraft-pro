@@ -52,6 +52,14 @@ Limit query depth, complexity, aliases, batch size and execution time. Authorize
 - Test webhook signature failure, stale timestamps and duplicate delivery.
 - Verify errors and logs do not disclose credentials or sensitive records.
 
+## Common AI failure mode
+
+**Failure:** The agent checks that a caller is authenticated, then fetches a record by the caller-supplied object ID without enforcing that the caller is authorized for that specific object and tenant.
+
+**Why it matters:** An authenticated user can substitute another user's or tenant's identifier and read or modify records outside their authority. This creates a direct confidentiality and integrity breach even though login and endpoint-level authentication appear to work.
+
+**Prevention:** Enforce object authorization at the data-access boundary on every request. Scope the lookup by both the requested object identifier and the authenticated principal's tenant or ownership context; do not fetch globally and rely on the client to filter. Add negative tests that substitute another user's and another tenant's IDs for every read and mutation path, and verify that unauthorized requests disclose no record data and perform no mutation.
+
 ## Completion criteria
 
 Every endpoint has documented access rules, resource limits and schemas; API inventory and versioning are current; and negative tests cover OWASP API risk categories relevant to the product.
