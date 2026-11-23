@@ -266,6 +266,10 @@ Its core principles are:
 - Keep reusable skills framework-agnostic unless a skill explicitly targets a technology.
 - Never claim verification, conformance, or security without supporting evidence.
 
+## Project roadmap
+
+The active delivery plan is maintained in [docs/roadmap.md](./docs/roadmap.md). v1.6.2 is limited to failure-mode coverage; quality tooling and adoption work are deferred to their own releases.
+
 ## Project status
 
 **Latest release: [v1.6.1 — OIDC staging validation](https://github.com/ViviBeri/webcraft-pro/releases/tag/v1.6.1) (publication pending).**
