@@ -63,7 +63,7 @@ Build components with clear contracts, predictable state, accessible semantics a
 **Symptoms:**
 - Boolean prop combinations make invalid or impossible states easy to express.
 - The prop surface grows every time a new consumer adopts the component.
-- Props describe *how* the component works (variant, size, padding) rather than *what* the consumer needs.
+- Props expose open-ended implementation overrides (`className`, inline `style`, arbitrary padding/margin values, render-prop slots) instead of bounded, enumerated variants.
 - Internal state setters or mutable internals are exposed as public API.
 - Behavior differs across consumers in ways no single prop was designed to express.
 - A change required by one consumer breaks another, and no test caught it.
