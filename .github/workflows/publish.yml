@@ -58,5 +58,6 @@ jobs:
           npm run validate:version-sync
           npm pack --dry-run
 
+      # Auth is OIDC via id-token: write. Do not reintroduce NODE_AUTH_TOKEN / secrets.NPM_TOKEN; see run 45060902492 (E401).
       - name: Stage public npm package with GitHub OIDC
         run: npm stage publish --access public
