@@ -139,6 +139,27 @@ Present the design direction, design tokens, page/component hierarchy, responsiv
 
 This gate applies even when the initial request mentions implementation: planning and presenting the direction may proceed, but component implementation waits for confirmation.
 
+## Common AI failure mode
+
+### Anti-pattern
+
+The agent produces a polished but interchangeable visual direction — familiar gradients, centered hero, repeated card grids, fashionable type — with no product-specific rationale behind those choices.
+
+### Symptoms
+
+- The direction could be reused unchanged for an unrelated product.
+- Visual references are copied as layouts rather than translated into product-specific principles.
+- Type, color, and composition follow trend appeal rather than content hierarchy and user tasks.
+- The Design Plan describes aesthetics but cannot justify them against audience, brand, or primary action.
+
+### Why it matters
+
+An interchangeable direction survives review but fails in market: users cannot distinguish the product from its competitors, the design does not reinforce the primary action, and the rework lands late — after implementation has begun — when changing direction is most expensive.
+
+### Correction
+
+Return to the verified product facts, audience, content, and primary task. State the visual concept in product-specific terms, then justify typography, palette, composition, imagery, and motion against that context. Challenge any decision that would transfer unchanged to an unrelated product. Mark unsupported assumptions explicitly or replace them with questions. Apply the existing [human confirmation gate](#7-human-confirmation-gate) before implementation.
+
 ## Quality rules
 
 - Make hierarchy obvious before adding visual effects.
