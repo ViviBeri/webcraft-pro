@@ -41,3 +41,11 @@ Test expired, revoked, replayed and malformed tokens; session fixation; logout i
 ## Completion criteria
 
 Identity protocol validation is correct, sessions are protected and revocable, recovery and MFA flows resist abuse, and secrets are absent from client code and logs.
+
+## Common AI failure mode
+
+**Failure:** An agent implements login successfully but reuses a pre-authentication session identifier after login, or exposes bearer/session tokens to browser storage, URLs, logs, or client-side telemetry.
+
+**Why it matters:** An attacker may fix or steal a session and inherit an authenticated identity, or replay a leaked credential until it expires or is revoked. A successful login screen does not prove that the session boundary is safe; the compromise can persist across privileged actions and account data.
+
+**Prevention:** Regenerate the session identifier at authentication and every privilege/trust transition, invalidate the prior identifier, and use appropriately scoped Secure, HttpOnly, SameSite cookies over HTTPS for browser sessions where suitable. Set idle and absolute expiry, revoke sessions on logout and credential/security events, and protect cookie-authenticated state changes against CSRF. Keep access, refresh, and recovery tokens out of URLs, localStorage by default, logs, analytics, and error reports. Test fixation by establishing a pre-login session and proving its identifier cannot authenticate after login; test replay, revocation, expiry, and privilege changes.

@@ -44,3 +44,11 @@ If a secret is exposed:
 ## Completion criteria
 
 Secrets have named owners and least-privilege scopes, production values are not present in client or repository content, rotation is tested, and CI workflows do not expose credentials to untrusted code.
+
+## Common AI failure mode
+
+**Failure:** An agent moves a credential from source code into an environment variable and calls the system secret-safe without checking how the value is injected, exposed to build steps, logged, bundled, or made available to untrusted CI jobs.
+
+**Why it matters:** Environment variables are a delivery mechanism, not a security boundary. A secret can still leak through frontend build-time substitution, debug output, process dumps, artifacts, overly broad workflow permissions, fork pull requests, or long-lived credentials. Once exposed, deleting the visible line does not revoke the credential or remove copies from history and artifacts.
+
+**Prevention:** Classify each value as public configuration or secret; never inject secrets into browser bundles or client-visible build variables. Use a managed secret store or protected CI secret with least-privilege scope, short lifetime where supported, and environment/job restrictions. Do not expose secrets to untrusted fork code or print them in logs; review artifact and cache contents. On suspected exposure, revoke/rotate first, then inspect repository history, workflow logs, artifacts, deployments, and provider audit logs. Verify the deployed output contains no secret and test rotation and access boundaries.

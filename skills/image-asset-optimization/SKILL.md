@@ -32,3 +32,11 @@ Use this skill when images, video posters, icons or other media dominate transfe
 ## Deliverables
 
 List the asset, current and optimized dimensions/format/bytes, loading priority, responsive strategy, accessibility treatment and measured impact.
+
+## Common AI failure mode
+
+**Failure:** An agent compresses images or switches formats but omits intrinsic dimensions, serves an oversized candidate, or lazy-loads the actual above-the-fold LCP image—then reports success from reduced file bytes alone.
+
+**Why it matters:** The page can still shift while images decode, delay its largest visible content, or waste bandwidth and memory on mobile. A smaller file is not evidence of better user-perceived loading if layout stability and resource priority regress.
+
+**Prevention:** Identify the actual LCP element and rendered dimensions from a representative viewport and network trace. Supply width/height or a stable aspect ratio, use srcset/sizes or the framework equivalent, and select a candidate appropriate to viewport and device pixel ratio. Do not lazy-load the LCP image; apply high priority only when measurement supports it. Lazy-load below-the-fold media, then compare bytes, decoded dimensions, LCP and CLS on constrained mobile conditions. Check art direction, cropping, alt text, and visual quality after optimization.

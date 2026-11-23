@@ -47,3 +47,11 @@ Inspect the accessibility tree, navigate landmarks and headings with a screen re
 ## Completion criteria
 
 The document has a meaningful semantic structure, interactive elements use native behavior, controls have clear accessible names, and the accessibility tree reflects the intended interface.
+
+## Common AI failure mode
+
+**Failure:** An agent treats semantic markup as a checklist of tags and ARIA attributes, then declares a page accessible without verifying the computed name, role, state, relationships, and keyboard behavior in the rendered interface.
+
+**Why it matters:** Superficially correct markup can still expose unnamed controls, duplicate landmark names, broken ID references, misleading link/button behavior, or a reading order that conflicts with the task. These failures block navigation and understanding even when the source contains familiar semantic elements.
+
+**Prevention:** Verify the rendered accessibility tree and complete representative keyboard and screen-reader journeys. Check computed accessible names and relationships after dynamic updates, not just source attributes. Prefer native HTML behavior, remove redundant or contradictory ARIA, and compare DOM order with visual order at responsive sizes. Record any journey or state not tested instead of claiming accessibility from tag presence.
