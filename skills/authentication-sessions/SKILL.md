@@ -44,8 +44,23 @@ Identity protocol validation is correct, sessions are protected and revocable, r
 
 ## Common AI failure mode
 
-**Failure:** An agent implements login successfully but reuses a pre-authentication session identifier after login, or exposes bearer/session tokens to browser storage, URLs, logs, or client-side telemetry.
+**Failure:** An agent implements login successfully but reuses the
+pre-authentication session identifier after login, and at privilege or
+trust transitions (elevation, account switch, MFA completion).
 
-**Why it matters:** An attacker may fix or steal a session and inherit an authenticated identity, or replay a leaked credential until it expires or is revoked. A successful login screen does not prove that the session boundary is safe; the compromise can persist across privileged actions and account data.
+**Why it matters:** An attacker who can fix or pre-seed a session identifier
+inherits the authenticated identity of the victim after login. The compromise
+survives the login boundary and persists across privileged actions and
+account data, even though the login flow itself appears to work.
 
-**Prevention:** Regenerate the session identifier at authentication and every privilege/trust transition, invalidate the prior identifier, and use appropriately scoped Secure, HttpOnly, SameSite cookies over HTTPS for browser sessions where suitable. Set idle and absolute expiry, revoke sessions on logout and credential/security events, and protect cookie-authenticated state changes against CSRF. Keep access, refresh, and recovery tokens out of URLs, localStorage by default, logs, analytics, and error reports. Test fixation by establishing a pre-login session and proving its identifier cannot authenticate after login; test replay, revocation, expiry, and privilege changes.
+**Prevention:** Regenerate the session identifier at authentication and at
+every privilege or trust transition; invalidate the prior identifier
+server-side after rotation. Set idle and absolute expiry, and revoke the
+session on logout and on credential or security events. Test fixation by
+establishing a pre-login session, completing login, and proving the pre-login
+identifier cannot authenticate any privileged request after that point.
+Verify the same for privilege-elevation and account-switch transitions.
+
+> Token storage and exposure (localStorage, URLs, logs, analytics, error
+> reports, telemetry) is a related but distinct failure mode — see
+> `secrets-configuration`.

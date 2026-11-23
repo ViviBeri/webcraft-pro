@@ -43,6 +43,7 @@ Make forms understandable, accessible and resilient while treating all client-su
    - Announce asynchronous results with an appropriate status region.
 6. **Protect data**
    - Use appropriate CSRF defenses for cookie-authenticated state-changing requests.
+   - Never submit state-changing operations through GET; reserve GET for read-only requests.
    - Use HTTPS and secure session handling.
    - Apply output encoding or context-appropriate sanitization when displaying submitted content.
    - Avoid placing sensitive data in URLs, analytics events, client logs or error messages.
