@@ -47,3 +47,16 @@ Include:
 ## Completion criteria
 
 The review is reproducible, covers critical tasks and input modes, distinguishes automated from manual evidence, and gives owners clear remediation and retest steps.
+
+## Common AI failure mode
+
+**Failure:** An agent signs off an accessibility release review after checking only the initial page state with a mouse and an automated scanner.
+
+**Why it matters:** Menus, dialogs, validation errors, asynchronous updates, and keyboard-only workflows can still block essential tasks even when the initial screen has no automated violations.
+
+**Symptoms:**
+- The review contains scanner output but no keyboard-only task results.
+- Interactive states such as dialogs, expanded menus, errors, or success messages are absent from the evidence.
+- The report claims broad coverage without naming routes, journeys, viewport sizes, or assistive technologies.
+
+**Prevention:** Define the critical user journeys and supported input modes before review. Exercise the full keyboard path through navigation, forms, dialogs, error recovery, and dynamic states; inspect representative screen-reader behavior and responsive reflow. Separate automated findings from manual evidence and list untested routes, states, and combinations in the release report.

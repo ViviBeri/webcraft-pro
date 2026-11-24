@@ -33,3 +33,16 @@ Use this skill when browser rendering, style calculation, layout, paint or hydra
 ## Deliverables
 
 Provide trace evidence, rendering bottlenecks, architectural trade-offs, selected fixes and repeatable before/after measurements.
+
+## Common AI failure mode
+
+**Failure:** An agent alternates DOM layout reads and style writes inside a loop or animation callback, forcing repeated synchronous layout calculations.
+
+**Why it matters:** The browser repeatedly recalculates layout on the main thread, delaying frames and input handling. The page can stutter even when the amount of DOM work appears small.
+
+**Symptoms:**
+- Performance traces show repeated forced reflow or layout between script operations.
+- The same geometry is read again after a style write in the same update cycle.
+- Jank increases with the number of elements processed or during scroll and resize.
+
+**Prevention:** Batch all required layout reads before writes, cache measurements for the current frame, and use observers or scheduled updates where appropriate. Avoid geometry reads after style mutations in the same loop. Re-profile the identical interaction and confirm fewer forced layouts without introducing stale measurements or visual regressions.

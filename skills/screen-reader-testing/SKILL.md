@@ -39,29 +39,24 @@ Select combinations relevant to supported platforms. Typical coverage may includ
 
 This is a selection guide, not a requirement to test every combination for every change. Document the chosen coverage and rationale.
 
-## Common issues
+## Common AI failure mode
 
-- Unlabeled or ambiguously named controls.
-- Repeated links with no useful distinguishing context.
-- Incorrect heading and landmark structure.
-- Focus changes that are not announced or are disorienting.
-- Dynamic results that update visually but are not announced.
-- Error summaries that are not connected to invalid controls.
-- Hidden or duplicated content exposed unexpectedly.
-- Custom widgets that announce a role but do not support the expected interaction.
+**Failure:** An agent reports a screen-reader journey as tested after inspecting automated scan results or the browser accessibility tree, without operating the selected assistive technology.
+
+**Why it matters:** Static evidence cannot establish actual speech or braille output, focus announcements, live-region timing, or browser/assistive-technology interoperability. Users can miss errors and status changes while the report falsely claims assistive-technology coverage.
+
+**Symptoms:**
+- The report marks a journey as screen-reader tested without operating the selected browser and assistive-technology pair.
+- No actual spoken or braille output is recorded for names, focus changes, errors, or dynamic updates.
+- Automated scan results or accessibility-tree inspection are presented as evidence of assistive-technology behavior.
+- Untested browser/assistive-technology combinations or unobserved announcements are reported as passed.
+
+**Prevention:** Separate automated scans, accessibility-tree inspection, and observed assistive-technology testing in the report. For each selected browser/AT pair, record versions, settings, task steps, expected output, actual spoken or braille output, and result. Exercise complete journeys including error recovery, dialogs, and asynchronous updates. Mark unrun combinations and unobserved announcements as untested.
 
 ## Reporting
 
-Record the environment, task, exact navigation steps, expected announcement, actual announcement and impact. Include the DOM/accessibility-tree evidence when useful, but do not substitute it for the observed assistive-technology behavior.
+Record the environment, task, exact navigation steps, expected announcement, actual announcement and impact. Include the DOM/accessibility-tree evidence when useful, but do not substitute it for the observed assistive-technology behavior. During the journey, also check control names, repeated-link context, heading and landmark structure, focus announcements, live-region updates, error associations, hidden or duplicated content, and custom-widget keyboard interaction.
 
 ## Completion criteria
 
 Critical user journeys can be completed with the selected assistive technology, important state changes are perceivable, and remaining coverage limitations are documented.
-
-## Common AI failure mode
-
-**Failure:** An agent reports a screen-reader workflow as verified because the page has no axe violations, the DOM contains expected ARIA attributes, or the browser accessibility tree looks plausible—without running the selected assistive technology and observing its output.
-
-**Why it matters:** A control can have a technically plausible name and role yet still be unusable in the actual interaction sequence. Speech output, reading order, focus announcements, live-region timing, and browser/AT interoperability can fail in ways a static scan or accessibility-tree snapshot cannot establish. Users may miss errors, status changes, or the next action while the report incorrectly claims assistive-technology coverage.
-
-**Prevention:** Separate automated, accessibility-tree, and observed assistive-technology evidence in the test report. For each selected browser/AT pair, record versions, settings, task steps, expected output, actual spoken/braille output, and result. Exercise complete journeys—including validation recovery, dialogs, and asynchronous updates—using the AT. Mark unrun combinations and unobserved announcements as untested; never convert a clean axe scan or ARIA inspection into an “AT tested” claim.

@@ -67,3 +67,16 @@ The narrative is coherent as semantic content, interaction improves understandin
 - Keep a visible progress or orientation cue only when it adds genuine value; do not imply that the visitor must follow a prescribed pace.
 - Define how the story behaves when fonts, images or remote data load late. Reserve media dimensions and refresh scroll measurements only after relevant layout changes settle.
 - Provide a linear narrow-screen alternative for horizontal or pinned sequences, preserving all text, controls and calls to action.
+
+## Common AI failure mode
+
+**Failure:** An agent makes essential narrative content appear only after a scroll-triggered animation initializes or reaches a prescribed progress point.
+
+**Why it matters:** Visitors using reduced motion, keyboard navigation, direct fragment links, browser find, slow devices, or disabled JavaScript can miss information or be unable to follow the story.
+
+**Symptoms:**
+- Core text or calls to action are hidden until a timeline or scroll event runs.
+- Direct fragment navigation lands on transformed or pinned content that is not readable in sequence.
+- The story becomes incomplete when motion is disabled or JavaScript fails.
+
+**Prevention:** Render the complete narrative in semantic document order before motion setup. Use animation only to emphasize progression, keep anchors and heading navigation functional, and provide a linear narrow-screen and reduced-motion presentation. Test with JavaScript disabled, motion unavailable, keyboard-only navigation, direct fragment URLs, and browser find.

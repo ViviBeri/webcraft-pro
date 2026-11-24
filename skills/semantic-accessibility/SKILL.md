@@ -30,28 +30,24 @@ Express meaning and interaction through native HTML first. Semantic markup gives
 - Keep accessible names concise, unique in context and aligned with visible labels.
 - Ensure hidden content is truly removed from both visual and accessibility navigation when intended; do not hide focusable descendants accidentally.
 
-## Common failure patterns
+## Common AI failure mode
 
-- Placeholder text used as the only form label.
-- A clickable element with no keyboard support or accessible name.
-- Heading levels selected only for font size.
-- Multiple unlabeled navigation landmarks.
-- Images with filenames or meaningless alt text.
-- ARIA attributes that reference missing IDs or stale state.
-- Visual order that conflicts with DOM and reading order.
+**Failure:** An agent chooses semantic elements and adds ARIA attributes from source inspection, then declares the interface accessible without checking the computed accessibility tree.
+
+**Why it matters:** Invalid ID references, overridden names, hidden focusable descendants, and conflicting native/ARIA semantics can leave controls unnamed or expose a misleading structure even when the markup looks plausible.
+
+**Symptoms:**
+- The agent declares the interface accessible without inspecting its rendered accessibility tree.
+- No computed name, role, value, state, or relationship checks are recorded for representative controls.
+- ARIA decisions are justified only from source markup, with no evidence from dynamic or hidden states.
+- The report treats tag presence or source-level attributes as proof of the computed accessibility structure.
+
+**Prevention:** Inspect computed name, role, value, state, and relationships in the rendered accessibility tree. Exercise representative controls by keyboard and screen reader, verify dynamic updates and responsive order, prefer native HTML, and remove redundant or contradictory ARIA. Record untested states instead of inferring accessibility from tag presence.
 
 ## Verification
 
-Inspect the accessibility tree, navigate landmarks and headings with a screen reader, use controls without a pointer, and verify names and roles after dynamic state changes. Check responsive layouts for DOM/visual order mismatch.
+Inspect the accessibility tree, navigate landmarks and headings with a screen reader, use controls without a pointer, and verify names and roles after dynamic state changes. Check responsive layouts for DOM/visual order mismatch. Also verify that form labels do not rely on placeholders, interactive elements retain keyboard support and accessible names, heading levels express structure, landmarks are distinguishable, images have meaningful alternatives, ARIA references resolve to current IDs and state, and visual order agrees with DOM and reading order.
 
 ## Completion criteria
 
 The document has a meaningful semantic structure, interactive elements use native behavior, controls have clear accessible names, and the accessibility tree reflects the intended interface.
-
-## Common AI failure mode
-
-**Failure:** An agent treats semantic markup as a checklist of tags and ARIA attributes, then declares a page accessible without verifying the computed name, role, state, relationships, and keyboard behavior in the rendered interface.
-
-**Why it matters:** Superficially correct markup can still expose unnamed controls, duplicate landmark names, broken ID references, misleading link/button behavior, or a reading order that conflicts with the task. These failures block navigation and understanding even when the source contains familiar semantic elements.
-
-**Prevention:** Verify the rendered accessibility tree and complete representative keyboard and screen-reader journeys. Check computed accessible names and relationships after dynamic updates, not just source attributes. Prefer native HTML behavior, remove redundant or contradictory ARIA, and compare DOM order with visual order at responsive sizes. Record any journey or state not tested instead of claiming accessibility from tag presence.
