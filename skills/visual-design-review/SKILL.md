@@ -168,3 +168,16 @@ For every score below 3, record at least one concrete observation and recommende
 - [ ] Findings include reproducible details.
 - [ ] Fixes have been rechecked.
 - [ ] Unverified items are clearly identified.
+
+## Common AI failure mode
+
+**Failure:** An agent approves a page's visual quality after inspecting only a desktop viewport, without checking the same page at narrow widths.
+
+**Why it matters:** Responsive overflow, clipped controls, overlapping navigation, unreadable text, and broken section ordering can make the primary task unusable on mobile even though the desktop screenshot looks polished.
+
+**Symptoms:**
+- The review has no recorded narrow viewport dimensions or mobile evidence.
+- Content or controls overflow, overlap, or become unreachable when the viewport narrows.
+- Desktop-only screenshots are used to claim responsive behavior passed.
+
+**Prevention:** Inspect the complete page at a narrow mobile viewport as well as the supported tablet and desktop sizes. Record exact dimensions, test navigation and primary interactions, and check overflow, clipping, focus visibility, text reflow, and section order. Mark any viewport not actually inspected as untested; do not infer responsive quality from source CSS alone.

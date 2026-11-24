@@ -30,3 +30,16 @@ Use this skill when custom fonts affect first render, layout stability, bandwidt
 ## Deliverables
 
 Provide font inventory, files removed or retained, preload rationale, fallback strategy, licensing notes and measured loading/layout impact.
+
+## Common AI failure mode
+
+**Failure:** An agent swaps in a custom web font whose metrics differ substantially from the fallback, causing text blocks to reflow after the font loads.
+
+**Why it matters:** Late changes in glyph widths and line metrics move headings, controls, and surrounding content, producing cumulative layout shift and disrupting reading position or interaction.
+
+**Symptoms:**
+- Text wraps to different lines after the web font loads.
+- Headings or controls move vertically despite reserved image and media dimensions.
+- The selected fallback has visibly different width or line-height metrics from the final font.
+
+**Prevention:** Choose a metric-compatible fallback and use supported font metric overrides where appropriate. Load only required WOFF2 subsets and weights, preload only a measured critical font, and choose `font-display` deliberately. Measure layout shift and text paint on representative devices and verify multilingual glyph coverage and readability when the custom font is unavailable.

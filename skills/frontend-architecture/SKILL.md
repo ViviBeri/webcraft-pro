@@ -84,3 +84,16 @@ For consequential architecture choices, record context, constraints, options con
 - Treat server/client component boundaries as data and capability boundaries where supported; pass only minimum serializable data to client code.
 - Prefer progressive enhancement for critical flows when the platform and product allow it.
 - Document route ownership, deep-link behavior, refresh behavior and fallback behavior for unavailable dependencies.
+
+## Common AI failure mode
+
+**Failure:** An agent introduces a second mutable source of truth for the same application state, allowing the UI, URL, and server data to diverge.
+
+**Why it matters:** Updates become order-dependent and stale values can overwrite newer user intent. Bugs appear during navigation, refresh, optimistic updates, and error recovery because ownership and synchronization rules are unclear.
+
+**Symptoms:**
+- The same value is independently stored in component state, a global store, and the URL or server cache.
+- A change in one representation does not update or invalidate the others.
+- Back/forward navigation or a failed optimistic update restores a value that no longer matches the authoritative state.
+
+**Prevention:** Assign each state value one authoritative owner based on its lifetime and sharing needs. Derive presentation state where possible, define URL synchronization and server-cache invalidation explicitly, and document optimistic-update rollback. Test navigation, refresh, concurrent updates, and failed requests to prove that duplicate mutable copies cannot drift.

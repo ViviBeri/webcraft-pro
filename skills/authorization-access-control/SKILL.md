@@ -42,3 +42,16 @@ Ensure every sensitive operation is authorized for the current principal, reques
 ## Completion criteria
 
 Sensitive routes and data operations have explicit server-side authorization, tenant isolation is tested, and negative tests cover object, function and property-level access.
+
+## Common AI failure mode
+
+**Failure:** An agent checks that a user is signed in but fails to authorize access to the specific resource identified by a client-supplied ID.
+
+**Why it matters:** An authenticated user can change an identifier and read, modify, delete, or export another user's object. Frontend route guards and hidden controls do not protect server-side data operations.
+
+**Symptoms:**
+- Changing an object ID in a request returns another user's resource.
+- List, search, export, or background-job paths omit the same ownership or tenant check used by the detail route.
+- Authorization is checked only in the UI or before a later resource lookup changes the target object.
+
+**Prevention:** At the server-side data boundary, authorize the current principal against the requested action and resolved resource on every operation. Scope resource queries by owner or tenant, deny by default, and re-check authorization in asynchronous work where permissions can change. Add negative tests that substitute another user's IDs across reads, writes, deletes, exports, and indirect access paths.

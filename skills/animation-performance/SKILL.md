@@ -44,15 +44,18 @@ Keep animation responsive and stable on real devices by measuring bottlenecks, l
    - Test reduced motion and non-animated fallbacks.
    - Confirm the visual result remains correct and no behavior was removed to hide a performance issue.
 
-## Common failure modes
+## Common AI failure mode
 
-- Assuming every transform is free or always GPU accelerated.
-- Adding will-change to every animated element.
-- Optimizing by removing essential content or interaction.
-- Using JavaScript scroll listeners for work better handled by CSS or ScrollTrigger.
-- Running infinite animations when elements are offscreen or no longer relevant.
-- Rebuilding triggers on every resize event without cleanup.
-- Treating a smooth desktop recording as proof of mobile performance.
+**Failure:** An agent optimizes animation by promoting every moving element to its own layer with permanent `will-change`, assuming transforms are always free.
+
+**Why it matters:** Excessive layer creation consumes GPU memory and increases rasterization and compositing work. On constrained devices, the attempted optimization can cause more dropped frames, memory pressure, and jank than the original animation.
+
+**Symptoms:**
+- Frame rate degrades as more elements animate or become promoted.
+- Paint, rasterization, memory, or compositing cost rises despite fewer layout operations.
+- The implementation keeps layers or continuous animation work after elements leave the viewport or unmount.
+
+**Prevention:** Profile the same interaction on representative devices before changing properties. Promote only elements where traces demonstrate a benefit, scope `will-change` to the active interaction, and remove it afterward. Pause offscreen work where appropriate, clean up timelines and observers, and compare frame stability, memory, paint, and compositing before and after. Preserve reduced-motion and non-animated behavior.
 
 ## Completion criteria
 

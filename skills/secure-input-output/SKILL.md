@@ -53,3 +53,16 @@ Test malformed encodings, oversized values, injection payloads, unexpected objec
 ## Completion criteria
 
 All trust-boundary inputs have server-side schemas, queries and rendering use context-safe APIs, file and URL handling are constrained, and negative tests cover malformed and adversarial inputs.
+
+## Common AI failure mode
+
+**Failure:** An agent inserts untrusted user-controlled text into an HTML rendering context without context-appropriate output encoding or a safe text API.
+
+**Why it matters:** Attacker-controlled markup or script can execute in another user's browser, exposing session data or performing actions with the victim's authority. Input validation alone does not make a value safe for every output context.
+
+**Symptoms:**
+- User-controlled strings reach `innerHTML`, unsafe template escape hatches, or equivalent HTML sinks.
+- A value validated for one context is reused in HTML, an attribute, JavaScript, CSS, or a URL without context-specific handling.
+- Tests cover ordinary input but omit markup and event-handler payloads in rendered output.
+
+**Prevention:** Keep untrusted values as text using safe DOM APIs such as `textContent` and framework auto-escaping. When rich HTML is a genuine requirement, use a maintained sanitizer with an explicit allowlist and verify the sanitized output at the final sink. Apply context-specific encoding, prohibit unsafe bypasses for untrusted data, and test representative injection payloads in a safe environment.

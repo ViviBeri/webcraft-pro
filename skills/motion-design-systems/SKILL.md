@@ -54,18 +54,25 @@ Create a consistent motion language that communicates hierarchy, cause and effec
 - Is essential information still available without animation?
 - Is reduced-motion behavior implemented and tested?
 
-## Anti-patterns
+## Common AI failure mode
 
-- Animating every element on page load.
-- Repeated bounce, elastic or overshoot effects without a semantic reason.
-- Long delays before a control becomes usable.
-- Parallax that reduces readability or orientation.
-- Multiple easing and duration values for the same interaction type.
-- Motion that hides validation, loading or success information.
+**Failure:** An agent documents shared motion tokens but implements components with one-off timing and easing values that bypass the token contract.
+
+**Why it matters:** The motion system becomes documentation without enforcement. Equivalent interactions feel inconsistent, exceptions multiply, and teams cannot change motion behavior reliably or audit reduced-motion alternatives.
+
+**Symptoms:**
+- Components use literal timing or easing values instead of the documented semantic tokens.
+- The same interaction type resolves to different timing or easing values across components without a documented exception.
+- Token definitions exist but shared components bypass them through local overrides or one-off values.
+- Exceptions have no recorded rationale or owner, so token compliance cannot be audited.
+
+**Prevention:** Audit real component usage for ungoverned values. Define semantic token roles with intent, ranges, triggers, interruption behavior, and reduced-motion alternatives; document justified exceptions with an owner. Test representative flows with motion enabled and reduced motion enabled, preserving immediate non-animated feedback and usable controls.
 
 ## Completion criteria
 
 The product has a small documented motion vocabulary, purposeful interaction patterns, consistent timing, accessible alternatives and verified behavior across relevant input methods.
+
+The motion review checklist also checks that page-load animation is purposeful, bounce or overshoot has a semantic reason, controls are not delayed until decorative animation completes, parallax preserves readability and orientation, and validation, loading, and success information remains visible.
 
 
 ## Token governance
@@ -80,11 +87,3 @@ For each shared pattern, document its trigger, start/end state, interruption beh
 - Do not delay activation, validation feedback, navigation or form submission until a decorative timeline completes.
 - Avoid focus movement and pointer-blocking overlays during transitions.
 - For automatically moving or updating content, assess applicable pause/stop/hide requirements instead of assuming reduced motion alone is sufficient.
-
-## Common AI failure mode
-
-**Failure:** An agent creates a token catalogue but allows components to bypass it with one-off durations, easing values, and distances—or treats reduced motion as a global switch that removes all feedback without preserving the state change.
-
-**Why it matters:** The token system becomes decorative documentation rather than a shared contract. Inconsistent motion increases cognitive load and maintenance cost; a reduced-motion mode that removes meaningful feedback can leave users unsure whether an action succeeded, failed, or is still processing.
-
-**Prevention:** Audit real component usage for ungoverned values and define semantic token roles with documented intent, range, trigger, interruption behavior, and reduced-motion alternative. Test representative flows with motion enabled and reduced motion enabled. Preserve immediate, non-animated state feedback and never delay activation or completion behind a timeline. Record intentional exceptions with ownership and rationale.
