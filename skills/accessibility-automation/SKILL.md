@@ -63,3 +63,11 @@ Automated scanners detect a subset of issues and cannot reliably judge every tex
 ## Completion criteria
 
 Representative states are scanned in CI, new violations fail visibly, exceptions are scoped and tracked, and manual testing covers issues automation cannot establish.
+
+## Common AI failure mode
+
+**Failure:** An agent adds an axe-core scan to CI and treats a zero-violation result as proof that the tested page or product is accessible or WCAG-conformant.
+
+**Why it matters:** Automated rules cover only a subset of accessibility requirements. A scan can miss keyboard traps, unusable focus order, misleading content, poor instructions, broken task flows, screen-reader announcement failures, and states that were never opened. A green CI badge can create false assurance while real users remain blocked.
+
+**Prevention:** Describe each scan as automated coverage of the exact route, build, viewport, and UI state exercised. Test representative templates and interactive states, not only the homepage. Keep exceptions narrow, owned, and time-bounded. Pair automation with manual keyboard/focus, zoom/reflow, content review, and selected assistive-technology tasks; track those as separate evidence. Never label a page or release “accessible” or “WCAG conformant” from axe results alone, and explicitly list untested journeys and criteria.

@@ -43,6 +43,7 @@ Make forms understandable, accessible and resilient while treating all client-su
    - Announce asynchronous results with an appropriate status region.
 6. **Protect data**
    - Use appropriate CSRF defenses for cookie-authenticated state-changing requests.
+   - Never submit state-changing operations through GET; reserve GET for read-only requests.
    - Use HTTPS and secure session handling.
    - Apply output encoding or context-appropriate sanitization when displaying submitted content.
    - Avoid placing sensitive data in URLs, analytics events, client logs or error messages.
@@ -61,16 +62,13 @@ Make forms understandable, accessible and resilient while treating all client-su
    - Verify keyboard and screen-reader announcements where test tools allow.
    - Confirm sensitive values are absent from URLs, logs and analytics.
 
-## Common failure modes
+## Common AI failure mode
 
-- Treating client-side validation as a security boundary.
-- Relying on placeholder text instead of visible labels.
-- Showing red borders without explanatory text.
-- Clearing the entire form after a server error.
-- Using GET for sensitive data or state-changing operations.
-- Trusting a client-supplied price, permission, account ID or ownership claim.
-- Disabling submit in a way that prevents users from discovering validation errors.
-- Failing to protect state-changing cookie-authenticated requests from CSRF.
+**Failure:** An agent implements client-side validation and accessible error messages, then treats that browser validation as the authoritative security and business-rule boundary.
+
+**Why it matters:** Attackers can bypass browser code and submit crafted requests directly. If the server trusts client-supplied values, ownership, permissions, prices, or workflow state, invalid or unauthorized operations can be accepted even though the visible form appears correct. This is a correctness and security failure, not merely a form UX defect.
+
+**Prevention:** Keep the existing field-contract, accessible-feedback, submission-state, and end-to-end testing guidance; enforce schema, authorization, ownership, rate limits, and business rules again on the server. Test direct requests that bypass the UI, including malformed, boundary, duplicate, and unauthorized submissions. Preserve valid entries on recoverable server errors, map errors to fields, and verify that sensitive values do not enter URLs, logs, or analytics. Client validation improves usability; it never grants trust.
 
 ## Completion criteria
 

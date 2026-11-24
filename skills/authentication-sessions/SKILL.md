@@ -41,3 +41,26 @@ Test expired, revoked, replayed and malformed tokens; session fixation; logout i
 ## Completion criteria
 
 Identity protocol validation is correct, sessions are protected and revocable, recovery and MFA flows resist abuse, and secrets are absent from client code and logs.
+
+## Common AI failure mode
+
+**Failure:** An agent implements login successfully but reuses the
+pre-authentication session identifier after login, and at privilege or
+trust transitions (elevation, account switch, MFA completion).
+
+**Why it matters:** An attacker who can fix or pre-seed a session identifier
+inherits the authenticated identity of the victim after login. The compromise
+survives the login boundary and persists across privileged actions and
+account data, even though the login flow itself appears to work.
+
+**Prevention:** Regenerate the session identifier at authentication and at
+every privilege or trust transition; invalidate the prior identifier
+server-side after rotation. Set idle and absolute expiry, and revoke the
+session on logout and on credential or security events. Test fixation by
+establishing a pre-login session, completing login, and proving the pre-login
+identifier cannot authenticate any privileged request after that point.
+Verify the same for privilege-elevation and account-switch transitions.
+
+> Token storage and exposure (localStorage, URLs, logs, analytics, error
+> reports, telemetry) is a related but distinct failure mode — see
+> `secrets-configuration`.

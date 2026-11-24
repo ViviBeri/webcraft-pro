@@ -80,3 +80,11 @@ For each shared pattern, document its trigger, start/end state, interruption beh
 - Do not delay activation, validation feedback, navigation or form submission until a decorative timeline completes.
 - Avoid focus movement and pointer-blocking overlays during transitions.
 - For automatically moving or updating content, assess applicable pause/stop/hide requirements instead of assuming reduced motion alone is sufficient.
+
+## Common AI failure mode
+
+**Failure:** An agent creates a token catalogue but allows components to bypass it with one-off durations, easing values, and distances—or treats reduced motion as a global switch that removes all feedback without preserving the state change.
+
+**Why it matters:** The token system becomes decorative documentation rather than a shared contract. Inconsistent motion increases cognitive load and maintenance cost; a reduced-motion mode that removes meaningful feedback can leave users unsure whether an action succeeded, failed, or is still processing.
+
+**Prevention:** Audit real component usage for ungoverned values and define semantic token roles with documented intent, range, trigger, interruption behavior, and reduced-motion alternative. Test representative flows with motion enabled and reduced motion enabled. Preserve immediate, non-animated state feedback and never delay activation or completion behind a timeline. Record intentional exceptions with ownership and rationale.

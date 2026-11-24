@@ -141,3 +141,11 @@ A change should identify affected components and pages. Avoid silent token renam
 - [ ] Themes, zoom, localization and reduced motion are considered.
 - [ ] Token changes are verified against representative pages.
 - [ ] Governance and deprecation rules are documented.
+
+## Common AI failure mode
+
+**Failure:** An agent creates a token for every observed value or component property, then adds theme-specific overrides and one-off aliases without ownership, semantic roles, or migration rules.
+
+**Why it matters:** Token proliferation creates multiple names for the same decision, makes theme behavior unpredictable, and encourages components to depend on implementation-specific values. A theme or brand change can leave stale references, unreadable contrast, and inconsistent component states across pages.
+
+**Prevention:** Audit existing values and repeated decisions before adding tokens. Keep primitive, semantic, and component layers distinct; create component tokens only for a real independently governed need. Give each token a role, owner, supported theme behavior, and deprecation path. Validate references for duplicates and undefined values, compare representative pages across themes and states, and test contrast, focus, zoom, localization, and reduced motion before accepting a token migration. Document intentional exceptions rather than adding aliases to silence individual mismatches.

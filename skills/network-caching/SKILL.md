@@ -34,3 +34,11 @@ Use this skill when origin latency, asset transfer, cache misses or inefficient 
 ## Deliverables
 
 Document waterfall evidence, cache policy by resource class, compression, CDN behavior, privacy considerations and deployment verification.
+
+## Common AI failure mode
+
+**Failure:** An agent adds aggressive CDN, browser, or service-worker caching to improve performance but fails to separate public assets from user-specific or authorization-dependent responses, or fails to invalidate cached data when identity and permissions change.
+
+**Why it matters:** A shared cache can serve one user's private response to another user, while a browser or service worker can display stale account data after logout, role changes, or tenant switching. The result can be a confidentiality breach or a misleading authorization state even when origin-side access control is correct.
+
+**Prevention:** Classify responses by sensitivity and identity dependence before setting cache policy. Use private/no-store behavior for sensitive personalized responses unless a reviewed design proves a safe alternative; never rely on a cache key that omits relevant authorization or variation dimensions. Define explicit invalidation and service-worker update behavior for logout, account/tenant changes, and permission changes. Verify deployed CDN and browser headers with two distinct users, role changes, cold/warm caches, and service-worker-controlled reloads; confirm no private response crosses identities.

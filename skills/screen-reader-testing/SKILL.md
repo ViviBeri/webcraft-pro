@@ -57,3 +57,11 @@ Record the environment, task, exact navigation steps, expected announcement, act
 ## Completion criteria
 
 Critical user journeys can be completed with the selected assistive technology, important state changes are perceivable, and remaining coverage limitations are documented.
+
+## Common AI failure mode
+
+**Failure:** An agent reports a screen-reader workflow as verified because the page has no axe violations, the DOM contains expected ARIA attributes, or the browser accessibility tree looks plausible—without running the selected assistive technology and observing its output.
+
+**Why it matters:** A control can have a technically plausible name and role yet still be unusable in the actual interaction sequence. Speech output, reading order, focus announcements, live-region timing, and browser/AT interoperability can fail in ways a static scan or accessibility-tree snapshot cannot establish. Users may miss errors, status changes, or the next action while the report incorrectly claims assistive-technology coverage.
+
+**Prevention:** Separate automated, accessibility-tree, and observed assistive-technology evidence in the test report. For each selected browser/AT pair, record versions, settings, task steps, expected output, actual spoken/braille output, and result. Exercise complete journeys—including validation recovery, dialogs, and asynchronous updates—using the AT. Mark unrun combinations and unobserved announcements as untested; never convert a clean axe scan or ARIA inspection into an “AT tested” claim.
