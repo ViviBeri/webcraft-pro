@@ -20,6 +20,8 @@ This is the single repository-maintained parking lot for work explicitly deferre
 
 ## Deferred migrations and housekeeping
 
+- [ ] Preserve the prohibition on state-changing GET submissions in `forms-and-validation`; allow GET only for non-sensitive, read-only forms (HeyDeer Batch 2 review)
+
 - [ ] Add `failure_mode_format` front-matter to all 44 skills and extend the validator (after Batch 4)
 - [ ] Migrate native-button guidance into `accessible-components`
 - [ ] Migrate DOM-selector guidance into `modern-css`
