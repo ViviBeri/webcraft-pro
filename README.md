@@ -155,7 +155,7 @@ The canonical `skills/` directory contains 44 portable `SKILL.md` files covering
 - Application security, authentication, authorization, and API security.
 - Core Web Vitals, rendering, JavaScript, images, fonts, and network performance.
 
-Skills follow the Agent Skills format and are organized by task rather than tied to one frontend framework. **Common AI failure mode** sections are present in 14 of 44 meet the five-part failure-mode rubric; 6 are partial and 24 are missing. The remaining work is tracked in [Issue #12](https://github.com/ViviBeri/webcraft-pro/issues/12) for the remaining batches.
+Skills follow the Agent Skills format and are organized by task rather than tied to one frontend framework. Failure-mode coverage is in progress: 14/44 meet the five-part rubric, 6 are partial, and 24 are missing. See [Issue #12](https://github.com/ViviBeri/webcraft-pro/issues/12) for the remaining batches.
 
 ### 13 engineering templates
 
@@ -268,7 +268,7 @@ The active delivery plan is maintained in [docs/roadmap.md](./docs/roadmap.md). 
 
 **Latest release: [v1.6.1 — OIDC staging validation](https://github.com/ViviBeri/webcraft-pro/releases/tag/v1.6.1).** The [published npm package](https://www.npmjs.com/package/webcraft-pro) is version `1.6.1` and includes npm provenance.
 
-The v1.6.0 release introduced selective skill installation, the Skill Doctor diagnostic, expanded installer safety checks, repository consistency validation, and contributor onboarding. The agent compatibility matrix remains explicitly **Not tested** pending real agent sessions. Failure-mode sections are present in 17 of 44 skills: three pre-existing sections plus 14 skills completed in Batches 1 and 2. The remaining 27 are tracked in [Issue #12](https://github.com/ViviBeri/webcraft-pro/issues/12) and will be delivered in reviewable batches.
+The v1.6.0 release introduced selective skill installation, the Skill Doctor diagnostic, expanded installer safety checks, repository consistency validation, and contributor onboarding. The agent compatibility matrix remains explicitly **Not tested** pending real agent sessions. Failure-mode coverage is in progress: 14/44 meet the five-part rubric, 6 are partial, and 24 are missing. The remaining work is tracked in [Issue #12](https://github.com/ViviBeri/webcraft-pro/issues/12) and will be delivered in reviewable batches.
 
 The official [WebCraft Pro landing page](https://viviberi.github.io/webcraft-pro/) was checked with the on-demand Chromium browser checker on 19 November 2026. The run completed **24 checks with 0 failures** across mobile (390px), tablet (768px), and desktop (1440px), in standard and reduced-motion modes. The report recorded no axe-core violations, 38 passed axe-core rules and 1 incomplete rule per viewport scan, successful keyboard traversal with visible focus indicators, and no uncaught page errors. [View the browser-check run and artifacts](https://github.com/ViviBeri/webcraft-pro/actions/runs/44602749892).
 
