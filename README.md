@@ -26,16 +26,10 @@ Get up and running in 5 minutes. WebCraft Pro requires Node.js 22.12.0 or higher
 
 ### 1. Install the skills
 
-Run the installer directly in your project root. The short npm command is the stable path once the package is published:
+Run the published npm package directly in your project root:
 
 ```bash
 npx webcraft-pro install --agent claude
-```
-
-**Until the public npm package is available**, run the same CLI from the GitHub repository without cloning it:
-
-```bash
-npx --yes --package=github:ViviBeri/webcraft-pro webcraft install --agent claude
 ```
 
 Options: use `--agent copilot`, `--agent codex`, or `--agent all`. You can also use `--stage` or `--skills` for selective installation. Use `--dry-run` to preview changes before installing.
@@ -161,7 +155,7 @@ The canonical `skills/` directory contains 44 portable `SKILL.md` files covering
 - Application security, authentication, authorization, and API security.
 - Core Web Vitals, rendering, JavaScript, images, fonts, and network performance.
 
-Skills follow the Agent Skills format and are organized by task rather than tied to one frontend framework. The initial **Common AI failure mode** documentation is present in `keyboard-focus`, `wcag-auditing`, and `core-web-vitals`; rollout to the remaining 41 skills is tracked in [Issue #12](https://github.com/ViviBeri/webcraft-pro/issues/12).
+Skills follow the Agent Skills format and are organized by task rather than tied to one frontend framework. **Common AI failure mode** sections have been merged for 14 of 44 skills in Batches 1 and 2; the remaining 30 are tracked in [Issue #12](https://github.com/ViviBeri/webcraft-pro/issues/12) for the remaining batches.
 
 ### 13 engineering templates
 
@@ -272,9 +266,9 @@ The active delivery plan is maintained in [docs/roadmap.md](./docs/roadmap.md). 
 
 ## Project status
 
-**Latest release: [v1.6.1 — OIDC staging validation](https://github.com/ViviBeri/webcraft-pro/releases/tag/v1.6.1) (publication pending).**
+**Latest release: [v1.6.1 — OIDC staging validation](https://github.com/ViviBeri/webcraft-pro/releases/tag/v1.6.1).** The [published npm package](https://www.npmjs.com/package/webcraft-pro) is version `1.6.1` and includes npm provenance.
 
-The v1.6.0 release candidate adds selective skill installation, the Skill Doctor diagnostic, expanded installer safety checks, repository consistency validation, and contributor onboarding. The agent compatibility matrix remains explicitly Not tested pending real agent sessions. The remaining 41 skill failure-mode updates remain tracked in [Issue #12](https://github.com/ViviBeri/webcraft-pro/issues/12) and will be delivered in reviewable batches.
+The v1.6.0 release introduced selective skill installation, the Skill Doctor diagnostic, expanded installer safety checks, repository consistency validation, and contributor onboarding. The agent compatibility matrix remains explicitly **Not tested** pending real agent sessions. Failure-mode sections have been merged for 14 of 44 skills; the remaining 30 are tracked in [Issue #12](https://github.com/ViviBeri/webcraft-pro/issues/12) and will be delivered in reviewable batches.
 
 The official [WebCraft Pro landing page](https://viviberi.github.io/webcraft-pro/) was checked with the on-demand Chromium browser checker on 19 November 2026. The run completed **24 checks with 0 failures** across mobile (390px), tablet (768px), and desktop (1440px), in standard and reduced-motion modes. The report recorded no axe-core violations, 38 passed axe-core rules and 1 incomplete rule per viewport scan, successful keyboard traversal with visible focus indicators, and no uncaught page errors. [View the browser-check run and artifacts](https://github.com/ViviBeri/webcraft-pro/actions/runs/44602749892).
 
