@@ -155,7 +155,7 @@ The canonical `skills/` directory contains 44 portable `SKILL.md` files covering
 - Application security, authentication, authorization, and API security.
 - Core Web Vitals, rendering, JavaScript, images, fonts, and network performance.
 
-Skills follow the Agent Skills format and are organized by task rather than tied to one frontend framework. **Common AI failure mode** sections are present in 17 of 44 skills: three pre-existing sections plus the Batch 1 and Batch 2 additions. The remaining 27 are tracked in [Issue #12](https://github.com/ViviBeri/webcraft-pro/issues/12) for the remaining batches.
+Skills follow the Agent Skills format and are organized by task rather than tied to one frontend framework. **Common AI failure mode** sections are present in 14 of 44 meet the five-part failure-mode rubric; 6 are partial and 24 are missing. The remaining work is tracked in [Issue #12](https://github.com/ViviBeri/webcraft-pro/issues/12) for the remaining batches.
 
 ### 13 engineering templates
 
