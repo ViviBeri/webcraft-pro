@@ -1,5 +1,8 @@
 # Post-v1.6.2 Work
 
+> This file lists work explicitly deferred from v1.6.2. Adding items is
+> encouraged. Removing items requires a linked PR that completes the work.
+
 This is the single repository-maintained parking lot for work explicitly deferred beyond v1.6.2. Items remain unchecked until delivered and verified in their assigned release.
 
 ## v1.6.3 — Quality tooling
