@@ -52,15 +52,19 @@ Use scroll position to support narrative, orientation or meaningful feedback wit
 - For horizontal storytelling, preserve a meaningful reading order and provide a usable narrow-screen alternative.
 - Do not require users to scroll a fixed distance to reveal essential instructions or controls.
 
-## Common failure modes
+## Common AI failure mode
 
-- Pinning long sections that trap visitors in an artificial sequence.
-- Creating horizontal scroll without discoverable cues or touch support.
-- Using fixed pixel offsets that break when text wraps or localization changes.
-- Measuring before fonts, images or dynamic content settle.
-- Hiding all content until ScrollTrigger initializes.
-- Using scrub for an interaction that should respond immediately to user input.
+**Failure:** An agent builds a pinned or scrubbed sequence using fixed offsets and measurements taken before fonts, images, or dynamic content settle.
 
+**Why it matters:** Trigger geometry diverges from the rendered document after wrapping, localization, media loading, or viewport changes, causing overlapping pins, skipped sections, or unreachable content.
+
+**Symptoms:**
+- Markers drift after assets load
+- pins cover navigation or focus
+- reverse scroll and fragment navigation break
+- resize leaves stale pin spacing or duplicate triggers.
+
+**Prevention:** Derive positions from actual layout and use function-based start/end values when dimensions change. Refresh only after meaningful layout changes settle. Revert responsive setups, provide normal-flow and no-JavaScript fallbacks, and test reverse/partial scroll, direct mid-page loads, focus, and post-load changes.
 ## Completion criteria
 
 The story works as ordinary content first, scroll-linked motion improves comprehension, triggers respond correctly across viewports, and visitors can navigate and read without being forced through an animation.

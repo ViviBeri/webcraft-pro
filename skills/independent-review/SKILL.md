@@ -106,3 +106,18 @@ The implementing agent must validate findings, reproduce behavioral issues where
 - [ ] Findings include evidence, severity, impact and actionable recommendations.
 - [ ] Unverified risks and unreviewed areas are disclosed.
 - [ ] The implementing agent receives a clear outcome and handoff.
+
+## Common AI failure mode
+
+**Failure:** An agent labels its own second pass independent, or accepts a review finding without reproducing it against the stated artifact and scope.
+
+**Why it matters:** Self-review shares implementation bias; unverified reviewer claims can trigger unnecessary changes or conceal the actual defect.
+
+**Symptoms:**
+- A fresh sub-agent is claimed but not used
+- findings lack location/evidence/reproduction
+- one component review is generalized to all routes
+- fixes are not retested.
+
+**Prevention:** Identify review mode honestly and state artifact/scope. If no separate reviewer is available, label self-review fallback. Record severity, location, evidence, impact, and recommendation; reproduce behavior, distinguish uncertainty, retest fixes, and list unreviewed areas.
+

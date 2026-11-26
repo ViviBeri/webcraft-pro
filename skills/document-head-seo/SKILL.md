@@ -112,3 +112,18 @@ Before completion:
 - Do not add structured data unless its values are accurate, visible/appropriate for the page and validated against the applicable schema requirements.
 - Respect the existing framework, SSR/SSG architecture, content-management system and deployment base path.
 - Do not copy substantial third-party reference content into this skill. Keep these instructions independently authored and link to sources.
+
+## Common AI failure mode
+
+**Failure:** An agent copies metadata across routes or invents canonicals, social images, structured data, or indexing directives without verifying deployed URLs and page content.
+
+**Why it matters:** Incorrect canonicals misdirect search signals, social previews show unrelated content, and inaccurate structured data or robots directives misrepresent or hide pages.
+
+**Symptoms:**
+- Distinct routes share metadata
+- canonicals point to localhost/previews/redirects
+- JSON-LD claims unsupported ratings/offers
+- robots and sitemap settings conflict with deployment intent.
+
+**Prevention:** Derive metadata from verified route content and production URL configuration. Check canonical targets, status codes, robots, sitemap, social assets, and structured-data claims. Validate deployed routes and rendered head output; leave unknown values unset.
+

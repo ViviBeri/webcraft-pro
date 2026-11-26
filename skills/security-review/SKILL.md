@@ -47,3 +47,18 @@ Only test systems for which the requester has authority. Use non-production data
 ## Completion criteria
 
 The review has explicit scope and authorization, findings are reproducible and prioritized, remediation owners are assigned, and residual risk is documented for release decision-makers.
+
+## Common AI failure mode
+
+**Failure:** An agent writes a security review from a checklist or scanner summary without tracing findings through actual code paths, trust boundaries, and attacker-controlled input.
+
+**Why it matters:** The report misses exploitable paths or overstates speculative issues as confirmed, wasting remediation effort while serious defects remain.
+
+**Symptoms:**
+- Findings lack locations, entry points, affected assets, or reproduction
+- scanner output is copied without reachability checks
+- alternate APIs/jobs/exports are omitted
+- severity lacks exploit preconditions and impact.
+
+**Prevention:** Trace each candidate from source to sink and verify authorization, validation, encoding, and failure behavior. Reproduce material findings safely, distinguish confirmed defects from risks, and record scope, assets, preconditions, impact, evidence, and remediation.
+

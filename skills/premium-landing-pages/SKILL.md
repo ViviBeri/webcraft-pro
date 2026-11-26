@@ -156,3 +156,18 @@ Classify page content as verified product facts, independently verified public f
 - [ ] Images, fonts and scripts are optimized.
 - [ ] Metadata is accurate.
 - [ ] Build and relevant tests pass.
+
+## Common AI failure mode
+
+**Failure:** An agent fills gaps in a landing-page brief with invented testimonials, customer logos, metrics, certifications, guarantees, pricing, or product capabilities.
+
+**Why it matters:** Unsupported credibility claims mislead visitors and create legal/reputational exposure; visual polish does not make fabricated evidence acceptable.
+
+**Symptoms:**
+- Placeholder testimonials/logos appear real
+- metrics and awards lack sources
+- unsupported features/pricing are promised
+- CTAs/forms imply unimplemented conversion paths.
+
+**Prevention:** Separate confirmed facts, verified claims with source/date, editorial explanation, and placeholders awaiting approval. Use only supported proof, omit unsupported credibility elements, verify CTAs/forms/routes, and require owner approval for commercial claims.
+

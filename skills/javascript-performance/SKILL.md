@@ -35,3 +35,18 @@ Use this skill when JavaScript increases transfer size, delays rendering, blocks
 ## Deliverables
 
 Provide bundle evidence, dependency findings, route-level loading plan, runtime bottlenecks, measurable budgets and before/after verification.
+
+## Common AI failure mode
+
+**Failure:** An agent memoizes broadly, splits bundles mechanically, or moves work to workers without measuring the user-visible bottleneck and new architectural costs.
+
+**Why it matters:** Changes can increase memory, duplicate work, delay interaction, or add serialization overhead while leaving the actual latency unchanged.
+
+**Symptoms:**
+- Caches lack evidence of repeated expensive work
+- splitting creates request waterfalls
+- workers serialize large objects
+- bundle size falls but interaction latency and long tasks do not improve.
+
+**Prevention:** Capture a baseline for the affected journey and identify parsing, execution, scheduling, network, or rendering costs. Profile the cause, compare equivalent routes/interactions, include memory, requests, long tasks, and user-visible latency, and remove changes without repeatable benefit.
+

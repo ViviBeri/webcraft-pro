@@ -38,3 +38,18 @@ Produce a system context diagram, data-flow diagram, trust-boundary inventory, t
 ## Completion criteria
 
 Critical assets and trust boundaries are identified, high-risk abuse cases have owners and mitigations, and each selected control has a verification method.
+
+## Common AI failure mode
+
+**Failure:** An agent designs controls around the happy path and treats authentication, frontend route guards, or one perimeter check as sufficient for every operation.
+
+**Why it matters:** Alternate routes, jobs, exports, object IDs, and state transitions can bypass the assumed boundary and expose sensitive data.
+
+**Symptoms:**
+- Authorization is undefined at data/action boundaries
+- tenant isolation and ownership remain implicit
+- background jobs reuse client IDs without rechecking
+- threat models omit abuse and failure paths.
+
+**Prevention:** Model assets, principals, trust boundaries, entry points, data flows, and security transitions. Define deny-by-default authorization for each operation/resource, including asynchronous work. Specify validation, secrets, logging, rate limits, and failure behavior; map threats to mitigations and negative tests.
+

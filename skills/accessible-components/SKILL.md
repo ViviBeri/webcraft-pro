@@ -74,3 +74,18 @@ Test every state with keyboard-only interaction, browser accessibility inspectio
 ## Completion criteria
 
 The component follows a documented interaction pattern, exposes accurate semantics and state, supports expected keyboard behavior, and has tests for lifecycle and edge states.
+
+## Common AI failure mode
+
+**Failure:** An agent implements a custom widget's visual appearance and ARIA roles but omits the keyboard and focus model required by the chosen pattern.
+
+**Why it matters:** Users encounter controls announced as tabs, menus, comboboxes, or dialogs that cannot be operated predictably; incorrect semantics promise behavior the implementation does not provide.
+
+**Symptoms:**
+- Tabs lack arrow-key navigation or synchronized panels
+- dialogs fail to move, contain, or restore focus
+- menu roles conflict with ordinary navigation
+- selected and expanded states disagree.
+
+**Prevention:** Choose the exact native or WAI-ARIA APG pattern first. Define its state machine, keyboard contract, focus lifecycle, and relationships. Prefer native controls. Test every state and transition, including dismissal, focus restoration, disabled options, async results, and repeated open/close cycles.
+

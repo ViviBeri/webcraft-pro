@@ -73,3 +73,18 @@ Styles have clear cascade ownership, reusable semantic tokens where justified, r
 - Avoid using content-visibility, containment or will-change as blanket performance switches; measure behavior and verify focus, find-in-page and layout implications.
 
 For each progressive enhancement, state the baseline behavior and the enhancement. Check actual browser support against the project's policy.
+
+## Common AI failure mode
+
+**Failure:** An agent adopts a modern CSS feature or selector without checking browser support, fallback behavior, specificity, or interaction with the existing cascade.
+
+**Why it matters:** A result that works in one browser can fail silently elsewhere, override component styles, or make future changes difficult.
+
+**Symptoms:**
+- Required layout depends on unsupported features
+- fallback leaves content hidden or overlapping
+- broad/high-specificity selectors override state styles
+- feature-query fallback breaks content order or tasks.
+
+**Prevention:** Check the project's browser policy. Use feature queries or progressive enhancement with a complete usable baseline, keep selectors scoped and specificity intentional, and test cascade interactions and rendered output in supported browsers and zoom/reflow sizes.
+
