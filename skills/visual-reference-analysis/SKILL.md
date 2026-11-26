@@ -95,3 +95,18 @@ Return a reference matrix with observation, inferred principle, proposed adaptat
 - [ ] No unlicensed assets or distinctive content are copied.
 - [ ] Responsive and accessibility constraints are included.
 - [ ] Verification claims match the evidence actually available.
+
+## Common AI failure mode
+
+**Failure:** An agent treats a static screenshot or competitor page as a complete specification and copies distinctive layout/assets/behavior without separating observations from assumptions or checking ownership.
+
+**Why it matters:** The result can reproduce wrong product decisions, claim unobserved interactions, or create IP and brand-confusion risks; one viewport cannot establish responsive rules or hidden states.
+
+**Symptoms:**
+- Analysis invents animation/breakpoints
+- unlicensed copy/logos/artwork are copied
+- every detail becomes a requirement regardless of user task
+- adaptations lack traceability to observations.
+
+**Prevention:** Identify reference type and intended role. Separate visible facts from interpretation and state evidence limits. Extract principles tied to audience, task, brand, and constraints; create an original composition with owned/licensed assets and mark unobserved behavior unverified.
+

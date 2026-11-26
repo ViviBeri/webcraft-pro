@@ -47,3 +47,18 @@ Use this skill to create a repeatable, evidence-based view of website performanc
 ## Deliverables
 
 Return scope, environment, baseline, evidence, ranked findings, proposed budgets, retest protocol and known limitations.
+
+## Common AI failure mode
+
+**Failure:** An agent reports an audit as passed from one Lighthouse score or desktop run without recording page, conditions, metric details, or variability.
+
+**Why it matters:** Aggregate scores hide slow routes, field experience, layout instability, and mobile regressions; one lab run is not evidence of real-user performance or stable improvement.
+
+**Symptoms:**
+- Reports omit URL, commit, viewport, device/network settings, and tool version
+- only homepage/desktop is measured
+- lab and field data are conflated
+- before/after runs use different conditions.
+
+**Prevention:** Define pages and journeys in scope. Capture repeatable lab runs under documented conditions and report individual metrics; separate lab diagnostics from CrUX/RUM field data. Compare equivalent builds, record limitations and untested routes, and do not infer a site-wide pass from one score.
+

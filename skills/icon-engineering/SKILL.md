@@ -153,3 +153,18 @@ Do not prescribe one animation duration for every interaction. Choose timing acc
 ## Completion criteria
 
 Icons have an intentional representation, correct accessible treatment, consistent sizing and styling, safe asset provenance, and verified behavior across relevant themes, input modes and motion preferences. No dependency is added without a demonstrated need.
+
+## Common AI failure mode
+
+**Failure:** An agent treats every SVG as decorative or labels the SVG while leaving its icon-only button or link unnamed.
+
+**Why it matters:** Informative icons can disappear from the accessibility tree, while icon-only controls are announced without an actionable name. Duplicate IDs or destructive optimization can break labels.
+
+**Symptoms:**
+- Icon-only controls have no computed name
+- decorative icons are redundantly announced
+- an SVG title does not name its parent control
+- repeated SVGs share IDs or lose metadata during optimization.
+
+**Prevention:** Classify each icon in context and name the interactive control, not merely its child graphic. Hide decorative SVGs from assistive technology and use unique references for informative graphics. Inspect computed names, test keyboard/touch operation, and verify optimized assets.
+

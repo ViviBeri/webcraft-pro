@@ -53,16 +53,21 @@ Create intentional, deterministic animation sequences with clear ownership, pred
 - Keep timelines controllable and avoid deeply nested callbacks when labels and timeline composition are clearer.
 - Do not create an animation merely to make an interface appear more sophisticated.
 
-## Common failure modes
+## Common AI failure mode
 
-- Creating animations during render.
-- Forgetting revert() or equivalent teardown.
-- Registering plugins repeatedly in component render paths.
-- Using global selectors in repeated components.
-- Leaving from() animations in a hidden or transformed state after an interrupted lifecycle.
-- Using a timeline for a simple CSS hover state.
-- Assuming zero duration alone makes a complex interaction accessible.
+**Failure:** An agent creates GSAP animations outside a clearly owned component or page lifecycle and fails to revert the animation context during teardown.
 
+**Why it matters:** Route changes, rerenders, and remounts leave duplicate timelines, listeners, and triggers attached to stale elements; first-load visuals can conceal memory and interaction defects.
+
+**Symptoms:**
+- Timelines accumulate after navigation
+- global selectors animate another component instance
+- listeners survive unmount
+- interrupted from/fromTo animations leave elements hidden or transformed
+- zero-duration animation is treated as sufficient accessibility support for a complex interaction
+- a timeline is used for a simple CSS hover/state change.
+
+**Prevention:** Assign setup to the component/page that owns its targets. Use scoped selectors and gsap.context with revert, or gsap.matchMedia with its returned revert. Register plugins outside render paths, clean up non-GSAP resources, and test remount, route change, interruption, replay, and teardown.
 ## Completion criteria
 
 The animation has a clear purpose, correct timing, scoped targets, lifecycle cleanup, responsive behavior and a verified non-animated or reduced-motion experience.

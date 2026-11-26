@@ -73,3 +73,18 @@ The interface preserves content, task completion and accessibility across the te
 - For complex data, document the narrow-screen interaction: scroll region, column prioritization, summary/detail view or alternative representation.
 
 Choose breakpoints from observed content failure. Record widths and conditions actually tested; do not claim universal device coverage from a small sample.
+
+## Common AI failure mode
+
+**Failure:** An agent treats responsiveness as familiar device breakpoints and tunes a few screenshots without testing content stress or intermediate widths.
+
+**Why it matters:** Real users resize windows, zoom text, use translated content, and encounter long labels; preset-only layouts overflow between breakpoints or with realistic content.
+
+**Symptoms:**
+- Overflow/clipping appears at untested widths
+- fixed heights break with large text/localization/errors
+- visual order conflicts with DOM order
+- page fails intermediate widths or 200% zoom.
+
+**Prevention:** Use fluid content-driven constraints. Test narrow, wide, and intermediate widths plus zoom/reflow, long text, localization, and error states. Verify focus order, touch targets, overflow, sticky elements, and DOM/visual order; record exact conditions.
+

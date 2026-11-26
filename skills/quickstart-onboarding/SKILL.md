@@ -90,3 +90,18 @@ This is a real workflow gate, not a status message. Continue only after an unamb
 - [ ] No dependencies were installed and no application implementation was started before explicit user confirmation.
 - [ ] The user was asked to confirm the design direction before any component code.
 - [ ] Accessibility, reduced motion, responsive behavior and verification are addressed.
+
+## Common AI failure mode
+
+**Failure:** An agent treats missing onboarding answers as permission to choose framework, motion, or brand direction, then implements before the user approves the plan.
+
+**Why it matters:** The plan can lock the project into an unwanted stack or visual approach and create rework; skipping the gate turns planning into unauthorized implementation.
+
+**Symptoms:**
+- Framework/motion is silently selected
+- assumptions appear as facts
+- design-direction.md omits open questions
+- code or dependencies are added before explicit approval.
+
+**Prevention:** Ask the three defined questions together and ask only for missing choices unless the user delegates them. Label assumptions, align with shared standards, then stop at the confirmation gate. Do not scaffold or implement until approval is unambiguous.
+

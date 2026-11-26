@@ -59,3 +59,18 @@ The reduced-motion preference is respected, essential content and feedback remai
 Identify whether motion starts automatically, lasts beyond five seconds, runs in parallel with other content, or updates automatically. Determine whether users need a pause, stop, hide or frequency control under the applicable accessibility requirements. A reduced-motion preference is not a substitute for required controls when content continues moving or updating.
 
 Keep the non-animated state as the default content presentation where practical. Avoid hiding content until JavaScript initializes; when animation is unavailable, the page must not expose an empty region or leave focus on an invisible element. If a preference changes at runtime, revert the old setup before applying the new one.
+
+## Common AI failure mode
+
+**Failure:** An agent globally disables animation for reduced-motion users but leaves content hidden, controls displaced, or status feedback dependent on the removed timeline.
+
+**Why it matters:** The preference can turn decorative enhancement into a broken interface: users lose content, miss state changes, or retain focus on invisible elements.
+
+**Symptoms:**
+- Elements remain transparent or off-screen
+- reveal sequences never reach final state
+- success/error feedback disappears
+- runtime preference changes leave stale setup.
+
+**Prevention:** Render content and final layout before motion setup. Design an explicit static or low-motion state, keep essential feedback immediate, preserve focus and interaction, and revert/rebuild preference-dependent setup. Test initial load, runtime changes, keyboard paths, and JavaScript failure.
+

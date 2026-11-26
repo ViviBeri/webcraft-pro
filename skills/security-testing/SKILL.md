@@ -48,3 +48,18 @@ Record affected component, vulnerable version or code path, exploit precondition
 ## Completion criteria
 
 Security checks run at defined lifecycle points, high-risk findings have owners and retest evidence, dependency and secret exposure are reviewed, and repository controls are described accurately.
+
+## Common AI failure mode
+
+**Failure:** An agent treats a clean dependency scan or passing happy-path test as proof that the application and supply chain are secure.
+
+**Why it matters:** Configured tools cover only selected rules and inputs; authorization bypasses, business-logic abuse, runtime misconfiguration, malicious build steps, and release credential risks may remain.
+
+**Symptoms:**
+- Green jobs omit tested threat classes
+- tests omit cross-user/tenant and unauthenticated cases
+- CI actions or provenance are unchecked
+- reports claim vulnerability-free status from scanner success.
+
+**Prevention:** Define a threat-informed matrix across application behavior, dependencies, repository controls, build/release permissions, and provenance. Add negative authorization tests, pin/review CI actions, inspect dependency alerts, and verify least-privilege tokens. Report scope and exclusions; treat untested areas as unknown.
+

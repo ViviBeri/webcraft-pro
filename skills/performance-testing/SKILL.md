@@ -32,3 +32,18 @@ Use this skill when teams need performance budgets and repeatable checks in pull
 ## Deliverables
 
 Provide the route matrix, budget definitions, tool versions, CI integration plan, artifact retention, noise policy and failure triage instructions.
+
+## Common AI failure mode
+
+**Failure:** An agent adds a performance test with arbitrary thresholds and treats one passing run as proof that the application meets its budget.
+
+**Why it matters:** Loose thresholds institutionalize regressions; noisy single runs fail unpredictably or conceal slowdowns; unrepresentative tests pass while critical interactions remain slow.
+
+**Symptoms:**
+- Budgets lack user/device/route rationale
+- tests omit interaction latency or layout stability
+- identical commits vary widely
+- thresholds are raised without investigating regressions.
+
+**Prevention:** Derive budgets from user journeys, supported devices, and explicit objectives. Measure representative routes/interactions, isolate or repeat noisy runs, keep comparable baselines, and require an explained review before changing a budget.
+
