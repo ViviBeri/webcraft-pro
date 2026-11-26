@@ -83,7 +83,7 @@ The component follows a documented interaction pattern, exposes accurate semanti
 
 **Symptoms:**
 - Tabs lack arrow-key navigation or synchronized panels
-- dialogs fail to move, contain, or restore focus
+- dialogs fail to move focus into the dialog or restore focus on close; modal dialogs fail to contain focus, while non-modal dialogs incorrectly prevent users from reaching the page
 - menu roles conflict with ordinary navigation
 - selected and expanded states disagree.
 

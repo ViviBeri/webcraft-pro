@@ -62,7 +62,8 @@ Use scroll position to support narrative, orientation or meaningful feedback wit
 - Markers drift after assets load
 - pins cover navigation or focus
 - reverse scroll and fragment navigation break
-- resize leaves stale pin spacing or duplicate triggers.
+- resize leaves stale pin spacing or duplicate triggers
+- horizontal scrolling has no discoverable cue or touch support.
 
 **Prevention:** Derive positions from actual layout and use function-based start/end values when dimensions change. Refresh only after meaningful layout changes settle. Revert responsive setups, provide normal-flow and no-JavaScript fallbacks, and test reverse/partial scroll, direct mid-page loads, focus, and post-load changes.
 ## Completion criteria

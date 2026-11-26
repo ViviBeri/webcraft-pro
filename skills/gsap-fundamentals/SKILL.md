@@ -63,7 +63,9 @@ Create intentional, deterministic animation sequences with clear ownership, pred
 - Timelines accumulate after navigation
 - global selectors animate another component instance
 - listeners survive unmount
-- interrupted from/fromTo animations leave elements hidden or transformed.
+- interrupted from/fromTo animations leave elements hidden or transformed
+- zero-duration animation is treated as sufficient accessibility support for a complex interaction
+- a timeline is used for a simple CSS hover/state change.
 
 **Prevention:** Assign setup to the component/page that owns its targets. Use scoped selectors and gsap.context with revert, or gsap.matchMedia with its returned revert. Register plugins outside render paths, clean up non-GSAP resources, and test remount, route change, interruption, replay, and teardown.
 ## Completion criteria
